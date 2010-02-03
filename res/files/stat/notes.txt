@@ -1,0 +1,82 @@
+#!/bin/bash
+ 
+NOTEFILE="$HOME/notes"
+ 
+function ins {
+	if [ -z "$1" ]
+	then
+		echo "Nessuna stringa da inserire!"
+	else
+		NOTA=$1
+		echo "$NOTA" > $NOTEFILE
+	fi
+	exit 0
+}
+ 
+function append {
+	if [ -z "$1" ]
+	then
+		echo "Nessuna stringa da inserire!"
+	else
+		NOTA=$1
+		echo "$NOTA" >> $NOTEFILE
+	fi
+	exit 0
+}
+ 
+function leg {
+	if [ -e $NOTEFILE ]
+	then
+		cat $NOTEFILE
+	else 
+		echo "Non e' presente alcuna nota"
+	fi
+	exit 0
+}
+ 
+function eli {
+	if [ -e $NOTEFILE ]
+	then
+		rm $NOTEFILE
+	else
+		echo "Il file non esiste, non puo' essere eliminato"
+	fi
+	exit 0
+}
+ 
+function aiuto {
+	echo "lostIT 0.1.1"
+	echo "GNU GPL license 3.0"
+	echo "Informazioni: gdb.lost@gmail.com"
+	echo "Uso: `basename "$0"` -comando [stringa]"
+	echo "comando: "
+	echo "		[ -i, -I, --inserisci]: "
+	echo "			inserisce [stringa] nel file delle note, le note precedenti verranno eliminate"
+	echo "		[ -a, -A, --append]: "
+	echo "			inserisce [stringa] alla fine del file delle note"
+	echo "		[ -l, -L, --leggi]: "
+	echo "			legge il file delle note. [stringa] non e' richiesto"
+	echo "		[ -e, -E, --elimina]: "
+	echo "			elimina le note. [stringa] non e' richiesto"
+	echo "		[ -h, -H, --help]: "
+	echo "			mostra questo help"
+	exit 0
+}
+ 
+ 
+for i in $*
+do
+	case $i in
+		-i | -I | --inserisci) 
+			ins "$2";;
+		-a | -A | --append)
+			append "$2";;
+		-l | -L | --leggi)
+			leg;;
+		-e | -E | --elimina)
+			eli;;
+		-h | -H | --help)
+			aiuto;;
+	esac
+done
+aiuto

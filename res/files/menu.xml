@@ -1,0 +1,42 @@
+<?xml version="1.0"?> 
+<!DOCTYPE menue [
+	<!ELEMENT menue (menu+)>
+	<!ELEMENT menu (text+)>
+	
+	<!ELEMENT text ANY>
+	<!ATTLIST text
+		id 	ID	#REQUIRED
+	>
+]>
+<!--
+
+Questo e' il file menu. Per ogni voce da visualizzare sul menu, creare
+un campo <menu></menu>, al cui interno dovete inserire un nodo
+<text></text> il cui id fara' riferimento all'id della pagina da caricare
+Esempio:
+	<menu>
+		<text id = 'prova'>ciao</text>
+	</menu>
+Creera' una voce di menu con testo 'ciao' che puntera' alla pagina con 
+id 'prova'
+Non sono ammessi caratteri quali <, >, &, e ogni carattere che faccia
+riferimento a un carattere speciale di XML.
+
+-->
+<menue>
+	<menu>
+		<text id = 'home'>Home</text>
+	</menu>
+	<menu>
+		<text id = 'prova'>Prova</text>
+	</menu>
+	<menu>
+		<text id = 'link1'>Primo</text>
+	</menu>
+	<menu>
+		<text id = 'link2'>Secondo</text>
+	</menu>
+	<menu>
+		<text id = 'link3'>Terzo</text>
+	</menu>
+</menue>

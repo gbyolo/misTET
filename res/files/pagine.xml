@@ -1,0 +1,46 @@
+<?xml version="1.0"?> 
+<!DOCTYPE pages [
+	<!ELEMENT pages (page+)>
+	<!ELEMENT page (go*)>
+	
+	<!ELEMENT page ANY>
+	<!ATTLIST page
+		id	ID	#REQUIRED
+	>
+	<!ELEMENT go ANY>
+	<!ATTLIST go
+		href	CDATA	#REQUIRED
+		lan		CDATA	#IMPLIED
+		testo	CDATA	#REQUIRED
+	>
+]>
+<!--
+
+Questo e' il file per le pagine. Creare un nuovo elemento <page></page>
+con il contenuto della pagina. L'attributo id deve essere lo stesso di
+quello specificato nel file menu per permettere il caricamento della 
+pagina stessa. Tramite go e' possibile creare un link ad un file esterno,
+e tramite l'attributo lan e' possibile includere sources. L'attributo 
+testo e' l'equivalente di <a href="">TESTO</a>
+
+-->
+<pages>
+	<page id = 'home'>
+		Pagina iniziale, qui verranno inserite le pagine cliccando sul menu
+	</page>
+	<page id = 'prova'>
+		<go href = "/res/files/stat/notes.txt" lan = "bash" testo = "View"></go>
+		View
+	</page>
+	<page id = 'link1'>
+			Pagina che fa riferimento a link1
+	</page>
+	<page id = 'link2'>
+		Pagina che fa riferimento a link2
+	</page>
+	<page id = 'link3'>
+		<![CDATA[
+		<a href = "#home" onClick = 'misTET.risorse.set.pagina("home");'>Clicca per andare alla home</a>
+		]]>
+	</page>
+</pages>
