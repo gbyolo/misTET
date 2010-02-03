@@ -195,11 +195,11 @@ var misTET = {
 				for (var i = 0; i < pagine.length; i++) {
 					if (pagine[i].getAttribute('id') == id) {
 						var list = pagine[i].childNodes;
-						// Si tratta di testo ormale
+						/* Si tratta di testo normale */
 						if (list.length == 1) {
 							output = pagine[i].firstChild.nodeValue;
 						} else {
-						// Sezione cdata
+						/* Sezione cdata */
 							for (var j = 0; j < list.length; j++) {
 							
 								if (list[j].nodeName == "#cdata-section") {
