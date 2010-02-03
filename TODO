@@ -1,0 +1,17 @@
+Cosa fare?
+Beh, direi come prima cosa avere qualcuno che mi aiuti ^^. E' inoltre
+necessario rendere disponibile a scelta dell'utente la funzione 
+dell'inserimento del Sintax Highlighting, quindi qualcosa che carichi 
+i file .js appoggiandosi magari ad un file xml, e misTET si comportera'
+di conseguenza. Questa per il momento resta la cosa piu' importante da 
+fare, in seguito dovrei scrivere un css piu' "vivace", e testare la
+compatibilita'(e, in tal caso, rendere compatibile misTET) su browser 
+che ancora non ho avuto modo di testare. 
+
+Quindi, ricapitolando:
+	1	-	Sintax Highlighting solo a scelta dell'utente
+	2	-	Css adeguato
+	3	-	Compatibilita' browser
+
+Come sempre e' possibile contattarmi a:
+				gdb[dot]lost[at]gmail[dot]com
