@@ -1,6 +1,6 @@
 /****************************************************************************
  * Copyleft lostpassword                                                    *
- *  [http://lostpassword.hellospace.net | gdb.lost@gmail.com]               *
+ * [http://lostpassword.hellospace.net | gdb.lost@gmail.com]                *
  *                                                                          *
  *                                                                          *
  * misTET is free software: you can redistribute it and/or modify           *
@@ -110,26 +110,26 @@ var misTET = {
 					
 				} else {
 				new Ajax.Request(path, {
-             		method: "get",
-             	   	asynchronous: false,
-             	   	evalJS: false,
+					method: "get",
+					asynchronous: false,
+             	   			evalJS: false,
                 
-             	   	onSuccess: function (http) {
-              	      	if (test = misTET.altro.XMLtest(http.responseXML, path)) {
-              	      		misTET.files.menu = http.responseXML;
-              	      	} else {
-					  	}
-               	   	},
+             	   			onSuccess: function (http) {
+              	      				if (test = misTET.altro.XMLtest(http.responseXML, path)) {
+              	      					misTET.files.menu = http.responseXML;
+              	      				} else {
+						}
+               	   			},
                 
-                	onFailure: function (http) {
-                    	error			 = new Error("Impossibile ricevere il file dei menu");
+                			onFailure: function (http) {
+                    				error			 = new Error("Impossibile ricevere il file dei menu");
 						error.name		 = "MenuError";
-                    	error.fileName   = path;
-                	}
-            	});
-            	/* c'e' un errore nella ricezione del file menu */
-            	if (error) {
-            		/* genero un eccezione di tipo error */
+                    				error.fileName   = path;
+                			}
+            			});
+            			/* c'e' un errore nella ricezione del file menu */
+            			if (error) {
+            				/* genero un eccezione di tipo error */
 					throw error;
 				}
 				return true;
