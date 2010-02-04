@@ -1,23 +1,23 @@
 body{
-	background-color:#000;
-	color:#FFFFFF;
-	font-family: Courier New, Terminus;
-	font-size:10px;
+	background-color: #E5E5E5;
+	color: #000000;
+	font-family: Fixed, Courier New;
+	font-size: 10px;
 	margin: 35px;
 }
 pre {
-	font-family: Courier New, Terminus;
-	font-size: 8pt;
+	font-family: Fixed, Courier New;
+	font-size: 3pt;
 }
 .title {
-	font-family: Terminus, Terminal, Courier New;
+	font-family: Terminal, Fixed, Courier New;
 	font-size: 14pt;
 	text-align: left;
-	color: #FFFFFF;
+	color: #000000;
 }
 .pagina {
-	border : 1px solid #444444;
-	background-color: #000000;
+	border : 1px solid #2808F6;
+	background-color: #E5E5E5;
 	width : 760px;
 	height: 350px;
 	text-align : left;
@@ -27,7 +27,7 @@ pre {
 	overflow: auto;
 }
 .menu {
-    font-size:12px;
+    font-size: 3pt;
 	width: 750px;
 	text-align : right;
 	margin: 0 auto;
@@ -35,29 +35,31 @@ pre {
 	padding : 5px;
 }
 .footer {
+	font-family: Fixed, Courier New, Courier;
 	width : 750px;
+	font-size: 3pt;
 	text-align : left;
 	margin: 0 auto;
 	padding : 5px;
 }
 
 a:link {
-	color:#FFFFFF; 
+	color: #000000; 
 	text-decoration: none;
 }		
 a:visited {
-	 color:#FFFFFF;
+	 color:#000000;
 	 text-decoration: none;
 }
 a:hover {
-	 color: #808080; 
-	 text-decoration: none;
+	 color: #2808F6; 
+	 text-decoration: underline;
 }
 input, textarea, select {
 	color: #FFFFFF;
 	background: #000000;
 	font-size: 8pt;
-	font-family: Terminus, Terminal, Courier New, Courier;
+	font-family: Fixed, Terminal, Courier New, Courier;
 }
 
 input:hover, textarea:hover, select:hover {
