@@ -60,7 +60,7 @@
 /* Add border to the lines */
 .syntaxhighlighter .line .content
 {
-	border-left: 3px solid #6CE26C !important;
+	border-left: 3px solid #E5E5E5 !important;
 	color: #000 !important;
 }
 
