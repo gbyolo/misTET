@@ -314,36 +314,36 @@ var misTET = {
 		importa: function (path) {
 		
 			var result;
-            var error = false;
+            		var error = false;
             
-            new Ajax.Request(path, {
-                method: "get",
-                asynchronous: false,
-                evalJS: false,
+            		new Ajax.Request(path, {
+                		method: "get",
+                		asynchronous: false,
+                		evalJS: false,
                 
-                onSuccess: function (http) {
-                    try {
-                        result = http.responseText;
-                    }
-                    catch (e) {
-                        error             = e;
-                        error.fileName    = path;
-                        error.lineNumber -= 5;
-                    }
-                },
+                		onSuccess: function (http) {
+                    			try {
+                        			result = http.responseText;
+                    			}
+                    			catch (e) {
+                     				error             = e;
+                     		   		error.fileName    = path;
+                   		     		error.lineNumber -= 5;
+                  			}
+            			},
                 
-                onFailure: function (http) {
-                    error            = new Error("Impossibile ricevere il file (#{status} - #{statusText}).".interpolate(http));
-                    error.fileName   = path;
-                    error.lineNumber = 0;
-                }
-            });
+                		onFailure: function (http) {
+                    			error            = new Error("Impossibile ricevere il file (#{status} - #{statusText}).".interpolate(http));
+                    			error.fileName   = path;
+                    			error.lineNumber = 0;
+                		}
+            		});
 
-            if (error) {
-                throw error;
-            }
+            		if (error) {
+                		throw error;
+           		 }
             
-            return result;
+           		return result;
 		},
 		
 		/* effettua un test di validita' del file xml */
@@ -369,21 +369,21 @@ var misTET = {
 		
 			var result = null;
             
-            new Ajax.Request(path, {
-                method: "get",
-                asynchronous: false,
-                evalJS: false,
+            		new Ajax.Request(path, {
+                		method: "get",
+                		asynchronous: false,
+                		evalJS: false,
                 
-                onSuccess: function (http) {
-                    try {
-                        window.eval(http.responseText);
-                    } catch (error) { }
-                }
-            });
+                		onSuccess: function (http) {
+                    			try {
+                       				window.eval(http.responseText);
+                    			} catch (error) { }
+                		}
+            		});
        
-        },
+        	},
         
-        /* parsa gli argomenti inviati tramite GET */
+       		/* parsa gli argomenti inviati tramite GET */
 		parseGET: function () {
 		
 			var args = new Array();
