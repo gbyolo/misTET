@@ -21,10 +21,10 @@ invece i vari stili da applicare a misTET
 
 Browser supportati:
 
-Google Chrome 	>=  3 (in testing versioni precedenti)
-Firefox 		>=  3.5.6 (in testing versioni precedenti, sicuramente compatibili)
-IE				>=  7 (testing IE6)
-Epiphany		>=  2.22.3
+	-	Google Chrome 	>=  3 (in testing versioni precedenti)
+	-	Firefox 		>=  3.5.6 (in testing versioni precedenti, sicuramente compatibili)
+	-	IE				>=  7 (testing IE6)
+	-	Epiphany		>=  2.22.3
 
 Per ora funziona quindi sulla maggior parte dei browser usati.
 
