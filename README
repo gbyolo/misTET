@@ -1,6 +1,4 @@
-<h2>misTET</h2>
-
-<h1>Info:</h1>
+<h2>Info:</h1>
 misTET e' un semplice cms realizzato in Ajax con il supporto di files XML per quanto riguarda il menu e le pagine. Le istruzioni sono presenti all'interno dei file menu.xml e pagine.xml per quanto riguarda questi ultimi, per il resto dare un'occhiata al README.
 
 Nella cartella res devono essere presenti:
@@ -18,7 +16,7 @@ Il file menu.xml e pagine.xml hanno una piccola documentazione all'interno di es
 La cartella stat contiene tutti i file quali sources/archivi, ogni risorsa, la cartella styles contiene
 invece i vari stili da applicare a misTET
 
-<h1>Browsers</h1>
+<h2>Browsers</h1>
 Browser supportati:
 
 Google Chrome 	>=  3 (in testing versioni precedenti)
@@ -28,7 +26,7 @@ Epiphany		>=  2.22.3
 
 Per ora funziona quindi sulla maggior parte dei browser usati.
 
-<h1>Collaborazione</h1>
+<h2>Collaborazione</h1>
 Chiunque voglia collaborare e' ben accetto, sono contattabile a gdb[dot]lost[at]gmail[dot]com
 
 P.s: l'uso del repository github comincia solamente dalla versione 0.1.9, per mio grande dispiacere a causa del poco tempo a disposizione, anche se da ora sara' possibile restare sempre aggiornati su questo repo :)
