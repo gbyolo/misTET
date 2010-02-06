@@ -4,14 +4,16 @@ Nella cartella res devono essere presenti:
 	-	misTET.js
 	-	prototype.js
 	-	files
-	-	style.css
+	
 All'interno di files:
 	-	menu.xml
 	-	pagine.xml
+	-	styles
 	-	stat
 	
 Il file menu.xml e pagine.xml hanno una piccola documentazione all'interno di essi.
-La cartella stat contiene tutti i file quali sources/archivi, ogni risorsa.
+La cartella stat contiene tutti i file quali sources/archivi, ogni risorsa, la cartella styles contiene
+invece i vari stili da applicare a misTET
 
 Browser supportati:
 
