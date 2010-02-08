@@ -1,6 +1,8 @@
 <h2>Info:</h2>
 
 misTET e' un semplice cms realizzato in Ajax con il supporto di files XML per quanto riguarda il menu e le pagine. Le istruzioni sono presenti all'interno dei file menu.xml e pagine.xml per quanto riguarda questi ultimi, per il resto dare un'occhiata al README.
+E' disponibile una demo su:
+http://lostpassword.hellospace.net/#home
 
 Nella cartella res devono essere presenti:
 	-	misTET.js
