@@ -52,6 +52,7 @@ var misTET = {
 			var divMenu = $('menu');
 			divMenu.innerHTML = misTET.risorse.parsa.menu();
 			var divPagina = $('pagina');
+			/* Oh my god! */
 			var hash = window.location.hash;
 			
 			if (hash == "") {
