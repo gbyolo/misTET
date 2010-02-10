@@ -381,18 +381,18 @@ var misTET = {
 					
 					var brush = "";
 					/* Cicla i brushes rispetto al file .js incluso */
-                	for (brush in SyntaxHighlighter.brushes) {
-                		/* Crea una copia degli alias */
-                    	var alias = SyntaxHighlighter.brushes[brush].aliases;
+                    for (brush in SyntaxHighlighter.brushes) {
+                        /* Crea una copia degli alias */
+                        var alias = SyntaxHighlighter.brushes[brush].aliases;
 
-						/* Scorre gli alias, e dice al core del sh di aggiungere i determinati alias */
-                    	for (var cicla = 0; cicla < alias.length; cicla++) {
-                        	SyntaxHighlighter.vars.discoveredBrushes[alias[cicla]] = brush;
-                    	}
-               	 	}
-               	 	/* Fine spezzone FANCULO */
+                        /* Scorre gli alias, e dice al core del sh di aggiungere i determinati alias */
+                        for (var cicla = 0; cicla < alias.length; cicla++) {
+                            SyntaxHighlighter.vars.discoveredBrushes[alias[cicla]] = brush;
+                        }
+                    }
+                    /* Fine spezzone FANCULO */
                	 	
-               	 	/* Setta il brush(dopo aver settato l'alias in discoveredBrushes */
+                    /* Setta il brush(dopo aver settato l'alias in discoveredBrushes */
 					SyntaxHighlighter.defaults["brush"] = langs[lan];
 					/* Esegue il Sintax Highlighting */
 					SyntaxHighlighter.highlight();
