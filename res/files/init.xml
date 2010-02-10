@@ -1,0 +1,17 @@
+<?xml version="1.0"?> 
+<!DOCTYPE init [
+	<!ELEMENT init (homePage+)>
+	<!ELEMENT init (caricamento+)>
+	
+	<!ELEMENT homePage ANY>
+	<!ELEMENT caricamento ANY>
+]>
+
+<!-- File di inizio
+	 homePage: id della home page (modificare il file pagine.xml di conseguenza
+	 caricamento: messaggio di caricamento da mostrare
+-->
+<init>
+	<homePage>home</homePage>
+	<caricamento>Caricamento...</caricamento>
+</init>
