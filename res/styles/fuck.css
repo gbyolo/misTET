@@ -1,0 +1,121 @@
+/* dark fuck theme */
+/* Realizzato da lostpassword, misTET 2010 */
+
+body
+{
+    background: #111111;
+    color: #777777;
+    font-family:Courier New;
+    font-size:11px;
+    text-align: justify;
+    margin:30px;
+}
+div.title
+{
+    font-size : 14pt;
+    text-align: center;
+    margin : 0px auto;
+    padding:10px;
+    
+}
+div.pagina
+{
+    background-color:#111111;
+    color: #ffffff;
+    font-family: Courier New;
+    width : 600px;
+    height: 350px;
+    font-size : 8pt;
+    margin : 0px auto;
+    padding:10px;
+    border-bottom: 1px solid #ABABAB;
+    border-left:1px solid #ABABAB;
+    overflow: auto;
+
+}
+#menu
+{
+    background-color:#111111;
+    font-family: Courier New,Courier;
+    width : 600px;
+    height: 20px;
+    font-size : 10pt;
+    margin : 1px auto;
+    padding:10px;
+    font-weight:bold;
+    border-bottom:1px solid #ABABAB;
+}
+
+
+/* Ringraziamento a iceok per il menu a tendina */
+.menu {
+    position: relative;
+    float: left;
+    margin-right: 5px;
+    text-align: left;
+}
+
+.menu > div.menu {
+    position: absolute;
+    display: none;
+    background: #111111;
+    padding: 4pt;
+    opacity: 0.9;
+	left: 10px;
+}
+
+div.menu:hover > div.menu {
+    display: block;
+}
+
+.menu a.element {
+    padding: 0;
+    font-size: 10pt;
+}
+
+.menu a.element div {
+    width: 100%;
+}
+
+.menu a.element:hover {
+    color: #E4E4E4;
+}
+
+div.footer
+{
+    background-color:#111111;
+    font-family: Courier New;
+    font-size : 10px;
+    margin : 20px auto;
+    padding:10px;
+    width : 600px;
+    height: 20px;
+	text-align: right;
+}
+.link
+{
+    padding: 6px;
+}
+a:link
+{
+    color: #888888;
+    font-family: courier new;
+    text-decoration: none;
+
+}		
+a:visited
+{
+    color: #888888;
+    font-family: courier new;
+    text-decoration: none;
+
+}
+a:hover
+{
+    color: #E4E4E4;
+    text-decoration: underline;
+}
+a{
+    color: #F64521;
+}
+
