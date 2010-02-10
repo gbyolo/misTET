@@ -29,8 +29,10 @@ testo e' l'equivalente di <a href="">TESTO</a>
 		Pagina iniziale, qui verranno inserite le pagine cliccando sul menu
 	</page>
 	<page id = 'prova'>
-		<go href = "/res/files/stat/notes.txt" lan = "bash" testo = "View"></go>
-		View
+		<go href = "/res/files/stat/notes.txt" lan = "python" testo = "View"></go>
+	</page>
+	<page id = 'sub'>
+		NOTHING ELSE MATTERS IN THIS LIFE
 	</page>
 	<page id = 'link1'>
 			Pagina che fa riferimento a link1
