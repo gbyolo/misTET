@@ -1,8 +1,6 @@
 <h2>Info:</h2>
 
 misTET e' un semplice cms realizzato in Ajax con il supporto di files XML per quanto riguarda il menu e le pagine. Le istruzioni sono presenti all'interno dei file menu.xml e pagine.xml per quanto riguarda questi ultimi, per il resto dare un'occhiata al README.
-E' disponibile una demo su:
-<a href = "http://lostpassword.hellospace.net/#mistet">http://lostpassword.hellospace.net/#mistet</a>
 
 Nella cartella res devono essere presenti:
 	-	misTET.js
@@ -15,21 +13,32 @@ All'interno di files:
 	-	styles
 	-	stat
 	
-Il file menu.xml e pagine.xml hanno una piccola documentazione all'interno di essi.
-La cartella stat contiene tutti i file quali sources/archivi, ogni risorsa, la cartella styles contiene
-invece i vari stili da applicare a misTET
+Il file menu.xml e pagine.xml hanno una piccola documentazione all'interno di essirrv@order-bottom: 1px solid #ABABAB;
+    border-left:1px solid #ABABAB;
+    overflow: auto;
 
-<h2>Browsers</h2>
+}
+#menu
+{
+    background-color:#111111;
+    font-family: Courier New,Courier;
+    width : 600px;
+    height: 20px;
+    font-size : 10pt;
+    margin : 1px auto;
+    padding:10px;
+    font-weight:bold;
+    border-bottom:1px solid #ABABAB;
+}
 
-Browser supportati:
 
-	-	Google Chrome 	>=  3 (in testing versioni precedenti)
-	-	Firefox 		>=  3.5.6 (in testing versioni precedenti, sicuramente compatibili)
-	-	IE				>=  7 (testing IE6)
-	-	Epiphany		>=  2.22.3
+/* Ringraziamento a iceok per il menu a tendina */
+.menu {
+    position: relative;
+    float: left;
+    margin-right: 5px;
+    text-align: left;
+}
 
-Per ora funziona quindi sulla maggior parte dei browser usati.
-
-<h2>Collaborazione</h2>
-
-Chiunque voglia collaborare e' ben accetto, sono contattabile a gdb[dot]lost[at]gmail[dot]com
+.menu > div.menu {
+    positÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
