@@ -10,7 +10,7 @@ la cosa piu' importante da fare,in seguito dovrei testare la compatibilita'
 ho avuto modo di testare.
 Ultima cosa, aggiungere l'attributo "dopo" al tag <go> in pagine.xml, per
 avere una sintassi del tipo(pagina parsata):
-link_a_un_file	-	testo_attributo_dopo
+link_a_un_file	-	testo_attributo_dopo.
 
 Quindi, ricapitolando:
 	1	-	Rimozione onClick
@@ -20,3 +20,4 @@ Quindi, ricapitolando:
 	
 Come sempre e' possibile contattarmi a:
 				gdb[dot]lost[at]gmail[dot]com
+
