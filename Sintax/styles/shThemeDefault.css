@@ -32,10 +32,15 @@
  * 
  * Interface elements.
  ************************************/
+ 
+ /***********************************
+ *	Modded by lostpassword
+ *	misTET, 2010
+ ************************************/
 
 .syntaxhighlighter
 {
-	background-color: #fff !important;
+	background-color: #0f0f0f !important;
 }
 
 /* Highlighed line number */
@@ -72,13 +77,13 @@
 /* First line */
 .syntaxhighlighter .line.alt1
 {
-	background-color: #fff !important;
+	background-color: #0f0f0f !important;
 }
 
 /* Second line */
 .syntaxhighlighter .line.alt2
 {
-	background-color: #F8F8F8 !important;
+	background-color: /home/lost/src/js/misTET/index.html !important;
 }
 
 .syntaxhighlighter .toolbar
@@ -103,7 +108,7 @@
 .syntaxhighlighter .plain,
 .syntaxhighlighter .plain a
 { 
-	color: #000 !important;
+	color: #fff !important;
 }
 
 .syntaxhighlighter .comments,
