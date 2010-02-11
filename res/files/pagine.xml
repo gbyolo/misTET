@@ -12,6 +12,7 @@
 		href	CDATA	#REQUIRED
 		lan		CDATA	#IMPLIED
 		testo	CDATA	#REQUIRED
+		dopo	CDATA	#REQUIRED
 	>
 ]>
 <!--
@@ -29,7 +30,7 @@ testo e' l'equivalente di <a href="">TESTO</a>
 		Pagina iniziale, qui verranno inserite le pagine cliccando sul menu
 	</page>
 	<page id = 'prova'>
-		<go href = "/res/files/stat/notes.txt" lan = "python" testo = "View"></go>
+		<go href = "/res/files/stat/notes.txt" lan = "python" testo = "View" dopo = " - Saluto in python!"></go>
 	</page>
 	<page id = 'sub'>
 		NOTHING ELSE MATTERS IN THIS LIFE
