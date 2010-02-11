@@ -8,15 +8,11 @@ link di pagine o menu, e impostare un refresh. Questa per il momento resta
 la cosa piu' importante da fare,in seguito dovrei testare la compatibilita'
 (e, in tal caso, rendere compatibile misTET) su browser che ancora non 
 ho avuto modo di testare.
-Ultima cosa, aggiungere l'attributo "dopo" al tag <go> in pagine.xml, per
-avere una sintassi del tipo(pagina parsata):
-link_a_un_file	-	testo_attributo_dopo.
 
 Quindi, ricapitolando:
 	1	-	Rimozione onClick
 	2	-	Sintax Highlighting solo a scelta dell'utente
-	3	-	Attributo "dopo"
-	4	-	Compatibilita' browser
+	3	-	Compatibilita' browser
 	
 Come sempre e' possibile contattarmi a:
 				gdb[dot]lost[at]gmail[dot]com
