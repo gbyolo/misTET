@@ -304,12 +304,13 @@ var misTET = {
 								} else if (list[j].nodeName == "go") {
 									var href = list[j].getAttribute('href');
 									var lan = list[j].getAttribute('lan') || "";
+									var dopo = list[j].getAttribute('dopo');
 									
 									if (lan != "") {
-										output += "<a href = \'#"+id+"&page="+href+"&lan="+lan+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\", \""+lan+"\");\'>"+list[j].getAttribute('testo')+"</a><br>";
+										output += "<a href = \'#"+id+"&page="+href+"&lan="+lan+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\", \""+lan+"\");\'>"+list[j].getAttribute('testo')+"</a>"+dopo+"<br>";
 									
 									} else if (lan == "") {
-										output += "<a href = \'#"+id+"&page="+href+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\");\'>"+list[j].getAttribute('testo')+"</a><br>";
+										output += "<a href = \'#"+id+"&page="+href+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\");\'>"+list[j].getAttribute('testo')+"</a>"+dopo+"<br>";
 									}	
 								}
 							}
