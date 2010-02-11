@@ -22,7 +22,8 @@ con il contenuto della pagina. L'attributo id deve essere lo stesso di
 quello specificato nel file menu per permettere il caricamento della 
 pagina stessa. Tramite go e' possibile creare un link ad un file esterno,
 e tramite l'attributo lan e' possibile includere sources. L'attributo 
-testo e' l'equivalente di <a href="">TESTO</a>
+testo e' l'equivalente di <a href="">TESTO</a>, mentre l'attributo dopo
+serve a precisare il testo da inserire dopo il link specificato da <go>
 
 -->
 <pages>
