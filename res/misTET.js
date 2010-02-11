@@ -309,7 +309,7 @@ var misTET = {
 										output += "<a href = \'#"+id+"&page="+href+"&lan="+lan+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\", \""+lan+"\");\'>"+list[j].getAttribute('testo')+"</a><br>";
 									
 									} else if (lan == "") {
-										output += "<a href = \'#"+id+"&page="+href+"\' onClick = \'misTET.risorse.set.pagina(\""+href+"\");\'>"+list[j].getAttribute('testo')+"</a><br>";
+										output += "<a href = \'#"+id+"&page="+href+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\");\'>"+list[j].getAttribute('testo')+"</a><br>";
 									}	
 								}
 							}
