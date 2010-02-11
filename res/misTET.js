@@ -117,28 +117,28 @@ var misTET = {
 					}
 					
 				} else {
-				new Ajax.Request(path, {
-					method: "get",
-					asynchronous: false,
-             	   			evalJS: false,
+					new Ajax.Request(path, {
+						method: "get",
+						asynchronous: false,
+             	   				evalJS: false,
                 
-             	   			onSuccess: function (http) {
-              	      				if (test = misTET.altro.XMLtest(http.responseXML)) {
-              	      					misTET.files.inizio = http.responseXML;
-              	      				} else {
-                                    }
-               	   			},
+             	   				onSuccess: function (http) {
+              	      					if (test = misTET.altro.XMLtest(http.responseXML)) {
+              	      						misTET.files.inizio = http.responseXML;
+              	      					} else {
+                                    			}
+               	   				},
                 
-                			onFailure: function (http) {
-                    				error			 = new Error("Impossibile ricevere il file di inizio");
-                                    error.name		 = "initEttor";
-                    				error.fileName   = path;
-                			}
-            			});
-            			/* c'e' un errore nella ricezione del file di inizio */
-            			if (error) {
-							$('pagina').innerHTML += error;
-						}
+                				onFailure: function (http) {
+                    					error			 = new Error("Impossibile ricevere il file di inizio");
+                                   			error.name		 = "initEttor";
+                    					error.fileName   = path;
+                				}
+            				});
+            				/* c'e' un errore nella ricezione del file di inizio */
+            				if (error) {
+						$('pagina').innerHTML += error;
+					}
 				}
 				var inizio = misTET.files.inizio.documentElement;
 				misTET.files.home = inizio.getElementsByTagName('homePage')[0].firstChild.nodeValue;
@@ -168,30 +168,30 @@ var misTET = {
 					}
 					
 				} else {
-				new Ajax.Request(path, {
-					method: "get",
-					asynchronous: false,
-             	   			evalJS: false,
+					new Ajax.Request(path, {
+						method: "get",
+						asynchronous: false,
+             	   				evalJS: false,
                 
-             	   			onSuccess: function (http) {
-              	      				if (test = misTET.altro.XMLtest(http.responseXML)) {
-              	      					misTET.files.menu = http.responseXML;
-              	      				} else {
-                                    }
-               	   			},
+             	   				onSuccess: function (http) {
+              	      					if (test = misTET.altro.XMLtest(http.responseXML)) {
+              	      						misTET.files.menu = http.responseXML;
+              	      					} else {
+                                    			}
+               	   				},
                 
-                			onFailure: function (http) {
-                    				error			 = new Error("Impossibile ricevere il file dei menu");
-                                    error.name		 = "MenuError";
-                    				error.fileName   = path;
-                			}
-            			});
-            			/* c'e' un errore nella ricezione del file menu */
-            			if (error) {
-            				/* genero un eccezione di tipo error */
-					throw error;
-				}
-				return true;
+                				onFailure: function (http) {
+                    					error			 = new Error("Impossibile ricevere il file dei menu");
+                                    			error.name		 = "MenuError";
+                    					error.fileName   = path;
+                				}
+            				});
+            				/* c'e' un errore nella ricezione del file menu */
+            				if (error) {
+            					/* genero un eccezione di tipo error */
+						throw error;
+					}
+					return true;
 				}
 			},
 			
@@ -347,25 +347,25 @@ var misTET = {
 				
 				/* Alias dei vari linguaggi */
 				var langs = {	
-								'bash'		: 'Bash', 
-								'cpp' 		: 'Cpp', 
-								'c'			: 'Cpp',
-								'c#' 		: 'CSharp', 
-								'css' 		: 'Css', 
-								'delphi' 	: 'Delphi', 
-								'java' 		: 'Java',
-								'js' 		: 'JScript', 
-								'jscript' 	: 'JScript',
-								'javascript': 'JSCript',
-								'php' 		: 'Php', 
-								'python' 	: 'Python', 
-								'py'		: 'Python',
-								'ruby' 		: 'Ruby', 
-								'rb'		: 'Ruby',
-								'sql' 		: 'Sql', 
-								'vb' 		: 'Vb', 
-								'xml' 		: 'Xml' 
-							};
+						'bash'		: 'Bash', 
+						'cpp' 		: 'Cpp', 
+						'c'		: 'Cpp',
+						'c#' 		: 'CSharp', 
+						'css' 		: 'Css', 
+						'delphi' 	: 'Delphi', 
+						'java' 		: 'Java',
+						'js' 		: 'JScript', 
+						'jscript' 	: 'JScript',
+						'javascript'	: 'JSCript',
+						'php' 		: 'Php', 
+						'python' 	: 'Python', 
+						'py'		: 'Python',
+						'ruby' 		: 'Ruby', 
+						'rb'		: 'Ruby',
+						'sql' 		: 'Sql', 
+						'vb' 		: 'Vb', 
+						'xml' 		: 'Xml' 
+						};
 								
 				if (linguaggio in langs) {
 					
