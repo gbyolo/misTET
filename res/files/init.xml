@@ -2,9 +2,11 @@
 <!DOCTYPE init [
 	<!ELEMENT init (homePage+)>
 	<!ELEMENT init (caricamento+)>
+	<!ELEMENT init (title+)>
 	
 	<!ELEMENT homePage ANY>
 	<!ELEMENT caricamento ANY>
+	<!ELEMENT title ANY>
 ]>
 
 <!-- File di inizio
@@ -14,4 +16,5 @@
 <init>
 	<homePage>home</homePage>
 	<caricamento>Caricamento...</caricamento>
+	<title>misTET - Power on earth</title>
 </init>
