@@ -91,6 +91,7 @@ var misTET = {
 		inizio: { },
 		caricamento: { },
 		home: { },
+		title: { },
 	},
 	risorse: {
 		carica: {
@@ -143,6 +144,8 @@ var misTET = {
 				var inizio = misTET.files.inizio.documentElement;
 				misTET.files.home = inizio.getElementsByTagName('homePage')[0].firstChild.nodeValue;
 				misTET.files.caricamento = inizio.getElementsByTagName('caricamento')[0].firstChild.nodeValue;
+				misTET.files.title = inizio.getElementsByTagName('title')[0].firstChild.nodeValue;
+				$('titolo').innerHTML = misTET.files.title;
 			},
 			
 			/* carica il file del menu, e lo salva in misTET.files.menu */
@@ -312,6 +315,8 @@ var misTET = {
 									} else if (lan == "") {
 										output += "<a href = \'#"+id+"&page="+href+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\");\'>"+list[j].getAttribute('testo')+"</a>"+dopo+"<br>";
 									}	
+								} else {
+									output += list[j].nodeValue;	
 								}
 							}
 						}
