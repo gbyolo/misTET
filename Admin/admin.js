@@ -21,15 +21,17 @@
 /* TODO lots of things */
 
 misTET.Admin = {
+		versione: "0.0.1",
+		
 		load: function () {
 			divPagina = $('pagina');
 			divPagina.innerHTML = "Admin Control Panel<br><a href = '#admin' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
-								  "<a href = '#admin' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
+                                  "<a href = '#admin' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
 		},
 		editMenu: function () {
 			divPagina = $('pagina');
 			divPagina.innerHTML = "<a href = '#' onClick = 'misTET.Admin.newMenu();'>Nuova voce menu</a><br>"+	
-								  "<a href = '#' onClick = 'misTET.Admin.editVoce();'>Edita una voce</a><br>";
+                                  "<a href = '#' onClick = 'misTET.Admin.editVoce();'>Edita una voce</a><br>";
 			
 		},
 }
