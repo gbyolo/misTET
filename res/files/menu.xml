@@ -29,6 +29,7 @@ Il funzionamento degli ID e' lo stesso come sopra citato.
 <menue>
 	<menu>
 		<text id = 'home'>Home</text>
+		<text id = 'admin'>Admin</text>
 	</menu>
 	<menu>
 		<text id = 'prova'>Prova</text>
