@@ -20,7 +20,7 @@
 
 var misTET = {
 	
-	versione: "0.2.0",
+	versione: "0.2.1",
 	
 	/* Inizializza misTET */
 	init: function () {
