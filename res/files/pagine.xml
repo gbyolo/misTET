@@ -36,11 +36,16 @@ serve a precisare il testo da inserire dopo il link specificato da <go>
 	<page id = 'sub'>
 		NOTHING ELSE MATTERS IN THIS LIFE
 	</page>
+	<page id = 'admin'>
+	</page>
 	<page id = 'link1'>
-			Pagina che fa riferimento a link1
+		Pagina che fa riferimento a link1
 	</page>
 	<page id = 'link2'>
 		Pagina che fa riferimento a link2
+		<![CDATA[
+			wowowowow
+		]]>
 	</page>
 	<page id = 'link3'>
 		<![CDATA[
