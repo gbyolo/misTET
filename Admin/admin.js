@@ -25,8 +25,8 @@ misTET.Admin = {
 		
 		load: function () {
 			divPagina = $('pagina');
-			divPagina.innerHTML = "Admin Control Panel<br><a href = '#admin' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
-                                  "<a href = '#admin' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
+			divPagina.innerHTML = "Admin Control Panel<br><a href = '#' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
+                                  "<a href = '#' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
 		},
 		editMenu: function () {
 			divPagina = $('pagina');
@@ -34,4 +34,21 @@ misTET.Admin = {
                                   "<a href = '#' onClick = 'misTET.Admin.editVoce();'>Edita una voce</a><br>";
 			
 		},
+		newMenu: function () {
+			divPagina = $('pagina');
+			if (!document.vocenuova) {
+				divPagina.innerHTML = "<form name = 'vocenuova' method = 'POST'>"+
+			                      	  "Id della voce menu:<br>" +
+			                      	  "<input type = 'text' value = '' name = 'id'></input>" +
+			                      	  "<br>Valore della voce menu:<br>" +
+			                      	  "<input type = 'text' value = '' name = 'value'></input>" +
+			                      	  "<input type = 'button' value = 'Submit' onClick = 'misTET.Admin.newMenu();'>";
+			} else {
+				idVoce = document.vocenuova.id.value;
+				name = document.vocenuova.value.value;
+				divPagina.innerHTML = "Creo una voce menu con id = "+idVoce+" e valore = "+name;
+				menuFile = misTET.files.menu.documentElement;
+				/* Creo la nuova voce menu all'interno del file */
+			}
+		}
 }
