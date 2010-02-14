@@ -286,53 +286,61 @@ var misTET = {
 			
 			/* Parsa il file XML delle pagine per trovare il contenuto della pagina con id specificato */
 			pagina: function (id) {
-			
-				var pagineXML = misTET.files.pagine.documentElement;
-				var output = "";
-				var pagine = pagineXML.getElementsByTagName('page');
 				
-				for (var i = 0; i < pagine.length; i++) {
-					if (pagine[i].getAttribute('id') == id) {
-						var list = pagine[i].childNodes;
-						/* Si tratta di testo normale */
-						if (list.length == 1) {
-							output = pagine[i].firstChild.nodeValue;
-						} else {
-						/* Sezione cdata */
-							for (var j = 0; j < list.length; j++) {
+				/* Admin control panel? */
+				if (id == "admin" || id == "Admin") {
+					misTET.Admin.load();
+				} else {
+					var pagineXML = misTET.files.pagine.documentElement;
+					var output = "";
+					var pagine = pagineXML.getElementsByTagName('page');
+				
+					for (var i = 0; i < pagine.length; i++) {
+						if (pagine[i].getAttribute('id') == id) {
+							var list = pagine[i].childNodes;
+							/* Si tratta di testo normale */
+							if (list.length == 1) {
+								output = pagine[i].firstChild.nodeValue;
+							} else {
+								/* Sezione cdata */
+								for (var j = 0; j < list.length; j++) {
 							
-								if (list[j].nodeName == "#cdata-section") {
-									output += list[j].nodeValue;
+									if (list[j].nodeName == "#cdata-section") {
+										output += list[j].nodeValue;
 									
-								} else if (list[j].nodeName == "go") {
-									var href = list[j].getAttribute('href');
-									var lan = list[j].getAttribute('lan') || "";
-									var dopo = list[j].getAttribute('dopo');
+									} else if (list[j].nodeName == "go") {
+										var href = list[j].getAttribute('href');
+										var lan = list[j].getAttribute('lan') || "";
+										var dopo = list[j].getAttribute('dopo');
 									
-									if (lan != "") {
-										output += "<a href = \'#"+id+"&page="+href+"&lan="+lan+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\", \""+lan+"\");\'>"+list[j].getAttribute('testo')+"</a>"+dopo+"<br>";
+										if (lan != "") {
+											output += "<a href = \'#"+id+"&page="+href+"&lan="+lan+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\", \""+lan+"\");\'>"+list[j].getAttribute('testo')+"</a>"+dopo+"<br>";
 									
-									} else if (lan == "") {
-										output += "<a href = \'#"+id+"&page="+href+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\");\'>"+list[j].getAttribute('testo')+"</a>"+dopo+"<br>";
-									}	
-								} else {
-									output += list[j].nodeValue;	
+										} else if (lan == "") {
+											output += "<a href = \'#"+id+"&page="+href+"\' onClick = \'misTET.risorse.loadPageGET(\""+href+"\");\'>"+list[j].getAttribute('testo')+"</a>"+dopo+"<br>";
+										}	
+									} else {
+										output += list[j].nodeValue;	
+									}
 								}
 							}
 						}
 					}
+					return output;
 				}
-			return output;
 			}
 		},
 		set: {
 			
 			/* Inserisce il contenuto della pagina in index.html */
 			pagina: function (id) {
-			
-				var inner = misTET.risorse.parsa.pagina(id);
-				var divPagina = $('pagina');
-				divPagina.innerHTML = inner;
+				if (id == "admin" || id == "Admin") {
+					misTET.Admin.load();
+				} else {
+					var inner = misTET.risorse.parsa.pagina(id);
+					var divPagina = $('pagina');
+					divPagina.innerHTML = inner;
+				}
 				
 			}
 		},
