@@ -63,7 +63,11 @@ var misTET = {
 					/* Elimina caratteri superflui */
 					var href = hash.match(/#\w+/);
 					/* Carica la pagina */
-					divPagina.innerHTML = misTET.risorse.parsa.pagina(href[0].replace('#', ''));
+					if (href[0].replace('#', '') == "admin" || href[0].replace('#', '') == "Admin") {
+						misTET.Admin.load();
+					} else {
+						divPagina.innerHTML = misTET.risorse.parsa.pagina(href[0].replace('#', ''));
+					}
 				} else {
 					/* Ti piace usare i sources eh? */
 					misTET.risorse.loadPageGET(args['page'], args['lan']);
