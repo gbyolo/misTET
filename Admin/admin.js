@@ -33,13 +33,13 @@ misTET.Admin = {
 			var file = misTET.altro.importa('/res/files/menu.xml');
 			if (!document.vocenuova) {
 				divPagina.innerHTML = "<form name = 'vocenuova' method = 'POST'>" +
-			                      	  "<textarea name = 'newMenu' rows = '20' cols = '75'>"+file+"</textarea>" +
-			                      	  "<input type = 'button' value = 'Submit' onClick = 'misTET.Admin.editMenu();'>";
+                                      "<textarea name = 'newMenu' rows = '20' cols = '75'>"+file+"</textarea>" +
+                                      "<input type = 'button' value = 'Submit' onClick = 'misTET.Admin.editMenu();'>";
 			} else {
 				newFile = document.vocenuova.newMenu;
 				divPagina.innerHTML = "Editing...";
 				/* Here something go change menu.xml content */
-    			// misTET.init();
+                // misTET.init();
 			}
 		}
 			
