@@ -25,30 +25,22 @@ misTET.Admin = {
 		
 		load: function () {
 			divPagina = $('pagina');
-			divPagina.innerHTML = "Admin Control Panel<br><a href = '#' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
-                                  "<a href = '#' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
+			divPagina.innerHTML = "Admin Control Panel<br><a href = '#admin' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
+                                  "<a href = '#admin' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
 		},
 		editMenu: function () {
 			divPagina = $('pagina');
-			divPagina.innerHTML = "<a href = '#' onClick = 'misTET.Admin.newMenu();'>Nuova voce menu</a><br>"+	
-                                  "<a href = '#' onClick = 'misTET.Admin.editVoce();'>Edita una voce</a><br>";
-			
-		},
-		newMenu: function () {
-			divPagina = $('pagina');
+			var file = misTET.altro.importa('/res/files/menu.xml');
 			if (!document.vocenuova) {
-				divPagina.innerHTML = "<form name = 'vocenuova' method = 'POST'>"+
-			                      	  "Id della voce menu:<br>" +
-			                      	  "<input type = 'text' value = '' name = 'id'></input>" +
-			                      	  "<br>Valore della voce menu:<br>" +
-			                      	  "<input type = 'text' value = '' name = 'value'></input>" +
-			                      	  "<input type = 'button' value = 'Submit' onClick = 'misTET.Admin.newMenu();'>";
+				divPagina.innerHTML = "<form name = 'vocenuova' method = 'POST'>" +
+			                      	  "<textarea name = 'newMenu' rows = '20' cols = '75'>"+file+"</textarea>" +
+			                      	  "<input type = 'button' value = 'Submit' onClick = 'misTET.Admin.editMenu();'>";
 			} else {
-				idVoce = document.vocenuova.id.value;
-				name = document.vocenuova.value.value;
-				divPagina.innerHTML = "Creo una voce menu con id = "+idVoce+" e valore = "+name;
-				menuFile = misTET.files.menu.documentElement;
-				/* Creo la nuova voce menu all'interno del file */
+				newFile = document.vocenuova.newMenu;
+				divPagina.innerHTML = "Editing...";
+				/* Here something go change menu.xml content */
+    			// misTET.init();
 			}
 		}
+			
 }
