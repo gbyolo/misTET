@@ -46,6 +46,16 @@ div.pagina
     border-bottom:1px solid #ABABAB;
 }
 
+input, textarea, button {
+	background-color: #000000;
+	border: 1px solid #fff;
+	color: #888888;
+}
+
+input:hover, textarea:hover, button:hover {
+	background-color: #222222;
+}
+
 
 /* Ringraziamento a iceok per il menu a tendina */
 .menu {
