@@ -39,7 +39,7 @@ misTET.Admin = {
 				newFile = document.vocenuova.newMenu;
 				divPagina.innerHTML = "Editing...";
 				/* Here something go change menu.xml content */
-                // misTET.init();
+				// misTET.init();
 			}
 		}
 			
