@@ -24,6 +24,7 @@ misTET.Admin = {
 		versione: "0.0.1",
 		
 		load: function () {
+			/* waiting for some more controls... */
 			divPagina = $('pagina');
 			divPagina.innerHTML = "Admin Control Panel<br><a href = '#admin' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
                                   "<a href = '#admin' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
