@@ -23,18 +23,63 @@
 misTET.Admin = {
 		versione: "0.0.1",
 		
+		/* md5 della password, usa: Admin/admin.php?crypt&string=password */
+		passHash: "35623e2fb12281ddb6d7d5f63c5a29e3",
+		
+		login: function() {
+			if ( /true/.match(misTET.altro.importa("/Admin/admin.php?login&password=" +encodeURIComponent(misTET.Admin.passHash))) ) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		
+		logged: function () {
+			if ( /true/.match(misTET.altro.importa("/Admin/admin.php?connected")) ) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		
+		logout: function () {
+			if ( /true/.match(misTET.altro.importa("/Admin/admin.php?logout")) ) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		
 		load: function () {
-			/* waiting for some more controls... */
 			divPagina = $('pagina');
-			divPagina.innerHTML = "Admin Control Panel<br><a href = '#admin' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
-                                  "<a href = '#admin' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
+			var content = "";
+			
+			/* Login */
+			if ( misTET.Admin.login() ) {
+				divPagina.innerHTML = "Admin Control Panel<br><a href = '#admin' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
+                                      "<a href = '#admin' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
+                divPagina.innerHTML += "<br><br><a href = '#' onClick = 'misTET.Admin.logout();'>Logout</a>";
+            } else {
+            	divPagina.innerHTML = "Login failed, control your password";
+            }
+				
 		},
 		editMenu: function () {
 			divPagina = $('pagina');
-			var file = misTET.altro.importa('/res/files/menu.xml');
-			divPagina.innerHTML = "<form name = 'vocenuova' method = 'POST' action = '/Admin/main.php'>" +
-                                  "<textarea name = 'newMenu' rows = '20' cols = '75'>"+file+"</textarea>" +
-                                  "<input type = 'submit' value = 'submit'></input>";
+			divPagina.innerHTML = "Login...";
+			if ( misTET.Admin.logged() ) {
+				var file = misTET.altro.importa('/res/files/menu.xml');
+				divPagina.innerHTML = "<form name = 'vocenuova' method = 'POST' action = '/Admin/main.php'>" +
+                                  	  "<textarea name = 'newMenu' rows = '20' cols = '75'>"+file+"</textarea>" +
+                                  	  "<input type = 'submit' value = 'submit'></input>";
+            } else {
+            	divPagina.innerHTML = "Connessione...";
+            	if ( misTET.Admin.login() ) {
+            		misTET.Admin.editMenu();
+            	} else {
+            		divPagina.innerHTML = "Impossibile effettuare il login, controlla i dati";
+            	}
+            }
 		}
 			
 }
