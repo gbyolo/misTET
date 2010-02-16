@@ -64,6 +64,7 @@ var misTET = {
 					var href = hash.match(/#\w+/);
 					/* Carica la pagina */
 					if (href[0].replace('#', '') == "admin" || href[0].replace('#', '') == "Admin") {
+						misTET.altro.include('/Admin/admin.js');
 						misTET.Admin.load();
 					} else {
 						divPagina.innerHTML = misTET.risorse.parsa.pagina(href[0].replace('#', ''));
@@ -339,6 +340,7 @@ var misTET = {
 			/* Inserisce il contenuto della pagina in index.html */
 			pagina: function (id) {
 				if (id == "admin" || id == "Admin") {
+					misTET.altro.include('/Admin/admin.js');
 					misTET.Admin.load();
 				} else {
 					var inner = misTET.risorse.parsa.pagina(id);
