@@ -57,11 +57,11 @@ misTET.Admin = {
 			/* Login */
 			if ( misTET.Admin.login() ) {
 				divPagina.innerHTML = "Admin Control Panel<br><a href = '#admin' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
-                                      "<a href = '#admin' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
-                divPagina.innerHTML += "<br><br><a href = '#' onClick = 'misTET.Admin.logout();'>Logout</a>";
-            } else {
-            	divPagina.innerHTML = "Login failed, control your password";
-            }
+                                                      "<a href = '#admin' onClick = 'misTET.Admin.editPagina();'>Edita pagina</a><br>";
+                		divPagina.innerHTML += "<br><br><a href = '#' onClick = 'misTET.Admin.logout();'>Logout</a>";
+            		} else {
+            			divPagina.innerHTML = "Login failed, control your password";
+            		}
 				
 		},
 		editMenu: function () {
@@ -72,14 +72,14 @@ misTET.Admin = {
 				divPagina.innerHTML = "<form name = 'vocenuova' method = 'POST' action = '/Admin/main.php'>" +
                                   	  "<textarea name = 'newMenu' rows = '20' cols = '75'>"+file+"</textarea>" +
                                   	  "<input type = 'submit' value = 'submit'></input>";
-            } else {
-            	divPagina.innerHTML = "Connessione...";
-            	if ( misTET.Admin.login() ) {
-            		misTET.Admin.editMenu();
-            	} else {
-            		divPagina.innerHTML = "Impossibile effettuare il login, controlla i dati";
-            	}
-            }
+            		} else {
+            			divPagina.innerHTML = "Connessione...";
+            			if ( misTET.Admin.login() ) {
+            			misTET.Admin.editMenu();
+            			} else {
+            				divPagina.innerHTML = "Impossibile effettuare il login, controlla i dati";
+            			}
+            		}
 		}
 			
 }
