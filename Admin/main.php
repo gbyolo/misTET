@@ -1,6 +1,7 @@
 <?php
 
 	define("VERSION", "0.1");
+	define("__NAME__", "AdminPanel");
 	
 	$newFile = $_POST['newMenu'];
 	
@@ -9,14 +10,12 @@
 	} else {
 		$handle = fopen("http://"+$_SERVER['HTTP_HOST']+"/res/files/menu.xml", "w");
 		if ($handle) {
-			//fwrite($handle, $newFile);
-			/* fuck all */
-			echo $newFile;
-			fclose($handle);
+			fwrite($handle, $newFile);
 		} else {
 			echo $_SERVER['HTTP_HOST'];
 		}
 	}
+	fclose($handle);
 	
 	
 ?>
