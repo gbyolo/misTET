@@ -18,7 +18,6 @@
  ****************************************************************************/
 
 /* Admin panel script */
-/* TODO lots of things */
 
 misTET.Admin = {
 		versione: "0.0.1",
