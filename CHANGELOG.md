@@ -1,4 +1,5 @@
 <h2>Cosa cambia dalle precedenti versioni</h2><br>
+	-	[17-02-2010]	-	0.2.1	Aggiunto Admin Panel (?)
 	-	[10-02-2010]	-	0.2.0	Due style, light e dark, a scelta dell'utente. Aggiunto uso dei sub menu, migliorato uso di prototype, creato il file init.xml,
 									tramite il quale si definiscono le variabili globali inerenti l'id della home page e del messaggio di caricamento.
 									Fixato il bug del SintaxHighlighting (fanculo!). Aggiunto attributo "dopo" a pagine.xml				
