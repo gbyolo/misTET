@@ -24,8 +24,7 @@ Browser supportati:<br>
 Per ora funziona quindi sulla maggior parte dei browser usati.
 
 <h2>Admin Panel</h2>
-Per ora niente da dire, leggere i sources e capire, c'e' ancora da implementare la modifica dei file del
-menu e delle pagine, (fottuta fopen)
+Recarsi in /Admin/DOC.md
 
 <h2>Collaborazione</h2>
 
