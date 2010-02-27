@@ -26,7 +26,7 @@ misTET.Admin = {
 		passHash: "35623e2fb12281ddb6d7d5f63c5a29e3",
 		
 		login: function() {
-			if ( /true/.match(misTET.altro.importa("/Admin/admin.php?login&password=" +encodeURIComponent(misTET.Admin.passHash))) ) {
+			if ( /true/.match(misTET.altro.importa("/Admin/admin.php?login&password=#{0}".interpolate([encodeURIComponent(misTET.Admin.passHash)]))) ) {
 				return true;
 			} else {
 				return false;
