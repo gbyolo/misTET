@@ -18,7 +18,8 @@
 <!--
 
 Questo e' il file per le pagine. Creare un nuovo elemento <page></page>
-con il contenuto della pagina. L'attributo id deve essere lo stesso di
+con il contenuto della pagina. La pagina admin deve essere solo definita,
+senza alcun contenuto. L'attributo id deve essere lo stesso di
 quello specificato nel file menu per permettere il caricamento della 
 pagina stessa. Tramite go e' possibile creare un link ad un file esterno,
 e tramite l'attributo lan e' possibile includere sources. L'attributo 
