@@ -89,7 +89,7 @@ var misTET = {
 			location.href = "http://jigsaw.w3.org/css-validator/validator?uri=" + url;
 		}
 	},
-	/* Files del menu e delle pagine */
+	/* Files principali */
 	files: {
 		menu: { },
 		pagine: { },
@@ -132,13 +132,14 @@ var misTET = {
               	      					if (test = misTET.altro.XMLtest(http.responseXML)) {
               	      						misTET.files.inizio = http.responseXML;
               	      					} else {
+              	      						misTET.error(test)
                                     			}
                	   				},
                 
                 				onFailure: function (http) {
                     					error			 = new Error("Impossibile ricevere il file di inizio");
                                    			error.name		 = "initEttor";
-                    					error.fileName   = path;
+                    					error.fileName   	 = path;
                 				}
             				});
             				/* c'e' un errore nella ricezione del file di inizio */
@@ -185,13 +186,14 @@ var misTET = {
               	      					if (test = misTET.altro.XMLtest(http.responseXML)) {
               	      						misTET.files.menu = http.responseXML;
               	      					} else {
+              	      						misTET.error(test)
                                     			}
                	   				},
                 
                 				onFailure: function (http) {
                     					error			 = new Error("Impossibile ricevere il file dei menu");
                                     			error.name		 = "MenuError";
-                    					error.fileName   = path;
+                    					error.fileName   	 = path;
                 				}
             				});
             				/* c'e' un errore nella ricezione del file menu */
@@ -235,13 +237,15 @@ var misTET = {
 						onSuccess: function (http) {
 							if (test = misTET.altro.XMLtest(http.responseXML)) {
 								misTET.files.pagine = http.responseXML;
+							} else {
+								misTET.error(test);
 							}
 						},
 					
 						onFailure: function (http) {
 							error				= new Error("Impossibile ricevere il file delle pagine");
 							error.name			= "PagineError";
-							error.fileName 		= path;
+							error.fileName 			= path;
 						}
 					});
 					/* c'e' un errore nella ricezione del file pagine */
@@ -427,6 +431,10 @@ var misTET = {
 				}
 			}
 		}
+	},
+	error: function (message) {
+		/* Inseriamo l'errore in $('pagina') */
+		$('pagina').innerHTML += '<br>'+message+'<br><br';
 	},
 	altro: {
 		
