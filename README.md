@@ -18,7 +18,7 @@ Il file menu.xml e pagine.xml hanno una piccola documentazione all'interno di es
 Browser supportati:<br>
 	- Google Chrome >= 3 (in testing versioni precedenti)
 	- Firefox >= 3.5.6 (in testing versioni precedenti, sicuramente compatibili)
-	- IE >= 7 (testing IE6)
+	- IE >= 7 (testing IE6) -> Per alcuni casi c'e' ancora da lavorare :(
 	- Epiphany >= 2.22.3
 	
 Per ora funziona quindi sulla maggior parte dei browser usati.
