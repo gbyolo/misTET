@@ -14,7 +14,10 @@
 	 caricamento: messaggio di caricamento da mostrare
 -->
 <init>
+	<!-- Id home page -->
 	<homePage>home</homePage>
+	<!-- Messaggio di caricamento -->
 	<caricamento>Caricamento...</caricamento>
+	<!-- Titolo -->
 	<title>misTET - Power on earth</title>
 </init>
