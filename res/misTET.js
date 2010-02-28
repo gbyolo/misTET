@@ -18,7 +18,7 @@
  ****************************************************************************/
 
 
-var misTET = {
+var mistet = Class.create({
 	
 	versione: "0.2.1",
 	
@@ -65,7 +65,7 @@ var misTET = {
 					/* Carica la pagina */
 					if (href[0].replace('#', '') == "admin" || href[0].replace('#', '') == "Admin") {
 						misTET.altro.include('/Admin/admin.js');
-						misTET.Admin.load();
+						misTET.Admin.initialize();
 					} else {
 						divPagina.innerHTML = misTET.risorse.parsa.pagina(href[0].replace('#', ''));
 					}
@@ -298,7 +298,7 @@ var misTET = {
 				
 				/* Admin control panel? */
 				if (id == "admin" || id == "Admin") {
-					misTET.Admin.load();
+					misTET.Admin.initialize();
 				} else {
 					var pagineXML = misTET.files.pagine.documentElement;
 					var output = "";
@@ -345,7 +345,7 @@ var misTET = {
 			pagina: function (id) {
 				if (id == "admin" || id == "Admin") {
 					misTET.altro.include('/Admin/admin.js');
-					misTET.Admin.load();
+					misTET.Admin.initialize();
 				} else {
 					var inner = misTET.risorse.parsa.pagina(id);
 					var divPagina = $('pagina');
@@ -547,4 +547,6 @@ var misTET = {
 		}
 
 	}
-}
+});
+
+var misTET = new mistet();
