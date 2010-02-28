@@ -31,14 +31,14 @@ admin.prototype = {
 	initialize: function () {
 		divPagina = $('pagina'); 
 		var content = "";
-			/* Login */
-			if ( this.login() ) {
-				divPagina.innerHTML = "Admin Control Panel<br><a href = '#admin' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
-						      		  "<a href = '#admin' onClick = 'misTET.Admin.editPagine();'>Edita Pagine</a><br>";
-                divPagina.innerHTML += "<a href = '#' onClick = 'misTET.Admin.logout();'>Logout</a>";
-            } else {
-            	divPagina.innerHTML = "Login failed, control your password";
-            }
+		/* Login */
+		if ( this.login() ) {
+			divPagina.innerHTML = "Admin Control Panel<br><a href = '#admin' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
+                                  "<a href = '#admin' onClick = 'misTET.Admin.editPagine();'>Edita Pagine</a><br>";
+            divPagina.innerHTML += "<a href = '#' onClick = 'misTET.Admin.logout();'>Logout</a>";
+            	} else {
+            		divPagina.innerHTML = "Login failed, control your password";
+            	}
 	},
 	
 	checkPHP: function (path) {
@@ -107,7 +107,7 @@ admin.prototype = {
             } else {
             	divPagina.innerHTML = "Connessione...";
             	if ( misTET.Admin.login() ) {
-            	misTET.Admin.editMenu();
+            		misTET.Admin.editMenu();
             	} else {
             		divPagina.innerHTML = "Impossibile effettuare il login, controlla i dati";
             	}
