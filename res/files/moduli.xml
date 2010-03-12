@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE modules [
+    <!ELEMENT modules (module*)>
+
+    <!ELEMENT module ANY>
+    <!ATTLIST module
+        name CDATA #REQUIRED
+    >
+]>
+
+<!--
+Qui tutti i moduli. L'attributo name non e' richiesto, solo se volete ^^
+-->
+
+<modules>
+    <module name="admin"/>
+</modules>
