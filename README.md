@@ -23,7 +23,7 @@ Browser supportati:<br>
 Per ora funziona quindi sulla maggior parte dei browser usati.
 
 <h2>Admin Panel</h2>
-Recarsi in /Admin/DOC.md
+Recarsi in /modules/admin/DOC.md
 
 <h2>Demo</h2>
 E' visibile una demo su:
