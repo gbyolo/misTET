@@ -14,7 +14,6 @@ All'interno di files:
 Il file menu.xml e pagine.xml hanno una piccola documentazione all'interno di essi. La cartella stat contiene tutti i file quali sources/archivi, ogni risorsa, la cartella styles contiene invece i vari stili da applicare a misTET.
 
 <h2>Browsers</h2>
-
 Browser supportati:<br>
 	- Google Chrome >= 3 (in testing versioni precedenti)
 	- Firefox >= 3.5.6 (in testing versioni precedenti, sicuramente compatibili)
@@ -26,6 +25,9 @@ Per ora funziona quindi sulla maggior parte dei browser usati.
 <h2>Admin Panel</h2>
 Recarsi in /Admin/DOC.md
 
-<h2>Collaborazione</h2>
+<h2>Demo</h2>
+E' visibile una demo su:
+<a href = "http://lostpassword.hellospace.net">http://lostpassword.hellospace.net</a>
 
+<h2>Collaborazione</h2>
 Chiunque voglia collaborare e' ben accetto, sono contattabile a gdb.lost@gmail.com 
