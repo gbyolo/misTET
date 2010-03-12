@@ -31,7 +31,7 @@ var mistet = Class.create({
 		var ops = $('pagina');
 		var args = misTET.altro.parseGET();
 		var menuOk = true, pagineOk = true;
-		ops.innerHTML = misTET.files.caricamento;
+		ops.innerHTML = misTET['files']['caricamento'];
 		
 		try {
 			misTET.risorse.carica.menu();
@@ -116,7 +116,7 @@ var mistet = Class.create({
 					
 					if (XmlDoc.readyState == 4) {
 						var xmlDoc = XmlDoc.responseXML;
-						misTET.files.menu = xmlDoc;
+						misTET['files']['menu'] = xmlDoc;
 					}
 					
 				} else {
@@ -127,7 +127,7 @@ var mistet = Class.create({
                 
              	   				onSuccess: function (http) {
               	      					if (test = misTET.altro.XMLtest(http.responseXML)) {
-              	      						misTET.files.inizio = http.responseXML;
+              	      						misTET['files']['inizio'] = http.responseXML;
               	      					} else {
               	      						misTET.error(test)
                                     			}
@@ -145,10 +145,10 @@ var mistet = Class.create({
 					}
 				}
 				var inizio = misTET.files.inizio.documentElement;
-				misTET.files.home = inizio.getElementsByTagName('homePage')[0].firstChild.nodeValue;
-				misTET.files.caricamento = inizio.getElementsByTagName('caricamento')[0].firstChild.nodeValue;
-				misTET.files.title = inizio.getElementsByTagName('title')[0].firstChild.nodeValue;
-				$('titolo').innerHTML = misTET.files.title;
+				misTET['files']['home'] = inizio.getElementsByTagName('homePage')[0].firstChild.nodeValue;
+				misTET['files']['caricamento'] = inizio.getElementsByTagName('caricamento')[0].firstChild.nodeValue;
+				misTET['files']['title'] = inizio.getElementsByTagName('title')[0].firstChild.nodeValue;
+				$('titolo').innerHTML = misTET['files']['title'];
 			},
 			
 			/* carica il file del menu, e lo salva in misTET.files.menu */
@@ -170,7 +170,7 @@ var mistet = Class.create({
 					
 					if (XmlDoc.readyState == 4) {
 						var xmlDoc = XmlDoc.responseXML;
-						misTET.files.menu = xmlDoc;
+						misTET['files']['title'] = xmlDoc;
 					}
 					
 				} else {
@@ -181,7 +181,7 @@ var mistet = Class.create({
                 
              	   				onSuccess: function (http) {
               	      					if (test = misTET.altro.XMLtest(http.responseXML)) {
-              	      						misTET.files.menu = http.responseXML;
+              	      						misTET['files']['menu'] = http.responseXML;
               	      					} else {
               	      						misTET.error(test)
                                     			}
@@ -222,7 +222,7 @@ var mistet = Class.create({
 					
 					if (XmlDoc.readyState == 4) {
 						var xmlDoc = XmlDoc.responseXML;
-						misTET.files.pagine = xmlDoc;
+						misTET['files']['pagine'] = xmlDoc;
 					}
 					
 				} else {
@@ -233,7 +233,7 @@ var mistet = Class.create({
 					
 						onSuccess: function (http) {
 							if (test = misTET.altro.XMLtest(http.responseXML)) {
-								misTET.files.pagine = http.responseXML;
+								misTET['files']['pagine'] = http.responseXML;
 							} else {
 								misTET.error(test);
 							}
@@ -259,7 +259,7 @@ var mistet = Class.create({
 			/* Parsa il file dei menu creando una stringa menu */
 			menu: function (id) {
 	
-				var Menu = misTET.files.menu.documentElement;
+				var Menu = misTET['files']['menu'].documentElement;
 				var len = Menu.getElementsByTagName('menu');
 				var output = "";
 				
@@ -299,7 +299,7 @@ var mistet = Class.create({
 			/* Parsa il file XML delle pagine per trovare il contenuto della pagina con id specificato */
 			pagina: function (id) {
 
-				var pagineXML = misTET.files.pagine.documentElement;
+				var pagineXML = misTET['files']['pagine'].documentElement;
 				var output = "";
 				var pagine = pagineXML.getElementsByTagName('page');
 				var code = "";
@@ -309,7 +309,7 @@ var mistet = Class.create({
 						var list = pagine[i].childNodes;
 						/* Si tratta di testo normale */
 						if (list.length == 1) {
-							output += pagine[i].firstChild.nodeValue;
+							output = pagine[i].firstChild.nodeValue;
 						} else {
 							/* Sezione cdata */
 							for (var j = 0; j < list.length; j++) {
@@ -347,7 +347,7 @@ var mistet = Class.create({
 			pagina: function (id) {
 				var inner = misTET.risorse.parsa.pagina(id);
 				try {
-					eval(inner);
+					document.eval(inner);
 				} catch (e) {
 					var divPagina = $('pagina');
 					divPagina.innerHTML = inner;
@@ -360,7 +360,7 @@ var mistet = Class.create({
 		
 			var linguaggio = lan || "";
 			var div = $('pagina');
-			div.innerHTML = misTET.files.caricamento;
+			div.innerHTML = misTET['files']['caricamento'];
 			
 			if (linguaggio == "") {
 				var inner = misTET.altro.importa(res);
