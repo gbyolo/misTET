@@ -347,7 +347,7 @@ var mistet = Class.create({
 			pagina: function (id) {
 				var inner = misTET.risorse.parsa.pagina(id);
 				try {
-					document.eval(inner);
+					window.eval(inner);
 				} catch (e) {
 					var divPagina = $('pagina');
 					divPagina.innerHTML = inner;
