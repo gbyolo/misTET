@@ -1,4 +1,5 @@
 <?php
+
 	session_start();
 	
 	define("VERSION", "0.1");
@@ -9,29 +10,28 @@
 	
 	$passHash = md5(PASSWORD);
 	
-	if (isset($_GET['login']) && isset($_GET['password'])) {
+	if (isset($_GET['login'])) {
 		/* Prova a loggarsi */
-		$password = htmlentities($_GET['password']);	
-		if ($password == $passHash) {
-			echo 'true';
-			$_SESSION['mistet']['logged'] = true;
+		if (isset($_POST['password'])) {
+			$password = htmlentities($_POST['password']);	
+				if ($password == PASSWORD) {
+					$_SESSION['mistet']['logged'] = true;
+					header("Location: http://".$_SERVER['HTTP_HOST']."/#admin");
+				} else {
+					echo 'false';
+				}
 		} else {
 			echo 'false';
 		}
-		exit;
-	}
-	if (isset($_GET['crypt']) && isset($_GET['string'])) {
-		echo md5(htmlentities($_GET['string']));
 	}
 	if (isset($_GET['connected'])) {
-    	if ($_SESSION['mistet']['logged']) {
-        	echo 'true';
-    	}
-    	else {
-        	echo 'false';
-    	}
- 
-   		exit;
+    		if ($_SESSION['mistet']['logged']) {
+        		echo 'true';
+    		}
+    		else {
+        		echo 'false';
+    		}
+ 		exit;
 	}
 	if (isset($_GET['logout'])) {
 		unset($_SESSION['mistet']);
