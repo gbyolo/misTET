@@ -23,7 +23,7 @@ var admin = Class.create();
 
 admin.prototype = {
 	
-	versione: "0.0.1",
+	versione: "0.0.2",
 	
 	dir: "/modules/admin",
 	
