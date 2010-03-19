@@ -96,11 +96,7 @@ admin.prototype = {
                                   		"<input type = 'submit' value = 'submit'></input>";
             	} else {
             		divPagina.innerHTML = "Connessione...";
-            		if ( misTET.Admin.login() ) {
-            			misTET.Admin.editMenu();
-            		} else {
-            			divPagina.innerHTML = "Impossibile effettuare il login, controlla i dati";
-            		}
+            		this.initialize();
            	 }
 	},
 	editPagine: function () {		
@@ -113,11 +109,7 @@ admin.prototype = {
                                   		"<input type = 'submit' value = 'submit'></input>";
         	} else {
         		divPagina.innerHTML = "Connessione...";
-            		if ( misTET.Admin.login() ) {
-            			misTET.Admin.editMenu();
-            		} else {
-            			divPagina.innerHTML = "Impossibile effettuare il login, controlla i dati";
-            		}
+            		this.initialize();
         	}
 	}
 };
