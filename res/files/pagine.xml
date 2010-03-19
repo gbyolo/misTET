@@ -12,7 +12,7 @@
 		href	CDATA	#REQUIRED
 		lan		CDATA	#IMPLIED
 		testo	CDATA	#REQUIRED
-		dopo	CDATA	#REQUIRED
+		dopo	CDATA	#IMPLIED
 	>
 ]>
 <!--
@@ -26,6 +26,9 @@ e tramite l'attributo lan e' possibile includere sources. L'attributo
 testo e' l'equivalente di <a href="">TESTO</a>, mentre l'attributo dopo
 serve a precisare il testo da inserire dopo il link specificato da <go>
 
+WARNING: Non utilizzare esclusivamente codice html all'interno del codice
+		 della pagina, potrebbe causare un malfunzionamento di misTET
+
 -->
 <pages>
 	<page id = 'home'>
@@ -38,10 +41,8 @@ serve a precisare il testo da inserire dopo il link specificato da <go>
 		NOTHING ELSE MATTERS IN THIS LIFE
 	</page>
 	<page id = 'admin'>
-		<![CDATA[
 			misTET.altro.include('/modules/admin/admin.js');
 			misTET.Admin.initialize();
-		]]>
 	</page>
 	<page id = 'link1'>
 		Pagina che fa riferimento a link1
@@ -53,8 +54,9 @@ serve a precisare il testo da inserire dopo il link specificato da <go>
 		]]>
 	</page>
 	<page id = 'link3'>
+		Link:
 		<![CDATA[
-		<a href = "#home" onClick = 'misTET.risorse.set.pagina("home");'>Clicca per andare alla home</a>
+			<br><a href = "#home" onClick = "misTET.risorse.set.pagina(\"home"\);">Clicca per andare alla home</a>
 		]]>
 	</page>
 </pages>
