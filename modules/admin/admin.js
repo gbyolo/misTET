@@ -71,15 +71,6 @@ admin.prototype = {
 			return result;
 		}
 	},
-
-	login: function () {
-		if ( this.checkPHP(this.dir+"/admin.php?login&password=#{0}".interpolate([encodeURIComponent(this.passHash)])) )  {
-			return true;
-		} else {
-			return false;
-		}
-	},
-	
 	logged: function () {
 		if ( this.checkPHP(this.dir+"/admin.php?connected") ) {
 			return true;
