@@ -27,20 +27,17 @@ admin.prototype = {
 	
 	dir: "/modules/admin",
 	
-	/* md5 della password, usa: Admin/admin.php?crypt&string=password */
-	passHash: "35623e2fb12281ddb6d7d5f63c5a29e3",
-	
 	initialize: function () {
-		divPagina = $('pagina'); 
-		var content = "";
-		/* Login */
-		if ( this.login() ) {
+		divPagina = $('pagina');
+		if (this.logged()) {
 			divPagina.innerHTML = 	"Admin Control Panel<br><a href = '#admin' onClick = 'misTET.Admin.editMenu();'>Edita Menu</a><br>"+
 						"<a href = '#admin' onClick = 'misTET.Admin.editPagine();'>Edita Pagine</a><br>";
                 	divPagina.innerHTML += 	"<a href = '#' onClick = 'misTET.Admin.logout();'>Logout</a>";
-            	} else {
-            		divPagina.innerHTML = "Login failed, control your password";
-            	}
+		} else {
+			divPagina.innerHTML =	"Login: <br><form action = '"+this.dir+"/admin.php?login' method = 'POST'>" +
+						"<Password: <input name = 'password' type = 'text'><br>" +	
+						"<input type = 'submit' value = 'submit'></form>";
+		}
 	},
 	
 	checkPHP: function (path) {
@@ -93,7 +90,7 @@ admin.prototype = {
 		
 	logout: function () {
 		if ( this.checkPHP(this.dir+"/admin.php?logout") )  {
-			return true;
+			location.reload();
 		} else {
 			return false;
 		}
