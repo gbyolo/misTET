@@ -8,7 +8,7 @@
 		$newFile = stripslashes($_POST['newMenu']);
 		$file = '..'.$_GET['file'];
 	
-		if (file_exists($file)) {
+		if (file_exists($file) && isset($_SESSION['mistet']['logged']) {
 			/* chmod 666 /res/files/menu.xml */
 			if ($handle = @@fopen($file, 'w')) {
 				if (@@fwrite($handle, $newFile)) {
@@ -27,7 +27,7 @@
 		$newFile = stripslashes($_POST['newPage']);
 		$file = '..'.$_GET['file'];
 		
-		if (file_exists($file)) {
+		if (file_exists($file) && isset($_SESSION['mistet']['logged']) {
 			/* chmod 666 /res/files/pagine.xml */
 			if ($handle = @@fopen($file, 'w')) {
 				if (@@fwrite($handle, $newFile)) {
