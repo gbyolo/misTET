@@ -1,5 +1,5 @@
 /****************************************************************************
- * Copyleft lostpassword                                                    *
+ * Copyright (C) <2010>  <lostpassword>                                     *
  * [http://lostpassword.hellospace.net | gdb.lost@gmail.com]                *
  *                                                                          *
  *                                                                          *
@@ -299,7 +299,7 @@ var mistet = Class.create({
 			/* Parsa il file XML delle pagine per trovare il contenuto della pagina con id specificato */
 			pagina: function (id) {
 
-				var pagineXML = misTET['files']['pagine'].documentElement;
+				var pagineXML = misTET.files.pagine.documentElement;
 				var output = "";
 				var pagine = pagineXML.getElementsByTagName('page');
 				var code = "";
@@ -364,7 +364,9 @@ var mistet = Class.create({
 			
 			if (linguaggio == "") {
 				var inner = misTET.altro.importa(res);
-				if (eval(inner)) { } else {
+				try {
+					window.eval(inner);
+				} catch (e) {
 					div.innerHTML = "<pre>"+inner+"</pre>";
 				}
 				
@@ -552,4 +554,5 @@ var mistet = Class.create({
 });
 
 var misTET = new mistet();
+
 

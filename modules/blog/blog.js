@@ -1,5 +1,5 @@
 /****************************************************************************
- * Copyleft lostpassword                                                    *
+ * Copyright (C) <2010>  <lostpassword>                                     *
  * [http://lostpassword.hellospace.net | gdb.lost@gmail.com]                *
  *                                                                          *
  *                                                                          *
