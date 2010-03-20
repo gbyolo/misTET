@@ -56,7 +56,7 @@ WARNING: Non utilizzare esclusivamente codice html all'interno del codice
 	<page id = 'link3'>
 		Link:
 		<![CDATA[
-			<br><a href = "#home" onClick = "misTET.risorse.set.pagina(\"home"\);">Clicca per andare alla home</a>
+			<br><a href = "#home" onClick = 'misTET.risorse.set.pagina("home");'>Clicca per andare alla home</a>
 		]]>
 	</page>
 </pages>
