@@ -1,4 +1,5 @@
 <h2>Cosa cambia dalle precedenti versioni</h2><br>
+	-	[30-03-2010]	-	0.3.3	NUOVO template, uso di jQuery, eliminato prototype
 	-	[11-03-2010]	-	0.2.2	Modificata(migliorata) gestione moduli
 	-	[17-02-2010]	-	0.2.1	Aggiunto Admin Panel (?)
 	-	[10-02-2010]	-	0.2.0	Due style, light e dark, a scelta dell'utente. Aggiunto uso dei sub menu, migliorato uso di prototype, creato il file init.xml,
