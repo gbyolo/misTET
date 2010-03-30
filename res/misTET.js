@@ -27,7 +27,7 @@ var misTET = {
 	init: function () {
 	
 		eval('misTET.risorse.carica.init()');
-		var ops = $('sd_left');
+		var ops = jQuery('#sd_left')[0];
 		var args = misTET.altro.parseGET();
 		var menuOk = true, pagineOk = true;
 		ops.innerHTML = misTET['files']['caricamento'];
@@ -50,7 +50,7 @@ var misTET = {
 		
 		if (menuOk && pagineOk) {
 			/* Nessun errore nel caricamento di menu e pagine, procedo al caricamento nella pagina */
-			var divMenu = $('nav');
+			var divMenu = jQuery('#nav')[0];
 			divMenu.innerHTML = misTET.risorse.parsa.menu();
 			
 			/* MenuMatic */
@@ -58,7 +58,7 @@ var misTET = {
 				var myMenu = new MenuMatic();
 			});	
 
-			var divPagina = $('sd_left');
+			var divPagina = jQuery('#sd_left')[0];
 			/* Oh my god! */
 			var hash = window.location.hash;
 			
@@ -278,7 +278,7 @@ var misTET = {
 				try {
 					window.eval(inner);
 				} catch (e) {
-					var divPagina = $('sd_left');
+					var divPagina = jQuery('#sd_left')[0];
 					divPagina.innerHTML = inner;
 				}
 			}
@@ -288,7 +288,7 @@ var misTET = {
 		loadPageGET: function (res, lan) {
 		
 			var linguaggio = lan || "";
-			var div = $('sd_left');
+			var div = jQuery('#sd_left')[0];
 			div.innerHTML = misTET['files']['caricamento'];
 			
 			if (linguaggio == "") {
@@ -367,31 +367,16 @@ var misTET = {
 	},
 	error: function (message) {
 		/* Inseriamo l'errore in $('pagina') */
-		$('sd_left').innerHTML += '<br>'+message+'<br><br';
+		jQuery('#sd_left')[0].innerHTML += '<br>'+message+'<br><br';
 	},
 	altro: {
 		
-		/* quando non si sa a cosa appoggiarsi, uff */
-		getXMLHttpObj: function(){
-			if(typeof(XMLHttpRequest)!='undefined')
-				return new XMLHttpRequest();
-
-			var axO = [	'Msxml2.XMLHTTP.6.0', 'Msxml2.XMLHTTP.4.0',
-						'Msxml2.XMLHTTP.3.0', 'Msxml2.XMLHTTP', 'Microsoft.XMLHTTP'], i;
-			for(i=0;i<axO.length;i++)
-				try {
-					return new ActiveXObject(axO[i]);
-				} catch(e) { }
-				return false;
-		},
-		
+		/* bah */
 		importa: function (path) {
-			var result;
-			
-			var o = misTET.altro.getXMLHttpObj();
+			var o = new XMLHttpRequest();
 			o.open('GET', path, false);
-			o.send(null)
-			return o;
+			o.send(null);
+			return o.responseText;
 		},
 
 		/* effettua un test di validita' del file xml */
@@ -413,8 +398,9 @@ var misTET = {
 		},
 
 		/* include un file .js */
+		/* quando non si sa a cosa appoggiarsi, uff */
 		include: function (path) {
-				var o = misTET.altro.getXMLHttpObj();
+				var o = new XMLHttpRequest();
 				o.open('GET', path, false);
 				o.send(null);
 				try {
