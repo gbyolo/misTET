@@ -17,10 +17,9 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
-
-var mistet = Class.create({
+var misTET = {
 	
-	versione: "0.2.2",
+	versione: "0.3.2",
 	
 	modules: "/modules",
 	
@@ -28,7 +27,7 @@ var mistet = Class.create({
 	init: function () {
 	
 		eval('misTET.risorse.carica.init()');
-		var ops = $('pagina');
+		var ops = $('sd_left');
 		var args = misTET.altro.parseGET();
 		var menuOk = true, pagineOk = true;
 		ops.innerHTML = misTET['files']['caricamento'];
@@ -51,9 +50,15 @@ var mistet = Class.create({
 		
 		if (menuOk && pagineOk) {
 			/* Nessun errore nel caricamento di menu e pagine, procedo al caricamento nella pagina */
-			var divMenu = $('menu');
+			var divMenu = $('nav');
 			divMenu.innerHTML = misTET.risorse.parsa.menu();
-			var divPagina = $('pagina');
+			
+			/* MenuMatic */
+			window.addEvent('domready', function() {			
+				var myMenu = new MenuMatic();
+			});	
+
+			var divPagina = $('sd_left');
 			/* Oh my god! */
 			var hash = window.location.hash;
 			
@@ -103,52 +108,20 @@ var mistet = Class.create({
 				var path = '/res/files/init.xml';
 				var test = false;
 				var error = false;
+				var ok = false;
 				
-				if (misTET.altro.isIE()) {
-					var XmlDoc = new XMLHttpRequest();
-					
-					if (!XmlDoc) {
-						return false;
-					}	
-					
-					XmlDoc.open("GET", path, false);
-					XmlDoc.send(null);
-					
-					if (XmlDoc.readyState == 4) {
-						var xmlDoc = XmlDoc.responseXML;
-						misTET['files']['menu'] = xmlDoc;
-					}
-					
+				if (jQuery.browser['msie']) {
+					misTET.error('Only Mozilla');
 				} else {
-					new Ajax.Request(path, {
-						method: "get",
-						asynchronous: false,
-             	   				evalJS: false,
-                
-             	   				onSuccess: function (http) {
-              	      					if (test = misTET.altro.XMLtest(http.responseXML)) {
-              	      						misTET['files']['inizio'] = http.responseXML;
-              	      					} else {
-              	      						misTET.error(test)
-                                    			}
-               	   				},
-                
-                				onFailure: function (http) {
-                    					error			 = new Error("Impossibile ricevere il file di inizio");
-                                   			error.name		 = "initEttor";
-                    					error.fileName   	 = path;
-                				}
-            				});
-            				/* c'e' un errore nella ricezione del file di inizio */
-            				if (error) {
-						$('pagina').innerHTML += error;
-					}
+					
+					jQuery.ajax({
+						type: 'GET',
+						url: path,
+						dataType: 'xml',
+						success: misTET.risorse.init
+					});
+					
 				}
-				var inizio = misTET.files.inizio.documentElement;
-				misTET['files']['home'] = inizio.getElementsByTagName('homePage')[0].firstChild.nodeValue;
-				misTET['files']['caricamento'] = inizio.getElementsByTagName('caricamento')[0].firstChild.nodeValue;
-				misTET['files']['title'] = inizio.getElementsByTagName('title')[0].firstChild.nodeValue;
-				$('titolo').innerHTML = misTET['files']['title'];
 			},
 			
 			/* carica il file del menu, e lo salva in misTET.files.menu */
@@ -158,48 +131,18 @@ var mistet = Class.create({
 				var test = false;
 				var error = false;
 				
-				if (misTET.altro.isIE()) {
-					var XmlDoc = new XMLHttpRequest();
-					
-					if (!XmlDoc) {
-						return false;
-					}	
-					
-					XmlDoc.open("GET", path, false);
-					XmlDoc.send(null);
-					
-					if (XmlDoc.readyState == 4) {
-						var xmlDoc = XmlDoc.responseXML;
-						misTET['files']['title'] = xmlDoc;
-					}
-					
+				
+				if (jQuery.browser['msie']) {
+					misTET.error('Only Mozilla');
 				} else {
-					new Ajax.Request(path, {
-						method: "get",
-						asynchronous: false,
-             	   				evalJS: false,
-                
-             	   				onSuccess: function (http) {
-              	      					if (test = misTET.altro.XMLtest(http.responseXML)) {
-              	      						misTET['files']['menu'] = http.responseXML;
-              	      					} else {
-              	      						misTET.error(test)
-                                    			}
-               	   				},
-                
-                				onFailure: function (http) {
-                    					error			 = new Error("Impossibile ricevere il file dei menu");
-                                    			error.name		 = "MenuError";
-                    					error.fileName   	 = path;
-                				}
-            				});
-            				/* c'e' un errore nella ricezione del file menu */
-            				if (error) {
-            					/* genero un eccezione di tipo error */
-						throw error;
-					}
-					return true;
-				}
+					jQuery.ajax({
+						type: 'GET',
+						url: path,
+						dataType: 'xml',
+						success: misTET.risorse.initMenu
+					});
+	
+				} 
 			},
 			
 			/* Carica il file delle pagine, e lo salva in misTET.files.pagine */
@@ -208,56 +151,41 @@ var mistet = Class.create({
 				var path = '/res/files/pagine.xml';
 				var test = false;
 				var error = false;
-				
-				if (misTET.altro.isIE()) {
-				
-					var XmlDoc = new XMLHttpRequest();
-					
-					if (!XmlDoc) {
-						return false;
-					}	
-					
-					XmlDoc.open("GET", path, false);
-					XmlDoc.send(null);
-					
-					if (XmlDoc.readyState == 4) {
-						var xmlDoc = XmlDoc.responseXML;
-						misTET['files']['pagine'] = xmlDoc;
-					}
-					
+								
+				if (jQuery.browser['msie']) {
+					misTET.error('Only Mozilla');
 				} else {
-					new Ajax.Request(path, {
-						method: "get",
-						asynchronous: false,
-						evalJS: false,
-					
-						onSuccess: function (http) {
-							if (test = misTET.altro.XMLtest(http.responseXML)) {
-								misTET['files']['pagine'] = http.responseXML;
-							} else {
-								misTET.error(test);
-							}
-						},
-					
-						onFailure: function (http) {
-							error				= new Error("Impossibile ricevere il file delle pagine");
-							error.name			= "PagineError";
-							error.fileName 			= path;
-						}
+					jQuery.ajax({
+						type: 'GET',
+						url: path,
+						dataType: 'xml',
+						success: misTET.risorse.initPagine
 					});
-					/* c'e' un errore nella ricezione del file pagine */
-					if (error) {
-						/* genero un eccezione di tipo error */
-						throw error;
-					}
-					return true;
 				}
+
 			}
 		},
+		
+		/* Funzioni di loading dei file XML */		
+		init: function (xml) {
+			misTET.files.home = jQuery(xml).find('home').text();
+			misTET.files.caricamento = jQuery(xml).find('caricamento').text();
+			misTET.files.title = jQuery(xml).find('title').text();
+			$$('title')[0].innerHTML = misTET['files']['title'];
+		},
+		
+		initMenu: function (xml) {
+			misTET['files']['menu'] = xml;
+		},
+		
+		initPagine: function (xml) {
+			misTET['files']['pagine'] = xml;
+		},
+		
 		parsa: {
 			
 			/* Parsa il file dei menu creando una stringa menu */
-			menu: function (id) {
+			menu: function () {
 	
 				var Menu = misTET['files']['menu'].documentElement;
 				var len = Menu.getElementsByTagName('menu');
@@ -270,31 +198,32 @@ var mistet = Class.create({
 					if (menuValue.length == 1) {
 						var id = menuValue[0].getAttribute('id');
 						var inner = menuValue[0].firstChild.nodeValue;
-						output += 	"\n\t\t<div class = \"menu\">\n\t\t\t<a class = \"link\" href = \'#" +
+						output += 	"\n<li><a href = \'#" +
 								id+"\' onClick = \'misTET.risorse.set.pagina(\""+id+"\");\'>"+inner +
-								"</a>\n\t\t</div>\n";
+								"</a></li>\n";
 					} else {
 						var sub = ""
 						var idPrincipale = menuValue[0].getAttribute('id');
 						var ciao = menuValue[0].firstChild.nodeValue;
-						output += 	"\n\t\t<div class = \"menu\">\n\t\t\t<a class = \"link\" href = \'#"+idPrincipale +
+						output += 	"\n<li><a href = \'#"+idPrincipale +
 								"\' onClick = \'misTET.risorse.set.pagina(\""+idPrincipale+"\");\'>"+ciao +
-								"</a>\n\t\t\t<div class = \"menu\">\n\t\t\t\t";
+								"</a>\n<ul>\n";
 						/* Scorre i sub menu */
 						for (var j = 1; j < menuValue.length; j++) {
 							var idSub = menuValue[j].getAttribute('id');
 							var inner2 = menuValue[j].firstChild.nodeValue;
-							output += 	"<a class = \'element\' href = \'#"+idSub +
+							output += 	"<li><a href = \'#"+idSub +
 									"\' onClick = \'misTET.risorse.set.pagina(\"" +
-									idSub+"\");\'><div class = \"\">"+inner2+"</div></a>\n\t\t\t\t";
+									idSub+"\");\'>"+inner2+"</a></li>\n";
 						}
-						output += "</div>\n\t\t</div>";
+						output += "</ul></li>";
 					}
 				}
-				output += "\t";
+				output += "";
 				
 				return output;
 			},
+
 			
 			/* Parsa il file XML delle pagine per trovare il contenuto della pagina con id specificato */
 			pagina: function (id) {
@@ -349,7 +278,7 @@ var mistet = Class.create({
 				try {
 					window.eval(inner);
 				} catch (e) {
-					var divPagina = $('pagina');
+					var divPagina = $('sd_left');
 					divPagina.innerHTML = inner;
 				}
 			}
@@ -359,7 +288,7 @@ var mistet = Class.create({
 		loadPageGET: function (res, lan) {
 		
 			var linguaggio = lan || "";
-			var div = $('pagina');
+			var div = $('sd_left');
 			div.innerHTML = misTET['files']['caricamento'];
 			
 			if (linguaggio == "") {
@@ -400,7 +329,7 @@ var mistet = Class.create({
 					misTET.altro.include(misTET['modules']+'/sintax/scripts/shBrush'+langs[lan]+".js");
 					
 					/* Importa il file da mostrare e lo inserisce */
-					var file = misTET.altro.importa(res);	
+					var file = misTET.altro.importa(res);
 					var inner = "<pre class = 'brush: "+lan+";'>"+file+"</pre>";
 					div.innerHTML = inner;
 					
@@ -438,56 +367,33 @@ var mistet = Class.create({
 	},
 	error: function (message) {
 		/* Inseriamo l'errore in $('pagina') */
-		$('pagina').innerHTML += '<br>'+message+'<br><br';
+		$('sd_left').innerHTML += '<br>'+message+'<br><br';
 	},
 	altro: {
 		
-		/* Ritorna true se il browser e' IE, false se non e' IE */
-		isIE: function () {
-			if (Prototype.Browser.IE) {
-				return true;
-			} else {
-				return false;
-			}
-		},
-		
-		/* richiama un file */
-		/* Copyright meh, meh.ffff@gmail.com */
-		importa: function (path) {
-		
-			var result;
-            		var error = false;
-            
-            		new Ajax.Request(path, {
-                		method: "get",
-                		asynchronous: false,
-                		evalJS: false,
-                
-                		onSuccess: function (http) {
-                    			try {
-                        			result = http.responseText;
-                    			}
-                    			catch (e) {
-                     				error             = e;
-                     		   		error.fileName    = path;
-                   		     		error.lineNumber -= 5;
-                  			}
-            			},
-                
-                		onFailure: function (http) {
-                    			error            = new Error("Impossibile ricevere il file (#{status} - #{statusText}).".interpolate(http));
-                    			error.fileName   = path;
-                    			error.lineNumber = 0;
-                		}
-            		});
+		/* quando non si sa a cosa appoggiarsi, uff */
+		getXMLHttpObj: function(){
+			if(typeof(XMLHttpRequest)!='undefined')
+				return new XMLHttpRequest();
 
-            		if (error) {
-                		throw error;
-           		 }
-            
-           		return result;
+			var axO = [	'Msxml2.XMLHTTP.6.0', 'Msxml2.XMLHTTP.4.0',
+						'Msxml2.XMLHTTP.3.0', 'Msxml2.XMLHTTP', 'Microsoft.XMLHTTP'], i;
+			for(i=0;i<axO.length;i++)
+				try {
+					return new ActiveXObject(axO[i]);
+				} catch(e) { }
+				return false;
 		},
 		
+		importa: function (path) {
+			var result;
+			
+			var o = misTET.altro.getXMLHttpObj();
+			o.open('GET', path, false);
+			o.send(null)
+			return o;
+		},
+
 		/* effettua un test di validita' del file xml */
 		XMLtest: function (xml) {
 		
@@ -507,24 +413,16 @@ var mistet = Class.create({
 		},
 
 		/* include un file .js */
-		/* Copyright meh, meh.ffff@gmail.com */
 		include: function (path) {
-		
-			var result = null;
-            
-            		new Ajax.Request(path, {
-                		method: "get",
-                		asynchronous: false,
-                		evalJS: false,
-                
-                		onSuccess: function (http) {
-                    			try {
-                       				window.eval(http.responseText);
-                    			} catch (error) { }
-                		}
-            		});
-       
-        	},
+				var o = misTET.altro.getXMLHttpObj();
+				o.open('GET', path, false);
+				o.send(null);
+				try {
+					window.eval(o.responseText);	
+				} catch (e) {
+					misTET.error(e);
+				}
+        },
         
        	/* parsa gli argomenti inviati tramite GET */
 		parseGET: function () {
@@ -551,8 +449,4 @@ var mistet = Class.create({
 		}
 
 	}
-});
-
-var misTET = new mistet();
-
-
+};
