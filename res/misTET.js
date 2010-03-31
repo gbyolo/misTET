@@ -19,23 +19,23 @@
 
 var misTET = {
 	
-	versione: "0.3.2",
+	versione: "0.3.5", /* Fixed bugs, modificate funzioni di parsing, include e importa */
 	
 	modules: "/modules",
 	
 	/* Inizializza misTET */
 	init: function () {
 	
-		eval('misTET.risorse.carica.init()');
-		var ops = jQuery('#sd_left')[0];
+		misTET.risorse.carica.init();
+		var ops = $j('#sd_left')[0];
 		var args = misTET.altro.parseGET();
 		var menuOk = true, pagineOk = true;
-		ops.innerHTML = misTET['files']['caricamento'];
+		$j(ops).html(misTET['files']['caricamento']);
 		
 		try {
 			misTET.risorse.carica.menu();
 		} catch (e) {
-			ops.innerHTML = e;
+			$j(ops).html(e);
 			menuOk = false;
 		}
 		
@@ -50,15 +50,15 @@ var misTET = {
 		
 		if (menuOk && pagineOk) {
 			/* Nessun errore nel caricamento di menu e pagine, procedo al caricamento nella pagina */
-			var divMenu = jQuery('#nav')[0];
-			divMenu.innerHTML = misTET.risorse.parsa.menu();
+			var divMenu = $j('#nav')[0];
+			$j(divMenu).html(misTET.risorse.parsa.menu());
 			
 			/* MenuMatic */
-			window.addEvent('domready', function() {			
-				var myMenu = new MenuMatic();
+			window.addEvent('domready', function () {			
+				var myMenu = new MenuMatic ();
 			});	
 
-			var divPagina = jQuery('#sd_left')[0];
+			var divPagina = $j('#sd_left')[0];
 			/* Oh my god! */
 			var hash = window.location.hash;
 			
@@ -99,6 +99,7 @@ var misTET = {
 		caricamento: { },
 		home: { },
 		title: { },
+		imported: { },
 	},
 	risorse: {
 		carica: {
@@ -110,11 +111,11 @@ var misTET = {
 				var error = false;
 				var ok = false;
 				
-				if (jQuery.browser['msie']) {
+				if ($j.browser['msie']) {
 					misTET.error('Only Mozilla');
 				} else {
 					
-					jQuery.ajax({
+					$j.ajax({
 						type: 'GET',
 						url: path,
 						dataType: 'xml',
@@ -124,7 +125,7 @@ var misTET = {
 				}
 			},
 			
-			/* carica il file del menu, e lo salva in misTET.files.menu */
+			/* Carica il file del menu, e lo salva in misTET.files.menu */
 			menu: function () {
 			
 				var path = '/res/files/menu.xml';
@@ -132,10 +133,10 @@ var misTET = {
 				var error = false;
 				
 				
-				if (jQuery.browser['msie']) {
+				if ($j.browser['msie']) {
 					misTET.error('Only Mozilla');
 				} else {
-					jQuery.ajax({
+					$j.ajax({
 						type: 'GET',
 						url: path,
 						dataType: 'xml',
@@ -152,10 +153,10 @@ var misTET = {
 				var test = false;
 				var error = false;
 								
-				if (jQuery.browser['msie']) {
+				if ($j.browser['msie']) {
 					misTET.error('Only Mozilla');
 				} else {
-					jQuery.ajax({
+					$j.ajax({
 						type: 'GET',
 						url: path,
 						dataType: 'xml',
@@ -168,108 +169,111 @@ var misTET = {
 		
 		/* Funzioni di loading dei file XML */		
 		init: function (xml) {
-			misTET.files.home = jQuery(xml).find('home').text();
-			misTET.files.caricamento = jQuery(xml).find('caricamento').text();
-			misTET.files.title = jQuery(xml).find('title').text();
-			$$('title')[0].innerHTML = misTET['files']['title'];
+			var test = false;
+			if (test = misTET.altro.XMLtest(xml)) {
+				misTET.files.home = $j(xml).find('home').text();
+				misTET.files.caricamento = $j(xml).find('caricamento').text();
+				misTET.files.title = $j(xml).find('title').text();
+				$j($$('title')[0]).html(misTET['files']['title']);
+			} else {
+				misTET.error(test);
+			}
 		},
 		
 		initMenu: function (xml) {
-			misTET['files']['menu'] = xml;
+			var test = false;
+			if (test = misTET.altro.XMLtest(xml)) {
+				misTET['files']['menu'] = xml;
+			} else {
+				misTET.error(test);
+			}
 		},
 		
 		initPagine: function (xml) {
-			misTET['files']['pagine'] = xml;
+			var test = false;
+			if (test = misTET.altro.XMLtest(xml)) {
+				misTET['files']['pagine'] = xml;
+			} else {
+				misTET.error(test);
+			}
 		},
 		
 		parsa: {
 			
-			/* Parsa il file dei menu creando una stringa menu */
+			/* parsa menu.xml */
 			menu: function () {
-	
-				var Menu = misTET['files']['menu'].documentElement;
-				var len = Menu.getElementsByTagName('menu');
 				var output = "";
 				
-				for (var i = 0; i < len.length; i++) {
-					/* Il primo nodo text e' la voce menu, i seguenti sono i submenu */
-					var menuValue = len[i].getElementsByTagName('text');
-					/* Abbiamo solo un nodo text, menu semplice */
-					if (menuValue.length == 1) {
-						var id = menuValue[0].getAttribute('id');
-						var inner = menuValue[0].firstChild.nodeValue;
+				var array = $j(misTET['files']['menu']).find('menu');
+				
+				array.each( function () {
+					var voci = $j(this).find('text');
+					if (voci.length == 1) {
+						var id = $j(voci[0]).attr('id');
+						var inner = $j(voci[0]).text();
 						output += 	"\n<li><a href = \'#" +
-								id+"\' onClick = \'misTET.risorse.set.pagina(\""+id+"\");\'>"+inner +
-								"</a></li>\n";
+									id + "\' onClick = \'misTET.risorse.set.pagina(\"" +
+									id + "\");\'>" + inner +
+									"</a></li>\n";
+
 					} else {
-						var sub = ""
-						var idPrincipale = menuValue[0].getAttribute('id');
-						var ciao = menuValue[0].firstChild.nodeValue;
-						output += 	"\n<li><a href = \'#"+idPrincipale +
-								"\' onClick = \'misTET.risorse.set.pagina(\""+idPrincipale+"\");\'>"+ciao +
-								"</a>\n<ul>\n";
-						/* Scorre i sub menu */
-						for (var j = 1; j < menuValue.length; j++) {
-							var idSub = menuValue[j].getAttribute('id');
-							var inner2 = menuValue[j].firstChild.nodeValue;
-							output += 	"<li><a href = \'#"+idSub +
+						var idPrincipale = $j(voci[0]).attr('id');
+						var innerP = $j(voci[0]).text();
+						output += 	"\n<li><a href = \'#" + idPrincipale +
 									"\' onClick = \'misTET.risorse.set.pagina(\"" +
-									idSub+"\");\'>"+inner2+"</a></li>\n";
+									idPrincipale + "\");\'>" + innerP +
+									"</a>\n<ul>\n";
+
+						for (var j = 1; j < voci.length; j++) {
+							var idSub = $j(voci[j]).attr('id');
+							var innerS = $j(voci[j]).text();
+							output += 	"<li><a href = \'#" + idSub +
+										"\' onClick = \'misTET.risorse.set.pagina(\"" +
+										idSub + "\");\'>" + innerS + "</a></li>\n";
+
 						}
 						output += "</ul></li>";
 					}
-				}
-				output += "";
+				});
 				
 				return output;
 			},
-
 			
-			/* Parsa il file XML delle pagine per trovare il contenuto della pagina con id specificato */
+			/* Parsa pagine.xml */
 			pagina: function (id) {
-
-				var pagineXML = misTET.files.pagine.documentElement;
 				var output = "";
-				var pagine = pagineXML.getElementsByTagName('page');
-				var code = "";
 				
-				for (var i = 0; i < pagine.length; i++) {
-					if (pagine[i].getAttribute('id') == id) {
-						var list = pagine[i].childNodes;
-						/* Si tratta di testo normale */
-						if (list.length == 1) {
-							output = pagine[i].firstChild.nodeValue;
-						} else {
-							/* Sezione cdata */
-							for (var j = 0; j < list.length; j++) {
-							
-								if (list[j].nodeName == "#cdata-section") {
-									code = list[j].nodeValue;
-									output += code;
-								} else if (list[j].nodeName == "go") {
-									var href = list[j].getAttribute('href');
-									var lan = list[j].getAttribute('lan') || "";
-									var dopo = list[j].getAttribute('dopo');
-								
-									if (lan != "") {
+				var array = $j(misTET['files']['pagine']).find('page');
+				
+				array.each( function() {
+					if ($j(this).attr('id') == id) {
+						if ($j(this).find('go').length != 0) {
+							var text = $j(this).text();
+							output += text;
+							$j(this).find('go').each( function () {
+								var href = $j(this).attr('href');
+								var lan = $j(this).attr('lan') || "";
+								var dopo = $j(this).attr('dopo');
+								var testo = $j(this).attr('testo');
+								if (lan != "") {
 										output += 	"<a href = \'#"+id+"&page="+href+"&lan="+lan+"\' " +
-												"onClick = \'misTET.risorse.loadPageGET(\""+href+"\", \""+lan+"\");\'>" +
-												list[j].getAttribute('testo')+"</a>"+dopo+"<br>";
+													"onClick = \'misTET.risorse.loadPageGET(\""+href+"\", \""+lan+"\");\'>" +
+													testo+"</a>"+dopo+"<br>";
 									
-									} else if (lan == "") {
-										output += 	"<a href = \'#"+id+"&page="+href+"\' onClick = \'misTET.risorse.loadPageGET(\"" +
-												href+"\");\'>"+list[j].getAttribute('testo')+"</a>"+dopo+"<br>";
-										}	
-								} else {
-									output += list[j].nodeValue;	
-								}
-							}
+								} else if (lan == "") {
+									output += 	"<a href = \'#"+id+"&page="+href+"\' onClick = \'misTET.risorse.loadPageGET(\"" +
+												href+"\");\'>" + testo + "</a>"+dopo+"<br>";
+								}		
+							});
+						} else {
+							output += $j(this).text();
 						}
 					}
-				}
+				});	
 				return output;
 			}
 		},
+
 		set: {
 			
 			/* Inserisce il contenuto della pagina in index.html */
@@ -278,8 +282,8 @@ var misTET = {
 				try {
 					window.eval(inner);
 				} catch (e) {
-					var divPagina = jQuery('#sd_left')[0];
-					divPagina.innerHTML = inner;
+					var divPagina = $j('#sd_left')[0];
+					$j(divPagina).html(inner);
 				}
 			}
 		},
@@ -288,15 +292,15 @@ var misTET = {
 		loadPageGET: function (res, lan) {
 		
 			var linguaggio = lan || "";
-			var div = jQuery('#sd_left')[0];
-			div.innerHTML = misTET['files']['caricamento'];
+			var div = $j('#sd_left')[0];
+			$j(div).html(misTET['files']['caricamento']);
 			
 			if (linguaggio == "") {
 				var inner = misTET.altro.importa(res);
 				try {
 					window.eval(inner);
 				} catch (e) {
-					div.innerHTML = "<pre>"+inner+"</pre>";
+					$j(div).html("<pre>"+inner+"</pre>");
 				}
 				
 			} else {
@@ -329,34 +333,35 @@ var misTET = {
 					misTET.altro.include(misTET['modules']+'/sintax/scripts/shBrush'+langs[lan]+".js");
 					
 					/* Importa il file da mostrare e lo inserisce */
-					var file = misTET.altro.importa(res);
+					misTET.altro.importa(res);
+					var file = misTET['files']['imported'];
 					var inner = "<pre class = 'brush: "+lan+";'>"+file+"</pre>";
-					div.innerHTML = inner;
+					$j(div).html(inner);
 					
 					/* Devo solo dire FANCULO a questo spezzone di codice, mi ha torturato di brutto! */
 					SyntaxHighlighter.vars.discoveredBrushes = {};
 					
 					var brush = "";
 					/* Cicla i brushes rispetto al file .js incluso */
-                    			for (brush in SyntaxHighlighter.brushes) {
-                        			/* Crea una copia degli alias */
-                        			var alias = SyntaxHighlighter.brushes[brush].aliases;
+                    for (brush in SyntaxHighlighter.brushes) {
+                        /* Crea una copia degli alias */
+                        var alias = SyntaxHighlighter.brushes[brush].aliases;
 
-                        			/* Scorre gli alias, e dice al core del sh di aggiungere i determinati alias */
-                        			for (var cicla = 0; cicla < alias.length; cicla++) {
-                            				SyntaxHighlighter.vars.discoveredBrushes[alias[cicla]] = brush;
-                        			}
-                   	 		}
-                    			/* Fine spezzone FANCULO */
+                        /* Scorre gli alias, e dice al core del sh di aggiungere i determinati alias */
+                        for (var cicla = 0; cicla < alias.length; cicla++) {
+                            	SyntaxHighlighter.vars.discoveredBrushes[alias[cicla]] = brush;
+                        }
+                   	}
+                    /* Fine spezzone FANCULO */
                	 	
-                    			/* Setta il brush(dopo aver settato l'alias in discoveredBrushes */
+                    /* Setta il brush(dopo aver settato l'alias in discoveredBrushes */
 					SyntaxHighlighter.defaults["brush"] = langs[lan];
 					/* Esegue il Sintax Highlighting */
 					SyntaxHighlighter.highlight();
 					
 				/* Sei gay, non usare il Sintax Highlighting */
 				} else {
-					div.innerHTML = 'Errore nel caricamento source. Specificare un linguaggio corretto<br>Linguaggi disponibili:<br><br>';
+					$j(div).html('Errore nel caricamento source. Specificare un linguaggio corretto<br>Linguaggi disponibili:<br><br>');
 					
 					for (l in langs) {
 							div.innerHTML += "&nbsp;"+l+"<br>";
@@ -367,16 +372,40 @@ var misTET = {
 	},
 	error: function (message) {
 		/* Inseriamo l'errore in $('pagina') */
-		jQuery('#sd_left')[0].innerHTML += '<br>'+message+'<br><br';
+		$j('#sd_left')[0].innerHTML += '<br>'+message+'<br><br';
 	},
 	altro: {
 		
-		/* bah */
+		/* Importa un file */
 		importa: function (path) {
-			var o = new XMLHttpRequest();
-			o.open('GET', path, false);
-			o.send(null);
-			return o.responseText;
+			if ($j.browser['msie']) {
+				misTET.error('Only Mozilla');
+			} else {
+				$j.ajax({
+					type: 'GET',
+					url: path,
+					dataType: 'text',
+					success: function (file) {
+						misTET.altro.exec(file, false);
+					},
+					error: misTET.error
+				});
+			}
+		},
+		
+		exec: function (file, ex) {
+				try {
+					misTET['files']['imported'] = file;
+				} catch (e) {
+					misTET.error(e);
+				}
+				if (ex == true) {
+					try {
+						window.eval(misTET['files']['imported']);
+					} catch (e) {
+						misTET.error(e);
+					}
+				}
 		},
 
 		/* effettua un test di validita' del file xml */
@@ -398,16 +427,20 @@ var misTET = {
 		},
 
 		/* include un file .js */
-		/* quando non si sa a cosa appoggiarsi, uff */
 		include: function (path) {
-				var o = new XMLHttpRequest();
-				o.open('GET', path, false);
-				o.send(null);
-				try {
-					window.eval(o.responseText);	
-				} catch (e) {
-					misTET.error(e);
-				}
+			if ($j.browser['msie']) {
+				misTET.error('Only Mozilla');
+			} else {
+				$j.ajax({
+					type: 'GET',
+					url: path,
+					dataType: 'text',
+					success: function(file){
+						misTET.altro.exec (file,true)
+					},
+					error: misTET.error
+				});
+			}
         },
         
        	/* parsa gli argomenti inviati tramite GET */
