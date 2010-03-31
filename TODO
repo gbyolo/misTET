@@ -6,3 +6,5 @@ funzioni siano compatibili con Internet  Explorer, per ora non me ne è
 importato molto, ma adesso ce n'è bisogno. Inoltre c'è da riscrivere
 totalmente la funzione init, fa altamente schifo, e il modulo admin, che
 ancora non è stato modificato, dato il cambiamento di framework.
+Come ultima cosa, ho notato che una volta caricato il corpo della pagina, 
+è necessario richiamare la funzione misTET.init() affinchè tutto venga visualizzato, fixerò...
