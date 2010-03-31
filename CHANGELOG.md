@@ -1,4 +1,6 @@
 <h2>Cosa cambia dalle precedenti versioni</h2><br>
+	-	[31-03-2010]	-	0.3.5	Fixed bugs, modificate funzioni di parsing, include e importa. [WARNING]: Impossibile usare il modulo admin, necessario
+									aspettare la 0.4
 	-	[30-03-2010]	-	0.3.3	NUOVO template, uso di jQuery, eliminato prototype. (__[WARNING]__): versione __[INSTABILE]__, è necessario aspettare la 0.4
 									affinchè sia stabile, e affidabile.
 	-	[11-03-2010]	-	0.2.2	Modificata(migliorata) gestione moduli
