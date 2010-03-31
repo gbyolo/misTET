@@ -212,24 +212,24 @@ var misTET = {
 						var id = $j(voci[0]).attr('id');
 						var inner = $j(voci[0]).text();
 						output += 	"\n<li><a href = \'#" +
-                                    id + "\' onClick = \'misTET.risorse.set.pagina(\"" +
-                                    id + "\");\'>" + inner +
-                                    "</a></li>\n";
+                                    		id + "\' onClick = \'misTET.risorse.set.pagina(\"" +
+                                    		id + "\");\'>" + inner +
+                                    		"</a></li>\n";
 
 					} else {
 						var idPrincipale = $j(voci[0]).attr('id');
 						var innerP = $j(voci[0]).text();
 						output += 	"\n<li><a href = \'#" + idPrincipale +
-                                    "\' onClick = \'misTET.risorse.set.pagina(\"" +
-                                    idPrincipale + "\");\'>" + innerP +
-                                    "</a>\n<ul>\n";
+                                    		"\' onClick = \'misTET.risorse.set.pagina(\"" +
+                                    		idPrincipale + "\");\'>" + innerP +
+                                    		"</a>\n<ul>\n";
 
 						for (var j = 1; j < voci.length; j++) {
 							var idSub = $j(voci[j]).attr('id');
 							var innerS = $j(voci[j]).text();
 							output += 	"<li><a href = \'#" + idSub +
-                                        "\' onClick = \'misTET.risorse.set.pagina(\"" +
-                                        idSub + "\");\'>" + innerS + "</a></li>\n";
+                                        		"\' onClick = \'misTET.risorse.set.pagina(\"" +
+                                        		idSub + "\");\'>" + innerS + "</a></li>\n";
 
 						}
 						output += "</ul></li>";
@@ -256,16 +256,16 @@ var misTET = {
 								var dopo = $j(this).attr('dopo');
 								var testo = $j(this).attr('testo');
 								if (lan != "") {
-										output += 	"<a href = \'#" + id + "&page=" + href +
-                                                    "&lan=" + lan + "\' " + "onClick = \'" +
-                                                    "misTET.risorse.loadPageGET(\"" + href +
-                                                    "\", \"" + lan + "\");\'>" +
-                                                    testo + "</a>" + dopo +"<br>";
+										output += "<a href = \'#" + id + "&page=" + href +
+                                                    		"&lan=" + lan + "\' " + "onClick = \'" +
+                                                    		"misTET.risorse.loadPageGET(\"" + href +
+                                                    		"\", \"" + lan + "\");\'>" +
+                                                    		testo + "</a>" + dopo +"<br>";
 									
 								} else if (lan == "") {
-									output += 	"<a href = \'#" + id + "&page="+href +
-                                                "\' onClick = \'misTET.risorse.loadPageGET(\"" +
-                                                href+"\");\'>" + testo + "</a>"+dopo+"<br>";
+									output += "<a href = \'#" + id + "&page="+href +
+                                                		"\' onClick = \'misTET.risorse.loadPageGET(\"" +
+                                               		 href+"\");\'>" + testo + "</a>"+dopo+"<br>";
 								}		
 							});
 						} else {
@@ -312,19 +312,19 @@ var misTET = {
 				var langs = {	
 						'bash'		: 'Bash', 
 						'cpp' 		: 'Cpp', 
-						'c'		: 'Cpp',
+						'c'			: 'Cpp',
 						'c#' 		: 'CSharp', 
 						'css' 		: 'Css', 
-						'delphi' 	: 'Delphi', 
+						'delphi' 		: 'Delphi', 
 						'java' 		: 'Java',
 						'js' 		: 'JScript', 
 						'jscript' 	: 'JScript',
 						'javascript'	: 'JSCript',
 						'php' 		: 'Php', 
-						'python' 	: 'Python', 
-						'py'		: 'Python',
+						'python' 		: 'Python', 
+						'py'			: 'Python',
 						'ruby' 		: 'Ruby', 
-						'rb'		: 'Ruby',
+						'rb'			: 'Ruby',
 						'sql' 		: 'Sql', 
 						'vb' 		: 'Vb', 
 						'xml' 		: 'Xml' 
@@ -346,18 +346,18 @@ var misTET = {
 					
 					var brush = "";
 					/* Cicla i brushes rispetto al file .js incluso */
-                    for (brush in SyntaxHighlighter.brushes) {
-                        /* Crea una copia degli alias */
-                        var alias = SyntaxHighlighter.brushes[brush].aliases;
+                   		for (brush in SyntaxHighlighter.brushes) {
+                        		/* Crea una copia degli alias */
+                        		var alias = SyntaxHighlighter.brushes[brush].aliases;
 
-                        /* Scorre gli alias, e dice al core del sh di aggiungere i determinati alias */
-                        for (var cicla = 0; cicla < alias.length; cicla++) {
-                            SyntaxHighlighter.vars.discoveredBrushes[alias[cicla]] = brush;
-                        }
-                     }
-                    /* Fine spezzone FANCULO */
+                        		/* Scorre gli alias, e dice al core del sh di aggiungere i determinati alias */
+                        		for (var cicla = 0; cicla < alias.length; cicla++) {
+                           		SyntaxHighlighter.vars.discoveredBrushes[alias[cicla]] = brush;
+                        		}
+                     	}
+                    	/* Fine spezzone FANCULO */
                	 	
-                    /* Setta il brush(dopo aver settato l'alias in discoveredBrushes */
+                    	/* Setta il brush(dopo aver settato l'alias in discoveredBrushes */
 					SyntaxHighlighter.defaults["brush"] = langs[lan];
 					/* Esegue il Sintax Highlighting */
 					SyntaxHighlighter.highlight();
