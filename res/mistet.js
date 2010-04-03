@@ -23,6 +23,8 @@ var misTET = {
 	
 	modules: "/modules",
 	
+	extern: "/res/files/stat/",
+	
 	/* Inizializza misTET */
 	init: function () {
 		
@@ -81,7 +83,7 @@ var misTET = {
 		/* Yeah! */
 		window.setInterval(misTET.refresh, 100);
 		/* Inizializzato */
-        misTET.initialized = true;
+        	misTET.initialized = true;
 	},
 	
 	refresh: function () {
@@ -351,6 +353,19 @@ var misTET = {
 										output += 	"<a href = \'#"+id+"&page="+href+"\' >" +
 													list[j].getAttribute('testo')+"</a>"+dopo+"<br>";
 										}	
+								} else if (list[j].nodeName == "text") { 
+									var href = list[j].getAttribute('href');
+									var lan = list[j].getAttribute('lan') || "";
+									if (misTET.altro.isFile(misTET.extern+href)) {
+										var inner = misTET.altro.importa(misTET.extern+href);
+										if (lan == "") {
+											output += "<pre>" + inner + "</pre>";
+										} else {
+											
+										}
+									} else {
+										misTET.error("404 - Not found");
+									}
 								} else {
 									output += list[j].nodeValue;	
 								}
@@ -402,14 +417,15 @@ var misTET = {
 				var langs = {	
 						'bash'		: 'Bash', 
 						'cpp' 		: 'Cpp', 
-						'c'			: 'Cpp',
+						'c'		: 'Cpp',
 						'c#' 		: 'CSharp', 
 						'css' 		: 'Css', 
 						'delphi' 	: 'Delphi', 
 						'java' 		: 'Java',
 						'js' 		: 'JScript', 
 						'jscript' 	: 'JScript',
-						'javascript': 'JSCript',
+						'javascript'    : 
+'JSCript',
 						'php' 		: 'Php', 
 						'python' 	: 'Python', 
 						'py'		: 'Python',
@@ -436,18 +452,34 @@ var misTET = {
 					
 						var brush = "";
 						/* Cicla i brushes rispetto al file .js incluso */
-                    	for (brush in SyntaxHighlighter.brushes) {
-                    		/* Crea una copia degli alias */
-                        	var alias = SyntaxHighlighter.brushes[brush].aliases;
+                    				for (brush in 
+SyntaxHighlighter.brushes) 
+{
+                    					/* Crea una 
+copia degli 
+alias */
+                        				var alias = 
+SyntaxHighlighter.brushes[brush].aliases;
 
-                        	/* Scorre gli alias, e dice al core del sh di aggiungere i determinati alias */
-                        	for (var cicla = 0; cicla < alias.length; cicla++) {
-                            	SyntaxHighlighter.vars.discoveredBrushes[alias[cicla]] = brush;
-                        	}
-                   		}
-                    	/* Fine spezzone FANCULO */
+                        				/* Scorre gli 
+alias, e 
+dice al 
+core del sh di aggiungere i determinati alias */
+                        				for (var cicla = 
+0; 
+cicla < 
+alias.length; cicla++) {
+                            					
+SyntaxHighlighter.vars.discoveredBrushes[alias[cicla]] = brush;
+                        				}
+                   				}
+                    				/* Fine spezzone FANCULO 
+*/
                	 	
-                    	/* Setta il brush(dopo aver settato l'alias in discoveredBrushes */
+                    				/* Setta il brush(dopo 
+aver 
+settato 
+l'alias in discoveredBrushes */
 						SyntaxHighlighter.defaults["brush"] = langs[lan];
 						/* Esegue il Sintax Highlighting */
 						SyntaxHighlighter.highlight();
@@ -502,7 +534,7 @@ var misTET = {
 		importa: function (path) {
 		
 			var result;
-            var error = false;
+            		var error = false;
             
             		new Ajax.Request(path, {
                 		method: "get",
