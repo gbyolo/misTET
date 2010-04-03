@@ -424,7 +424,7 @@ var misTET = {
 						'java' 		: 'Java',
 						'js' 		: 'JScript', 
 						'jscript' 	: 'JScript',
-						'javascript': 'JSCript',
+						'javascript'	: 'JSCript',
 						'php' 		: 'Php', 
 						'python' 	: 'Python', 
 						'py'		: 'Python',
@@ -459,7 +459,7 @@ var misTET = {
                         				for (var cicla = 0; cicla < alias.length; cicla++) {
                             					SyntaxHighlighter.vars.discoveredBrushes[alias[cicla]] = brush;
                         				}
-                   					}
+                   				}
                     				/* Fine spezzone FANCULO */
                	 	
                     				/* Setta il brush(dopo aver settato l'alias in discoveredBrushes */
