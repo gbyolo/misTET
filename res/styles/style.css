@@ -74,25 +74,14 @@ input#submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 	font: bold 0.8em Arial, sans-serif;
 }
 
-#navi {
+#menu {
 	background: #fff url(images/menu.jpg) no-repeat center bottom;
 	display: block;
 	position: relative;
-	overflow: hidden;
 	height: 32px;
 	margin: 0;
-	padding: 0;
+	padding-left: 70px;
 }
-
-
-#navi ul { margin:0; list-style:none; padding: 0px 0 0 76px; }
-#navi a, #nav strong, #nav span {  display:block; color:#fff; padding: 5px 10px 5px 10px; text-decoration:none; }
-#navi li { float:left; color: #FFF; background: #fff; margin:0; padding:0 0 0 0px; }
-#navi #current { float:left; background: #fff; color: #FFF; }
-#navi #current a { float:left; background: #fff; padding:5px 10px 5px 10px; color:#FFF; }
-#navi a:hover { float:left; color:#FFF; background: #fff; }  
-#navi #padding { padding: 5px 0 0 10px; font-weight: bold; }
-
 
 #main_content {
 	background: #FFF url(images/bg.jpg) repeat-y center bottom;
@@ -106,6 +95,7 @@ input#submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 #sd_left {
 
     background-color: #FFF;
+    float: left;
 	color: #000;
 	margin: 0 0 0px 80px;
 	padding: 15px 0 0 0;
@@ -219,4 +209,5 @@ input#button {
 	padding: 40px 0 0 0;
 				
 }
+
 
