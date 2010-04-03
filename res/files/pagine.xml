@@ -2,6 +2,7 @@
 <!DOCTYPE pages [
 	<!ELEMENT pages (page+)>
 	<!ELEMENT page (go*)>
+	<!ELEMENT page (text*)>
 	
 	<!ELEMENT page ANY>
 	<!ATTLIST page
@@ -14,6 +15,12 @@
 		testo	CDATA	#REQUIRED
 		dopo	CDATA	#IMPLIED
 	>
+	
+	<!ELEMENT text ANY>
+	<!ATTLIST text
+		href	CDATA	#REQUIRED
+		lan		CDATA	#IMPLIED
+	>
 ]>
 <!--
 
@@ -24,7 +31,10 @@ quello specificato nel file menu per permettere il caricamento della
 pagina stessa. Tramite go e' possibile creare un link ad un file esterno,
 e tramite l'attributo lan e' possibile includere sources. L'attributo 
 testo e' l'equivalente di <a href="">TESTO</a>, mentre l'attributo dopo
-serve a precisare il testo da inserire dopo il link specificato da <go>
+serve a precisare il testo da inserire dopo il link specificato da <go>.
+Il tag <text> serve ad importare all'interno di una pagina il testo del
+file specificato dall'attributo href. Specificare l'attributo lan per
+eventuali sources.
 
 WARNING: Non utilizzare esclusivamente codice html all'interno del codice
 		 della pagina, potrebbe causare un malfunzionamento di misTET
@@ -46,6 +56,12 @@ WARNING: Non utilizzare esclusivamente codice html all'interno del codice
 	</page>
 	<page id = 'link1'>
 		Pagina che fa riferimento a link1
+	</page>
+	<page id = 'provone'>
+		<![CDATA[
+			Che bello!
+		]]>
+		<text href = "prova.txt"></text>
 	</page>
 	<page id = 'link2'>
 		Pagina che fa riferimento a link2

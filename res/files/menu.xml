@@ -40,6 +40,7 @@ Il funzionamento degli ID e' lo stesso come sopra citato.
 	</menu>
 	<menu>
 		<text id = 'link1'>Primo</text>
+		<text id = 'provone'>Provone</text>
 	</menu>
 	<menu>
 		<text id = 'link2'>Secondo</text>
