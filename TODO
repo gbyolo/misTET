@@ -3,8 +3,6 @@ TODO
 Fin'ora non ce n'è stato tanto bisogno, ora direi di si. Ora che il 
 nuovo template è stato applicato, devo gestire jQuery in modo che le
 funzioni siano compatibili con Internet  Explorer, per ora non me ne è
-importato molto, ma adesso ce n'è bisogno. Inoltre c'è da riscrivere
-totalmente la funzione init, fa altamente schifo, e il modulo admin, che
-ancora non è stato modificato, dato il cambiamento di framework.
-Come ultima cosa, ho notato che una volta caricato il corpo della pagina, 
-è necessario richiamare la funzione misTET.init() affinchè tutto venga visualizzato, fixerò...
+importato molto, ma adesso ce n'è bisogno. Modificare il file pagine.xml
+con l'aggiunta del tag <source> che permette l'inserimento di un source +
+testo. 
