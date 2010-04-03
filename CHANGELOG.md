@@ -3,6 +3,7 @@
 									Aggiunto continuo controllo sull'hash, eliminato evento onClick sugli url
 									Funzione isFile
 									Modificato menu
+									[__WARNING__] modulo Admin non funzionante
 	-	[31-03-2010]	-	0.3.5	Fixed bugs
 									modificate funzioni di parsing, include e importa. 
 									[WARNING]: Impossibile usare il modulo admin, necessario aspettare la 0.4
