@@ -9,7 +9,6 @@
 	>
 ]>
 <!--
-
 To create a new menu voice, just use `menu` node. Each `text` node represents
 a new voice: if you use only one node, it is a simple menu, if you use
 several ones, the first one represents the main voice, the other ones 
