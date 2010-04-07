@@ -1,8 +1,5 @@
 TODO
 
-Fin'ora non ce n'è stato tanto bisogno, ora direi di si. Ora che il 
-nuovo template è stato applicato, devo gestire jQuery in modo che le
-funzioni siano compatibili con Internet  Explorer, per ora non me ne è
-importato molto, ma adesso ce n'è bisogno. Modificare il file pagine.xml
-con l'aggiunta del tag <source> che permette l'inserimento di un source +
-testo. 
+Make bettere my admin module, now it sucks enough to exists.
+The admin.initilize() function works well, but when I try to reload
+#admin it doesn't work, I have to fix that.

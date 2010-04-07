@@ -59,7 +59,7 @@ WARNING: Non utilizzare esclusivamente codice html all'interno del codice
 	</page>
 	<page id = 'provone'>
 		<![CDATA[
-			Che bello!
+			File esterno
 		]]>
 		<text href = "prova.txt"></text>
 	</page>
