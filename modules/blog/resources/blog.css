@@ -1,0 +1,27 @@
+.post {
+	border-bottom: 1px solid #000;
+	margin-bottom: 10px;
+	font-size: 11px;
+}
+
+.post .title {
+	text-align: center;
+	font-weight: bold;
+	font-size: 13px;
+	color: #000;
+	font-style: bold;
+}
+
+.post .foot {
+	margin-top: 10px;
+	text-align: right;
+}
+
+.post .author {
+	font-weight: bold;
+	font-style: italic;
+}
+
+.post .date {
+	font-style: italic;
+}
