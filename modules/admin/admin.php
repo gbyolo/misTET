@@ -5,13 +5,12 @@
 	define("VERSION", "0.1");
 	define("__NAME__", "AdminPanel");
 	
-	/* Inserisci qui la tua password */
+	/* Here your password */
 	define("PASSWORD", "meg");
 	
 	$passHash = md5(PASSWORD);
 	
 	if (isset($_GET['login'])) {
-		/* Prova a loggarsi */
 		if (isset($_POST['password'])) {
 			$password = htmlentities($_POST['password']);	
 				if ($password == PASSWORD) {

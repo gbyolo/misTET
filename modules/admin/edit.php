@@ -9,7 +9,6 @@
 		$file = '..'.$_GET['file'];
 	
 		if (file_exists($file) && isset($_SESSION['mistet']['logged'])) {
-			/* chmod 666 /res/files/menu.xml */
 			if ($handle = @@fopen($file, 'w')) {
 				if (@@fwrite($handle, $newFile)) {
 					header("Location: http://".$_SERVER['HTTP_HOST']);
@@ -22,13 +21,12 @@
 		} else {
 			echo "false";
 		}
-	} else if (isset($_GET['pagine'])) {
+	} else if (isset($_GET['pages'])) {
 		
 		$newFile = stripslashes($_POST['newPage']);
 		$file = '..'.$_GET['file'];
 		
 		if (file_exists($file) && isset($_SESSION['mistet']['logged'])) {
-			/* chmod 666 /res/files/pagine.xml */
 			if ($handle = @@fopen($file, 'w')) {
 				if (@@fwrite($handle, $newFile)) {
 					header("Location: http://".$_SERVER['HTTP_HOST']);
