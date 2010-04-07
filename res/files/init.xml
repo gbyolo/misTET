@@ -1,20 +1,22 @@
 <?xml version="1.0"?> 
 <!DOCTYPE init [
 	<!ELEMENT init (homePage+)>
-	<!ELEMENT init (caricamento+)>
+	<!ELEMENT init (loadMessage+)>
 	<!ELEMENT init (title+)>
 	
 	<!ELEMENT homePage ANY>
-	<!ELEMENT caricamento ANY>
+	<!ELEMENT loadMessage ANY>
 	<!ELEMENT title ANY>
 ]>
 
-<!-- File di inizio
-	 homePage: id della home page (modificare il file pagine.xml di conseguenza
-	 caricamento: messaggio di caricamento da mostrare
+<!--
+	 Init file
+	 homePage: specifies the id of the page you want to use as homepage
+	 loadMessage: message to show while misTET is loading
+	 title: title tag in head section
 -->
 <init>
 	<homePage>home</homePage>
-	<caricamento>Caricamento...</caricamento>
+	<loadMessage>Loading...</loadMessage>
 	<title>misTET - Power on earth</title>
 </init>

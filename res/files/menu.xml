@@ -10,20 +10,12 @@
 ]>
 <!--
 
-Questo e' il file menu. Per ogni voce da visualizzare sul menu, creare
-un campo <menu></menu>, al cui interno dovete inserire un nodo
-<text></text> il cui id fara' riferimento all'id della pagina da caricare
-Esempio:
-	<menu>
-		<text id = 'prova'>ciao</text>
-	</menu>
-Creera' una voce di menu con testo 'ciao' che puntera' alla pagina con 
-id 'prova'
-Non sono ammessi caratteri quali <, >, &, e ogni carattere che faccia
-riferimento a un carattere speciale di XML.
-Disponibili ora anche i sub menu. Vedere il menu con prima voce con id "prova".
-La prima voce e' considerata la voce principale, le altre faranno parte del sub-menu.
-Il funzionamento degli ID e' lo stesso come sopra citato.
+To create a new menu voice, just use `menu` node. Each `text` node represents
+a new voice: if you use only one node, it is a simple menu, if you use
+several ones, the first one represents the main voice, the other ones 
+represent the sub menu. The `id` attribute is REQUIRED, since it must be 
+the same you'll use for the specified page in pages.xml.
+Don't use XML special characters.
 
 -->
 <menue>
@@ -32,20 +24,23 @@ Il funzionamento degli ID e' lo stesso come sopra citato.
 		<text id = 'admin'>Admin</text>
 	</menu>
 	<menu>
-		<text id = 'prova'>Prova</text>
-		<text id = 'sub'>sub-prova</text>
-		<text id = 'sub'>sub-prova</text>
-		<text id = 'sub'>sub-prova</text>
+		<text id = 'blog'>Blog</text>
+	</menu>
+	<menu>
+		<text id = 'main'>Main voice</text>
+		<text id = 'sub'>sub</text>
+		<text id = 'sub'>sub</text>
+		<text id = 'sub'>sub</text>
 		<text id = 'sub'>NOTHINGNIGGERNOTHING</text>
 	</menu>
 	<menu>
-		<text id = 'link1'>Primo</text>
-		<text id = 'provone'>Provone</text>
+		<text id = 'link1'>First</text>
+		<text id = 'extern'>Extern_file</text>
 	</menu>
 	<menu>
-		<text id = 'link2'>Secondo</text>
+		<text id = 'link2'>Second</text>
 	</menu>
 	<menu>
-		<text id = 'link3'>Terzo</text>
+		<text id = 'link3'>third</text>
 	</menu>
 </menue>

@@ -10,9 +10,13 @@
 ]>
 
 <!--
-Qui tutti i moduli
+	Here all your modules.
+	To create a new module, just enter his name here, and then create a
+	new folder in /modules with the same name. The main file of the module
+	you created before must have the specified name.
 -->
 
 <modules>
-    <module name="admin"/>
+	<module name="admin"></module>
+	<module name="blog"></module>
 </modules>
