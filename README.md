@@ -23,9 +23,9 @@ I have, and I will have no intention to write IE support for misTET, since I nev
 <h2>Admin Panel</h2>
 View /modules/admin/DOC.md
 
-<h2>Demo</h2>
-You can view a `demo` of misTET here:
-<a href = "http://lostpassword.hellospace.net">http://lostpassword.hellospace.net</a>
+<h2>Site</h2>
+misTET developing site is here:
+<a href = "http://mistet.altervista.org" target = "_blank">http://mistet.altervista.org</a>
 
 <h2>Collaboration</h2>
-Whoever wants to collaborate is welcome, contact me at: gdb.lost[at]gmail[dot]com 
+Whoever wants to collaborate is welcome, contact me at: <a href = "mailto:gdb.lost@gmail.com">gdb.lost[at]gmail[dot]com </a>
