@@ -25,21 +25,10 @@ Don't use XML special characters.
 	<menu>
 		<text id = 'blog'>Blog</text>
 	</menu>
-	<menu>
-		<text id = 'main'>Main voice</text>
-		<text id = 'sub'>sub</text>
-		<text id = 'sub'>sub</text>
-		<text id = 'sub'>sub</text>
-		<text id = 'sub'>NOTHINGNIGGERNOTHING</text>
-	</menu>
-	<menu>
-		<text id = 'link1'>First</text>
+	<menu>	
+		<text id = 'features'>Features</text>
 		<text id = 'extern'>Extern_file</text>
-	</menu>
-	<menu>
-		<text id = 'link2'>Second</text>
-	</menu>
-	<menu>
-		<text id = 'link3'>third</text>
+		<text id = 'go'>`go`</text>
+		<text id = 'nigger'>NIGGER_NIGGER</text>
 	</menu>
 </menue>

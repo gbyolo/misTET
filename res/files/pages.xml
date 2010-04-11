@@ -23,7 +23,6 @@
 	>
 ]>
 <!--
-
 To create a new page, just use <page> node with the page content. The 
 attribute `id` has to be the same you specified in menu.xml. Through <go>
 node you can create a link to an extern file, and through the attribute
@@ -37,37 +36,39 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 -->
 <pages>
 	<page id = 'home'>
-		HomePage. It's id is `home`, you can change it. Use the menu above.
+		<![CDATA[
+			This site is for everybody who follows my project. It will be updated everytime
+			another version of misTET is released. You can visit the blog page to view all the
+			news.
+		]]>
 	</page>
 	<page id = 'admin'>
 	</page>
 	<page id = 'blog'>
 	</page>
-	<page id = 'main'>
-		<go href = "/res/files/stat/notes.txt" lan = "python" text = "View" after = " - Hello world in python"></go>
-	</page>
-	<page id = 'sub'>
-		NOTHING ELSE MATTERS IN THIS LIFE
-	</page>
-	<page id = 'link1'>
-		First link.
+	<page id = 'features'>
+		<![CDATA[
+			In this section there are some of the features of this cms, like including an extern file,
+			using sources, and using the `go` attribute.
+		]]>
 	</page>
 	<page id = 'extern'>
 		<![CDATA[
-			Here an example of how to include an extern file:
+			This is an example of how including an extern file, with Syntax Highlighting :P
 		]]>
 		<text href = "notes.txt" lan = "python"></text>
 	</page>
-	<page id = 'link2'>
-		Second link, this page refers to `link2`
+	<page id = 'go'>
 		<![CDATA[
-			<br>wowowowow
+			Using `go` attribute. As you can see, you can also include a file using:<br>
+			<pre id = 'code'>#id&page=pageRef</pre><br>where pageRef is a link of a file in this server :P<br><br>
 		]]>
+		<go href = "/res/files/stat/notes.txt" lan = "python" text = "View" after = " ~ This is an external link, a source"></go>
+		<go href = "/res/files/stat/well" text = "View" after = " ~ This is an external link, a simple file"></go>
 	</page>
-	<page id = 'link3'>
-		Link:
+	<page id = 'nigger'>
 		<![CDATA[
-			<br><a href = ""'>Home</a>
+			NIGGER page, this is just useless.
 		]]>
 	</page>
 </pages>
