@@ -28,6 +28,7 @@ input#submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 	margin: 0 auto;
 	padding: 0px;
 	width: 886px;
+	height: 500px;
 	color: #000;
 }
 
@@ -40,8 +41,15 @@ input#submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 	padding: 0;
 }
 
-	#preheader a { color: #FFF; background: inherit; text-decoration:none; }
-	#preheader a:hover { color: #FFF; background: inherit;}
+#main_content {
+	width: 886px;
+	background: #FFF url(images/bg.jpg) repeat-y center bottom;
+	margin: 0 auto;
+	padding: 0px;
+}
+
+#preheader a { color: #FFF; background: inherit; text-decoration:none; }
+#preheader a:hover { color: #FFF; background: inherit;}
 
 #preheader #padding {
 	
@@ -83,23 +91,16 @@ input#submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 	padding-left: 70px;
 }
 
-#main_content {
-	background: #FFF url(images/bg.jpg) repeat-y center bottom;
-	background-color: #FFF;
-	margin: 0 auto;
-	padding: 0px;
-	width: 886px;
-}
-
 
 #sd_left {
-
     background-color: #FFF;
     float: left;
 	color: #000;
 	margin: 0 0 0px 80px;
 	padding: 15px 0 0 0;
 	width: 500px;
+	height: 400px;
+	overflow: auto;
 	
 }	
 
@@ -111,8 +112,13 @@ input#submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 	margin: 0 90px 0 0;
 	padding: 0px 0px 0 15px;
 	width: 170px;
+	height: 400px;
 	border-left: 1px dashed #ccc;
 }	
+
+#code {
+	border: 1px solid #000;
+}
 
 /* For IE... */
 * html #sd_right {
@@ -139,15 +145,6 @@ input#submit { width: 28px; height: 20px; font-weight: bold; border: none; backg
 }
 
 
-#date { 
-	color: #46574D; 
-	background: #FFFFFF;
-	text-align: right; 
-	margin: 10px 0 5px 0; 
-	padding: 0.4em 0 0 0; 
-	border-top: 1px solid #eee;
-}
-
 input#button { 
 	background: #FFFFF4; 
 	color: #808080;
@@ -155,19 +152,6 @@ input#button {
 	border-bottom: 1px solid #ccc;
 }
 
-#comments { 
-	padding: 10px 10px 8px 10px; 
-	margin: 0 0 7px 0; 
-	background: #f8f8f8; 
-	color: #000;
-}
-
-#commentsbox { 
-	padding: 8px 0 10px 10px; 
-	margin: 0 0 10px 0; 
-	background: #f4f4f4; 
-	color: #000;
-}
 
 #error {
 	color: #990000;
