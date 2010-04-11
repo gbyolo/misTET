@@ -55,9 +55,9 @@
 			}
 		}
 		@@fclose($file);
-		echo "<form action = '?menu&file={$menuFile}' method = 'POST'>".
-             "<textarea name = 'newMenu' rows = '20' cols = '65'>{$content}</textarea>".
-             "<input type = 'submit' value = 'submit'></input>";
+		echo 	"<form action = '?menu&file={$menuFile}' method = 'POST'>".
+             		"<textarea name = 'newMenu' rows = '20' cols = '65'>{$content}</textarea>".
+             		"<input type = 'submit' value = 'submit'></input>";
              
 	} else if (isset($_GET['editPages'])) {
 		
@@ -69,9 +69,9 @@
 			}
 		}
 		@@fclose($file);
-		echo "<form action = '?pages&file={$pagesFile}' method = 'POST'>".
-             "<textarea name = 'newPage' rows = '20' cols = '65'>{$content}</textarea>".
-             "<input type = 'submit' value = 'submit'></input>";
+		echo 	"<form action = '?pages&file={$pagesFile}' method = 'POST'>".
+             		"<textarea name = 'newPage' rows = '20' cols = '65'>{$content}</textarea>".
+             		"<input type = 'submit' value = 'submit'></input>";
              
 	} else if (isset($_GET['login'])) {
 		
@@ -102,15 +102,15 @@
 	} else if (isset($_SESSION['mistet']['logged']) ) {
 		
 		echo "<h2>Admin Control Panel</h2><br>".
-			  "<a href = '?editMenu'>Edit menu.xml</a><br>".
-			  "<a href = '?editPages' >Edit pages.xml</a><br>".
-              "<a href = '?logout'>Logout</a>";
+		     "<a href = '?editMenu'>Edit menu.xml</a><br>".
+		     "<a href = '?editPages' >Edit pages.xml</a><br>".
+              	     "<a href = '?logout'>Logout</a>";
               
 	} else if (!isset($_SESSION['mistet']['logged'])) { 
 		
 		echo "Login: <br><form action = '?login' method = 'POST'>".
-			 "<Password: <input name = 'password' type = 'text'><br>".
-			 "<input type = 'submit' value = 'submit'></form>";
+		     "<Password: <input name = 'password' type = 'text'><br>".
+		     "<input type = 'submit' value = 'submit'></form>";
 
 	} else 
 

@@ -45,7 +45,6 @@ var misTET = {
 		var args = misTET.other.parseGET();
 		var menuOk = true, pagesOk = true;
 		ops.innerHTML = misTET['config']['loading'];
-		misTET.resources.load.modules();
 		
 		try {
 			misTET.resources.load.menu();
@@ -69,6 +68,7 @@ var misTET = {
 			divMenu.innerHTML = misTET.resources.parse.menu();
 
 			var divpage = $('sd_left');
+			misTET.resources.load.modules();
 			
 			if (misTET.location == "") {
 				misTET['resources'].set.page(misTET['config']['home']);
@@ -106,20 +106,20 @@ var misTET = {
 			if (misTET.location == "") {
 				misTET.resources.set.page(misTET['config']['home']);
 			} else {
-					var args = misTET.other.parseGET();
-					if (!isset(args['page'])) {
+				var args = misTET.other.parseGET();
+				if (!isset(args['page'])) {
 						
-						var href = misTET.location.match(/#\w+/);
-						misTET.resources.set.page(href[0].replace('#', ''));	
-					} else {
+					var href = misTET.location.match(/#\w+/);
+					misTET.resources.set.page(href[0].replace('#', ''));	
+				} else {
 						
-						var inner = misTET.resources.loadPageGET(args['page'], args['lan']);
-						div.innerHTML = inner;
-						if (isset(args['lan'])) {
-							/* Sintax Highlighting */
-							SyntaxHighlighter.highlight();
-						} 
-					}
+					var inner = misTET.resources.loadPageGET(args['page'], args['lan']);
+					div.innerHTML = inner;
+					if (isset(args['lan'])) {
+						/* Sintax Highlighting */
+						SyntaxHighlighter.highlight();
+					} 
+				}
 			}
 		}
 	},
@@ -157,24 +157,24 @@ var misTET = {
 				new Ajax.Request(path, {
 					method: "get",
 					asynchronous: false,
-       	   			evalJS: false,
+       	   				evalJS: false,
                 
-             	   	onSuccess: function (http) {
+             	   			onSuccess: function (http) {
 						if (test = misTET.other.XMLtest(http.responseXML)) {
-              	      		misTET['config']['init'] = http.responseXML;
-              	      	} else {
-              	      		misTET.error(test)
-                        }
-               	    },
+              	      					misTET['config']['init'] = http.responseXML;
+              	      				} else {
+              	      				misTET.error(test)
+                        		}
+               	    			},
                 
-                	onFailure: function (http) {
-                    	error			 = new Error("Error while loading init.xml");
-                        error.name		 = "initEttor";
-                    	error.fileName   	 = path;
-                	}
-            	});
-            	/* Error... */
-            	if (error) {
+                			onFailure: function (http) {
+                    				error			 = new Error("Error while loading init.xml");
+                        			error.name		 = "initEttor";
+                    				error.fileName   	 = path;
+                			}
+            			});
+            			/* Error... */
+            			if (error) {
 					$('sd_left').innerHTML += error;
 				}
 				
@@ -197,24 +197,24 @@ var misTET = {
 				new Ajax.Request(path, {
 					method: "get",
 					asynchronous: false,
-       	   			evalJS: false,
+       	   				evalJS: false,
                 
-             	   	onSuccess: function (http) {
+             	   			onSuccess: function (http) {
 						if (test = misTET.other.XMLtest(http.responseXML)) {
-              	      		misTET['config']['menu'] = http.responseXML;
-              	      	} else {
-              	      		misTET.error(test)
-                        }
-               	    },
+              	      					misTET['config']['menu'] = http.responseXML;
+              	      				} else {
+              	      					misTET.error(test)
+                        			}
+               	    			},
                 
-                	onFailure: function (http) {
-                    	error			 = new Error("Error while loading menu.xml");
-                        error.name		 = "menuEttor";
-                    	error.fileName   	 = path;
-                	}
-            	});
-            	/* Error... */
-            	if (error) {
+                			onFailure: function (http) {
+                    				error			 = new Error("Error while loading menu.xml");
+                        			error.name		 = "menuEttor";
+                    				error.fileName   	 = path;
+                			}
+            			});
+            			/* Error... */
+            			if (error) {
 					$('sd_left').innerHTML += error;
 				}
 			},
@@ -226,27 +226,27 @@ var misTET = {
 				var test = false;
 				var error = false;
 				
-								new Ajax.Request(path, {
+				new Ajax.Request(path, {
 					method: "get",
 					asynchronous: false,
-       	   			evalJS: false,
-                
-             	   	onSuccess: function (http) {
+       	   				evalJS: false,
+                	
+             	   			onSuccess: function (http) {
 						if (test = misTET.other.XMLtest(http.responseXML)) {
-              	      		misTET['config']['pages'] = http.responseXML;
-              	      	} else {
-              	      		misTET.error(test)
-                        }
-               	    },
+              	      					misTET['config']['pages'] = http.responseXML;
+              	      				} else {
+              	      					misTET.error(test)
+                        			}
+               	    			},
                 
-                	onFailure: function (http) {
-                    	error			 = new Error("Error while loading pages.xml");
-                        error.name		 = "pagesEttor";
-                    	error.fileName   	 = path;
-                	}
-            	});
-            	/* Error... */
-            	if (error) {
+                			onFailure: function (http) {
+                    				error			 = new Error("Error while loading pages.xml");
+                        			error.name		 = "pagesEttor";
+                    				error.fileName   	 = path;
+                			}
+            			});
+            			/* Error... */
+            			if (error) {
 					$('sd_left').innerHTML += error;
 				}
 			},
@@ -261,24 +261,24 @@ var misTET = {
 				new Ajax.Request(path, {
 					method: "get",
 					asynchronous: false,
-       	   			evalJS: false,
+       	   				evalJS: false,
                 
-             	   	onSuccess: function (http) {
+             	   			onSuccess: function (http) {
 						if (test = misTET.other.XMLtest(http.responseXML)) {
-              	      		misTET['config']['modules'] = http.responseXML;
-              	      	} else {
-              	      		misTET.error(test)
-                        }
-               	    },
+              	      					misTET['config']['modules'] = http.responseXML;
+              	      				} else {
+              	      					misTET.error(test)
+                        			}
+               	    			},
                 
-                	onFailure: function (http) {
-                    	error			 = new Error("Error while loading modules.xml");
-                        error.name		 = "modulesError";
-                    	error.fileName   	 = path;
-                	}
-            	});
-            	/* Error... */
-            	if (error) {
+                			onFailure: function (http) {
+                    				error			 = new Error("Error while loading modules.xml");
+                        			error.name		 = "modulesError";
+                    				error.fileName   	 = path;
+                			}
+            			});
+            			/* Error... */
+            			if (error) {
 					$('sd_left').innerHTML += error;
 				}
 			
@@ -483,7 +483,7 @@ var misTET = {
                     				/* prepare the specified brush */
 						SyntaxHighlighter.defaults["brush"] = langs[lan];
 					
-					/* are you able? */
+					/* mah */
 					} else {
 						div.innerHTML = 'Error while loading source. Please specify one of the following languages:<br><br>';
 					
@@ -513,18 +513,18 @@ var misTET = {
 		},
 		
 		isFile: function (path) {
-            var result = false;
+            		var result = false;
  
  			try {
-            	new Ajax.Request(path, {
-                	method: "GET",
-                	asynchronous: false,
+            			new Ajax.Request(path, {
+                			method: "GET",
+                			asynchronous: false,
  
-                	onSuccess: function () {
-                    	result = true;
-                	},
-            	});
-            } catch (exception) { }
+                			onSuccess: function () {
+                    				result = true;
+                			},
+            			});
+            		} catch (exception) { }
  
             return result;
         },
