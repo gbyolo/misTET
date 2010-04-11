@@ -1,5 +1,3 @@
 TODO
 
-Make bettere my admin module, now it sucks enough to exists.
-The admin.initilize() function works well, but when I try to reload
-#admin it doesn't work, I have to fix that.
+Make better the blog module

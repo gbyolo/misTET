@@ -6,7 +6,7 @@ misTET is a simple Ajax cms with XML support as regards menu and pages contents.
 	- files
 
 /res/files folder:
-	- menu.xm
+	- menu.xml
 	- pages.xml
 	- styles
 	- stat
@@ -21,7 +21,7 @@ Supported Browsers:<br>
 I have, and I will have no intention to write IE support for misTET, since I never cared about that. If someone wants to help me do this, well, it would be beautiful :D.
 
 <h2>Admin Panel</h2>
-View /modules/admin/DOC.md
+View /modules/admin/README.md
 
 <h2>Site</h2>
 misTET developing site is here:
