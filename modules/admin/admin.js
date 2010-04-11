@@ -21,125 +21,24 @@
 
 misTET.modules.admin = {
 	
-	version: "0.0.2",
+	version: "0.2.3",
 	name: "admin",
-	dir: "/modules/admin",
+	dir: "/modules/admin/",
 	
 	initialize: function () {
-		misTET.modules.admin.location = document.location.hash;
 		
-		if (/#admin/.match(misTET.modules.admin.location)) {
-			var divPagina = $('sd_left');
-			if (misTET.modules.admin.logged()) {
-				divPagina.innerHTML = 	"Admin Control Panel<br><a href = '#admin' onClick = 'misTET.modules.admin.editMenu();'>Edit menu.xml</a><br>"+
-										"<a href = '#admin' onClick = 'misTET.modules.admin.editPagine();'>Edit pages.xml</a><br>";
-                divPagina.innerHTML += 	"<a href = '#' onClick = 'misTET.modules.admin.logout();'>Logout</a>";
-			} else {
-				divPagina.innerHTML =	"Login: <br><form action = '"+misTET.modules.admin.dir+"/admin.php?login' method = 'POST'>" +
-										"<Password: <input name = 'password' type = 'text'><br>" +	
-										"<input type = 'submit' value = 'submit'></form>";
-			}
+		if (/#admin/.match(document.location.href)) {
+			window.location.href = misTET.modules.admin.dir;
 		}
 		
-		if (isset(misTET.intva)) {
-			clearInterval(misTET.intval);
-		}
-		misTET.modules.admin.intVal = window.setInterval(misTET.modules.admin.refresh, 100);
+		misTET.modules.admin.intval = window.setInterval(misTET.modules.admin.refresh, 100);
 		
 	},
 	
 	refresh: function () {
-		if (misTET.modules.admin.location != document.location.hash) {
-			misTET.modules.admin.location = document.location.hash;
-			
-			if (/#admin/.match(misTET.modules.admin.location)) {
-				var divPagina = $('sd_left');
-				if (misTET.modules.admin.logged()) {
-					divPagina.innerHTML = 	"Admin Control Panel<br><a href = '#admin' onClick = 'misTET.modules.admin.editMenu();'>Edit menu.xml</a><br>"+
-											"<a href = '#admin' onClick = 'misTET.modules.admin.editPagine();'>Edit pages.xml</a><br>";
-                	divPagina.innerHTML += 	"<a href = '#' onClick = 'misTET.modules.admin.logout();'>Logout</a>";
-				} else {
-					divPagina.innerHTML =	"Login: <br><form action = '"+misTET.modules.admin.dir+"/admin.php?login' method = 'POST'>" +
-											"<Password: <input name = 'password' type = 'text'><br>" +	
-											"<input type = 'submit' value = 'submit'></form>";
-				}
-			} else {
-				misTET.refresh();
-			}
-		}
-	},
-	
-	checkPHP: function (path) {
-		var error = false;
-		var result = "";
 		
-		new Ajax.Request(path, {
-			method: "get",
-			asynchronous: false,
-			evalJS: false,
-			
-			onSuccess: function (http) {
-				result = http.responseText;
-				if ( /true/.match(result) ) {
-					result = true;
-				} else {
-					result = false;
-				}
-			},
-			
-			onFailure: function (http) {
-				error 			= new Error("Error while receiving file. #{status}".interpolate(http));
-				error.name 		= "receiveError";
-				error.fileName  = path;
-			}
-		});
-		
-		if (error) {
-			return error;
-		} else {
-			return result;
+		if (/#admin/.match(document.location.hash)) {
+			window.location.href = "/modules/admin/";
 		}
-	},
-	
-	logged: function () {
-		if ( misTET.modules.admin.checkPHP(misTET.modules.admin.dir+"/admin.php?connected") ) {
-			return true;
-		} else {
-			return false;
-		}
-	},
-		
-	logout: function () {
-		if ( misTET.modules.admin.checkPHP(misTET.modules.admin.dir+"/admin.php?logout") )  {
-			location.href = "#";
-		} else {
-			return false;
-		}
-	},
-	editMenu: function () {
-		divPagina = $('sd_left');
-		divPagina.innerHTML = "Login...";
-		if ( misTET.modules.admin.logged() ) {
-			var file = misTET.other.encorp('/res/files/menu.xml');
-			divPagina.innerHTML = 	"<form action = '"+misTET.modules.admin.dir+"/edit.php?menu&file=/res/files/menu.xml' method = 'POST'>" +
-                                  		"<textarea name = 'newMenu' rows = '20' cols = '65'>"+file+"</textarea>" +
-                                  		"<input type = 'submit' value = 'submit'></input>";
-            	} else {
-            		divPagina.innerHTML = "Loading...";
-            		misTET.modules.admin.initialize();
-           	 }
-	},
-	editPagine: function () {		
-		divPagina = $('sd_left');
-		divPagina.innerHTML = "Login...";
-		if ( misTET.modules.admin.logged() ) {
-			var file = misTET.other.encorp('/res/files/pagine.xml');
-			divPagina.innerHTML = 	"<form action = '"+misTET.modules.admin.dir+"/edit.php?pages&file=/res/files/pagine.xml' method = 'POST'>" +
-                                  		"<textarea name = 'newPage' rows = '20' cols = '65'>"+file+"</textarea>" +
-                                  		"<input type = 'submit' value = 'submit'></input>";
-        	} else {
-        		divPagina.innerHTML = "Loading...";
-            		misTET.modules.admin.initialize();
-        	}
 	}
 }
