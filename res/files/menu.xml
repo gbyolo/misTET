@@ -24,6 +24,7 @@ Don't use XML special characters.
 	</menu>
 	<menu>
 		<text id = 'blog'>Blog</text>
+		<text id = 'blog=admin'>Admin</text>
 	</menu>
 	<menu>	
 		<text id = 'features'>Features</text>
