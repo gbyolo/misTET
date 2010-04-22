@@ -1,3 +1,5 @@
 TODO
 
-Make better the blog module
+I must rewrite the feature of the blog/admin panel wich provides to delete
+a single post, because it doesn't work fine, but, well, it doesn't matter 
+so much now :P
