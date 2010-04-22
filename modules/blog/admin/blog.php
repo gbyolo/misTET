@@ -50,7 +50,7 @@ if (!isset($_SESSION['mistet']['logged'])) {
 			echo "<form action = '?new' method = 'POST'>".
 				 "Title: <input type = 'text' name = 'title'></input>".
 				 "<br>Author: <input type = 'text' name = 'author'></input>".
-				 "<br>Text: <textarea name = 'text' rows = '24' cols = '60'></textarea>".
+				 "<br><textarea name = 'text' rows = '15' cols = '60'></textarea>".
 				 "<br><input type = 'submit' value = 'submit'></input>".
 				 "</form>";
 		} else {
@@ -65,12 +65,13 @@ if (!isset($_SESSION['mistet']['logged'])) {
 	
 			/* Are you going to put a fucking text? */
 			$text = $file->createCDataSection(str_replace(']]>', ']&#93;>', urldecode($_POST['text'])));
-    		$newPost->appendChild($text);
-    		$file->documentElement->appendChild($newPost);
+    			$newPost->appendChild($text);
+    			$file->documentElement->appendChild($newPost);
 
 			$file->documentElement->setAttribute('n', $id);
-    		$file->save('../resources/blog.xml');
-    		echo "<p id = 'success'>{$_POST['title']} has been created!</p>";
+    			$file->save('../resources/blog.xml');
+    			echo "<p id = 'success'>{$_POST['title']} has 
+been created!</p>";
 		}
 	} else if (isset($_GET['show'])) {
 		$posts = $file->documentElement->getElementsByTagName('post');
@@ -97,7 +98,7 @@ if (!isset($_SESSION['mistet']['logged'])) {
 					echo "<form action = '?id={$_REQUEST['id']}&edit' method = 'POST'>".
 				 		 "Title: <input type = 'text' name = 'title' value = '{$title}'></input>".
 				 		 "<br>Author: <input type = 'text' name = 'author' value = '${author}'></input>".
-				 		 "<br>Text: <textarea name = 'text' rows = '24' cols = '60'>{$post->nodeValue}</textarea>".
+				 		 "<br><textarea name = 'text' rows = '15' cols = '60'>{$post->nodeValue}</textarea>".
 				 		 "<br><input type = 'submit' value = 'submit'></input>".
 				 		 "</form>";
 				} else {
