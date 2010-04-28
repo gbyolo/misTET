@@ -21,7 +21,7 @@
 
 misTET.modules.blog = {
 
-	version: "0.0.1",
+	version: "0.1",
 	name: "blog",
 	root: "/modules/blog/",
 	file: { },
@@ -38,7 +38,9 @@ misTET.modules.blog = {
 		}
 		
 		if (/#blog/.match(misTET.modules.blog.location)) {
-			if (isset(args['id'])) {
+			if (/admin/.match(misTET.modules.blog.location)) {
+				window.location.href = misTET.modules.blog.root + "admin";
+			} else  if (isset(args['id'])) {
 				misTET.modules.blog.display(args['id']);
 			} else {
 				misTET.modules.blog.display();
@@ -51,15 +53,14 @@ misTET.modules.blog = {
 	
 	refresh: function () {
 		
-		if (misTET.modules.blog.location != document.location.hash) {
-		
-			misTET.modules.blog.location = document.location.hash;
-			var loc = misTET.modules.blog.location;
-			var args = misTET.other.parseGET();
-			
-			if (/#blog/i.match(loc)) {
+		if (/#blog/i.match(document.location.hash)) {
+			if (misTET.modules.blog.location != document.location.hash) {
+				misTET.modules.blog.location = document.location.hash;
+				var loc = misTET.modules.blog.location;
+				var args = misTET.other.parseGET();
+				
 				if (/admin/.match(loc)) {
-					misTET.modules.blog.admin();
+					window.location.href = misTET.modules.blog.root + "admin";
 				}
 				if (!isset(args['id'])) {
 					misTET.modules.blog.display();
@@ -126,25 +127,37 @@ misTET.modules.blog = {
 		return output;
 	},
 	
+	checkPost: function (map) {
+		var result = true;
+		['title', 'text', 'author', 'date'].each(function(obj) {
+			if (typeof(map[obj]) == "undefined") {
+				result = false;
+			}
+		});
+		return result;
+	},
+	
 	display: function (id) {
 		if (id) {
 			var post = misTET.modules.blog.getPost(id);
-			var output = "<div class = 'post'><div class = 'title'>"+ post.title + "</div>" + post.text + "<div class = 'foot'>"+
-					 	"Posted by <span class = 'author'>" + post.author + "</span> on <span class = 'date'>" + post.date + "</span></div>";
-			$('sd_left').innerHTML = output;
+			if (misTET.modules.blog.checkPost(post)) {
+				var output = "<div class = 'post'><div class = 'title'>"+ post.title + "</div>" + post.text + "<div class = 'foot'>"+
+					 		"Posted by <span class = 'author'>" + post.author + "</span> on <span class = 'date'>" + post.date + "</span></div>";
+				$('sd_left').innerHTML = output;
+			} else {
+				$('sd_left').innerHTML = "<p id = 'error'>The selected post doesn\'t exist</p>";
+			}
 		} else {
+			$('sd_left').innerHTML = "";
 			for (var j = misTET.modules.blog.total; j > 0; j--) {
-				$('sd_left').innerHTML = "";
-				var currentPost = misTET.modules.blog.getPost(j);
-				var output = "<div class = 'post'><div class = 'title'>"+ currentPost.title + "</div>" + currentPost.text + "<div class = 'foot'>"+
-					 		 "Posted by <span class = 'author'>" + currentPost.author + "</span> on <span class = 'date'>" + currentPost.date + "</span></div>";
-				$('sd_left').innerHTML += output;
+				var currentPost = misTET.modules.blog.getPost(""+j+"");
+				if (misTET.modules.blog.checkPost(currentPost)) {
+					var output = "<div class = 'post'><div class = 'title'>"+ currentPost.title + "</div>" + currentPost.text + "<div class = 'foot'>"+
+					 		 	"Posted by <span class = 'author'>" + currentPost.author + "</span> on <span class = 'date'>" + currentPost.date + "</span></div>";
+					$('sd_left').innerHTML += output;
+				}
 			}
 		}
 	},
-	
-	admin: function () {
-		/** This has to be implemented */
-	}
 	
 }
