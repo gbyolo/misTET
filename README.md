@@ -23,6 +23,12 @@ I have, and I will have no intention to write IE support for misTET, since I nev
 <h2>Admin Panel</h2>
 View /modules/admin/README.md
 
+<h2>Blog</h2>
+View /modules/blog/README.md
+
+<h2>SintaxHighlighting</h2>
+View /modules/sintax/README.md
+
 <h2>Site</h2>
 misTET developing site is here:
 <a href = "http://mistet.altervista.org" target = "_blank">http://mistet.altervista.org</a>
