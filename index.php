@@ -1,3 +1,23 @@
+<?php
+	$ip = $_SERVER['REMOTE_ADDR'];
+	$req = $_SERVER['REQUEST_URI'];
+	$user = $_SERVER['HTTP_USER_AGENT'];
+	$conn = $_SERVER['HTTP_CONNECTION'];
+	$referer = $_SERVER['HTTP_REFERER'];
+	$date = date("d-m-Y H:i:s");
+	$string = "|-----------------------------------------------------|\n".
+			  "IP: {$ip}\tREQ_URI: {$req}\nUSER_AGENT: {$user}\n".
+			  "CONNECTION: {$conn}\n".
+			  "REFERER: {$referer}\nTIME: {$date}".
+			  "\n|-----------------------------------------------------|";
+	$ops = "log";
+	if (@@file_exists($ops) ) {
+			if ($handle = @@fopen($ops, 'a')) {
+				if (@@fwrite($handle, $string)) {
+				}
+			} 
+		}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -32,10 +52,9 @@
 			<div id = "main_content">
 				<div id = "sd_right">
 					<div id = "text_padding">
-						<h2>Search</h2>
-						<form method ="post" action = "#">
-							<p><input type = "text" name = "search" id = "search"></input> <input type = "submit" value = "Go" id = "submit"></input> </p>
-						</form>
+						<h2>Info</h2>
+						e-mail: <a href = "mailto:gdb.lost@gmail.com">gdb.lost[at]gmail[dot]com</a>
+						<a href = "http://github.com/lostpassword/misTET" target = "_blank">Github</a>
 					</div>
 				</div>
 				
