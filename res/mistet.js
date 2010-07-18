@@ -33,6 +33,7 @@ var misTET = {
 	/* start misTET */
 	init: function () {
 		
+		/* you shouldn't initialize misTET more than one time */
 		if (misTET.initialized) {
 			throw new Error("misTET has been already initialized.");
 		}
