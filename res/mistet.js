@@ -192,24 +192,24 @@ var misTET = {
 				new Ajax.Request(path, {
 					method: "get",
 					asynchronous: false,
-       	   				evalJS: false,
+       	   			evalJS: false,
                 
-             	   			onSuccess: function (http) {
+             	   	onSuccess: function (http) {
 						if (test = misTET.other.XMLtest(http.responseXML)) {
-              	      					misTET['config']['menu'] = http.responseXML;
-              	      				} else {
-              	      					misTET.error(test)
-                        			}
-               	    			},
+              	      		misTET['config']['menu'] = http.responseXML;
+              	      	} else {
+              	      		misTET.error(test)
+                        }
+               	    },
                 
-                			onFailure: function (http) {
-                    				error			 = new Error("Error while loading menu.xml");
-                        			error.name		 = "menuError";
-                    				error.fileName   	 = path;
-                			}
-            			});
-            			/* Error... */
-            			if (error) {
+                	onFailure: function (http) {
+                    	error			 = new Error("Error while loading menu.xml");
+                       	error.name		 = "menuError";
+                    	error.fileName   	 = path;
+                	}
+            	});
+            	/* Error... */
+            	if (error) {
 					$('sd_left').innerHTML += error;
 				}
 			},
@@ -264,24 +264,24 @@ var misTET = {
 				new Ajax.Request(path, {
 					method: "get",
 					asynchronous: false,
-       	   				evalJS: false,
+       	   			evalJS: false,
                 	
-             	   			onSuccess: function (http) {
+             	   	onSuccess: function (http) {
 						if (test = misTET.other.XMLtest(http.responseXML)) {
-              	      					misTET['config']['pages'] = http.responseXML;
-              	      				} else {
-              	      					misTET.error(test)
-                        			}
-               	    			},
+              	      		misTET['config']['pages'] = http.responseXML;
+              	      	} else {
+              	      		misTET.error(test)
+                        }
+               	    },
                 
-                			onFailure: function (http) {
-                    				error			 = new Error("Error while loading pages.xml");
-                        			error.name		 = "pagesEttor";
-                    				error.fileName   	 = path;
-                			}
-            			});
-            			/* Error... */
-            			if (error) {
+                	onFailure: function (http) {
+                    	error			 = new Error("Error while loading pages.xml");
+                        error.name		 = "pagesEttor";
+                    	error.fileName   	 = path;
+                	}
+            	});
+            	/* Error... */
+            	if (error) {
 					$('sd_left').innerHTML += error;
 				}
 			},
@@ -383,14 +383,14 @@ var misTET = {
 					var langs = {	
 							'bash'		: 'Bash', 
 							'cpp' 		: 'Cpp', 
-							'c'		: 'Cpp',
+							'c'			: 'Cpp',
 							'c#' 		: 'CSharp', 
 							'css' 		: 'Css', 
 							'delphi' 	: 'Delphi', 
 							'java' 		: 'Java',
 							'js' 		: 'JScript', 
 							'jscript' 	: 'JScript',
-							'javascript'	: 'JSCript',
+							'javascript': 'JSCript',
 							'php' 		: 'Php', 
 							'python' 	: 'Python', 
 							'py'		: 'Python',
@@ -456,24 +456,24 @@ var misTET = {
 				new Ajax.Request(path, {
 					method: "get",
 					asynchronous: false,
-       	   				evalJS: false,
+       	   			evalJS: false,
                 
-             	   			onSuccess: function (http) {
+             	   	onSuccess: function (http) {
 						if (test = misTET.other.XMLtest(http.responseXML)) {
-              	      					misTET['config']['modules'] = http.responseXML;
-              	      				} else {
-              	      					misTET.error(test)
-                        			}
-               	    			},
+              	      		misTET['config']['modules'] = http.responseXML;
+              	      	} else {
+              	      		misTET.error(test)
+                        }
+               	    },
                 
-                			onFailure: function (http) {
-                    				error			 = new Error("Error while loading modules.xml");
-                        			error.name		 = "modulesError";
-                    				error.fileName   	 = path;
-                			}
-            			});
-            			/* Error... */
-            			if (error) {
+                	onFailure: function (http) {
+                    	error			 = new Error("Error while loading modules.xml");
+                        error.name		 = "modulesError";
+                    	error.fileName   	 = path;
+                	}
+            	});
+            	/* Error... */
+            	if (error) {
 					$('sd_left').innerHTML += error;
 				}
 			
@@ -512,18 +512,18 @@ var misTET = {
 		},
 		
 		isFile: function (path) {
-            		var result = false;
+        	var result = false;
  
  			try {
-            			new Ajax.Request(path, {
-                			method: "GET",
-                			asynchronous: false,
+            	new Ajax.Request(path, {
+                	method: "GET",
+                	asynchronous: false,
  
-                			onSuccess: function () {
-                    				result = true;
-                			},
-            			});
-            		} catch (exception) { }
+                	onSuccess: function () {
+                    	result = true;
+                	},
+            	});
+            } catch (exception) { }
  
             return result;
         },
@@ -532,34 +532,34 @@ var misTET = {
 		encorp: function (path) {
 		
 			var result;
-            		var error = false;
+            var error = false;
             
-            		new Ajax.Request(path, {
-                		method: "get",
-                		asynchronous: false,
-                		evalJS: false,
+            new Ajax.Request(path, {
+                method: "get",
+                asynchronous: false,
+                evalJS: false,
                 
-                		onSuccess: function (http) {
-                    			try {
-                        			result = http.responseText;
-                    			}
-                    			catch (e) {
-                     				error             = e;
-                     		   		error.fileName    = path;
-                  			}
-            			},
+                onSuccess: function (http) {
+                    try {
+                        result = http.responseText;
+                    }
+                    catch (e) {
+                     	error             = e;
+                     	error.fileName    = path;
+                  	}
+            	},
                 
-                		onFailure: function (http) {
-                    			error            = new Error("Error while loading file (#{status} - #{statusText}).".interpolate(http));
-                    			error.fileName   = path;
-                		}
-            		});
+                onFailure: function (http) {
+                    error            = new Error("Error while loading file (#{status} - #{statusText}).".interpolate(http));
+                    error.fileName   = path;
+                }
+            });
 
-            		if (error) {
-                		throw error;
-           		 }
+            if (error) {
+                throw error;
+           	}
             
-           		return result;
+           	return result;
 		},
 		
 		XMLtest: function (xml) {
@@ -584,19 +584,19 @@ var misTET = {
 		
 			var result = null;
             
-            		new Ajax.Request(path, {
-                		method: "get",
-                		asynchronous: false,
-                		evalJS: false,
+            new Ajax.Request(path, {
+                method: "get",
+                asynchronous: false,
+                evalJS: false,
                 
-                		onSuccess: function (http) {
-                    			try {
-                       				window.eval(http.responseText);
-                    			} catch (error) { 
-                    				misTET.error(error);
-                    			}
-                		}
-            		});
+                onSuccess: function (http) {
+                    try {
+                       	window.eval(http.responseText);
+                    } catch (error) { 
+                    	misTET.error(error);
+                    }
+                }
+            });
        
         },
 		
