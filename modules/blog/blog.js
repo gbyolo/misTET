@@ -21,7 +21,7 @@
 
 misTET.modules.blog = {
 
-	version: "0.1",
+	version: ["0", "2", "0"].join("."),
 	name: "blog",
 	root: "/modules/blog/",
 	file: { },
@@ -31,15 +31,15 @@ misTET.modules.blog = {
 		
 		misTET.modules.blog.location = document.location.hash;		
 		misTET.modules.blog.initXML();
+		
 		var args = misTET.other.parseGET();
 		
-		if (isset(misTET.intval)) {
-			clearInterval(misTET.intval);
-		}
 		
 		if (/#blog/.match(misTET.modules.blog.location)) {
-			if (/admin/.match(misTET.modules.blog.location)) {
+			 
+			 if (/admin/.match(misTET.modules.blog.location)) {
 				window.location.href = misTET.modules.blog.root + "admin";
+				
 			} else  if (isset(args['id'])) {
 				misTET.modules.blog.display(args['id']);
 			} else {
@@ -48,20 +48,21 @@ misTET.modules.blog = {
 		}
 		
 		misTET.other.insertCSS(misTET.modules.blog.root + "resources/blog.css");
-		misTET.modules.blog.intval = window.setInterval(misTET.modules.blog.refresh, 100);
+		misTET.modules.blog.intval = new PeriodicalExecuter(misTET.modules.blog.refresh, 1);
 	},
 	
 	refresh: function () {
 		
-		if (/#blog/i.match(document.location.hash)) {
-			if (misTET.modules.blog.location != document.location.hash) {
-				misTET.modules.blog.location = document.location.hash;
+		if (/#blog/i.match(location.hash)) {
+			if (misTET.modules.blog.location != location.hash) {
+				misTET.modules.blog.location = location.hash;
 				var loc = misTET.modules.blog.location;
 				var args = misTET.other.parseGET();
 				
 				if (/admin/.match(loc)) {
 					window.location.href = misTET.modules.blog.root + "admin";
 				}
+				
 				if (!isset(args['id'])) {
 					misTET.modules.blog.display();
 				} else if (isset(args['id']) ) {
@@ -70,7 +71,7 @@ misTET.modules.blog = {
 					misTET.refresh();
 				}
 			}
-		}
+		} 
 	},
 	
 	initXML: function () {

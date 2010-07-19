@@ -20,7 +20,7 @@
 
 /** Admin panel script **/
 
-	define("VERSION", "0.2.3");
+	define("VERSION", "0.2.4");
 	define("__NAME__", "AdminPanel");
 	
 	/* Here admin root dir*/

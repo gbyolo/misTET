@@ -21,24 +21,24 @@
 
 misTET.modules.admin = {
 	
-	version: "0.2.3",
+	version: "0.2.4",
 	name: "admin",
 	dir: "/modules/admin/",
 	
 	initialize: function () {
 		
 		if (/#admin/.match(document.location.href)) {
-			window.location.href = misTET.modules.admin.dir;
+			location.href = misTET.modules.admin.dir;
 		}
 		
-		misTET.modules.admin.intval = window.setInterval(misTET.modules.admin.refresh, 100);
+		misTET.modules.admin.intval = new PeriodicalExecuter(misTET.modules.admin.refresh, 1);
 		
 	},
 	
 	refresh: function () {
 		
 		if (/#admin/.match(document.location.hash)) {
-			window.location.href = "/modules/admin/";
+			location.href = "/modules/admin/";
 		}
 	}
 }
