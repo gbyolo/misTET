@@ -1,4 +1,8 @@
 <h2>Changelog</h2><br>
+	-	[07-19-2010]	-	0.5.1	Fixed a bug
+	-	[07-19-2010]	-	0.5		Better as regards modules
+									added blog
+									some fixes
 	-	[00-00-2010]	-	0.4		Better as regards modules
 									added blog
 									some fixes

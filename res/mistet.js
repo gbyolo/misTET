@@ -26,7 +26,7 @@ function empty (string) {
 
 var misTET = {
     
-    version: ["0", "5", "0"].join("."),
+    version: ["0", "5", "1"].join("."),
     
     modFolder: "/modules",
     modules: { },
