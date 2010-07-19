@@ -58,6 +58,15 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 		]]>
 		<text href = "notes.txt" lan = "python"></text>
 	</page>
+	<page id = 'PHP'>
+		<![CDATA[
+			You can use the following syntax:<br>
+			<pre id = 'code'>#id&page=name.php</pre><br>
+			name.php: name of the page in /res/files/stat<br>
+			The output is not the source, but what the server says getting the PHP page. Here's an example:<br>
+		]]>
+		<go href = "/res/files/stat/lol.php" text = "View" after = " ~ This is a PHP page which shows your IP"></go>
+	</page>
 	<page id = 'go'>
 		<![CDATA[
 			Using `go` attribute. As you can see, you can also include a file using:<br>

@@ -29,6 +29,7 @@ Don't use XML special characters.
 	<menu>	
 		<text id = 'features'>Features</text>
 		<text id = 'extern'>Extern_file</text>
+		<text id = 'PHP'>PHP</text>
 		<text id = 'go'>`go`</text>
 		<text id = 'nigger'>NIGGER_NIGGER</text>
 	</menu>
