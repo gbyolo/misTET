@@ -86,6 +86,7 @@ var misTET = {
 
         if (misTET.location !== location.hash) {
             misTET.location = location.hash;
+            misTET.resources.modules.load();
             misTET.go(location.hash, misTET.other.parseGET());
         } 
 
