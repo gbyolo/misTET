@@ -26,10 +26,15 @@ misTET.modules.blog = {
 	root: "/modules/blog/",
 	file: { },
 	total: "",
+	initialized: false,
 	
 	initialize: function () {
 		
-		misTET.modules.blog.location = document.location.hash;		
+		if (misTET.modules.blog.initialized) {
+			throw new error("The blog module has already been initialized");
+		}
+		
+		misTET.modules.blog.location = location.hash;		
 		misTET.modules.blog.initXML();
 		
 		var args = misTET.other.parseGET();
@@ -40,7 +45,7 @@ misTET.modules.blog = {
 			 if (/admin/.match(misTET.modules.blog.location)) {
 				window.location.href = misTET.modules.blog.root + "admin";
 				
-			} else  if (isset(args['id'])) {
+			} else if (isset(args['id'])) {
 				misTET.modules.blog.display(args['id']);
 			} else {
 				misTET.modules.blog.display();
@@ -49,6 +54,7 @@ misTET.modules.blog = {
 		
 		misTET.other.insertCSS(misTET.modules.blog.root + "resources/blog.css");
 		misTET.modules.blog.intval = new PeriodicalExecuter(misTET.modules.blog.refresh, 1);
+		misTET.modules.blog.initialized = true;
 	},
 	
 	refresh: function () {
