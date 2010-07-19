@@ -20,6 +20,9 @@ Supported Browsers:<br>
 	
 I have, and I will have no intention to write IE support for misTET, since I never cared about that. If someone wants to help me do this, well, it would be beautiful :D.
 
+<h2>Modules</h2>
+misTET is also a modular cms, so you can write your own module without edit the main source. View /modules/README.md for more instructions.
+
 <h2>Admin Panel</h2>
 View /modules/admin/README.md
 

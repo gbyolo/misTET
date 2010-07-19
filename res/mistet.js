@@ -19,11 +19,14 @@
 
 function isset (obj) {
 	return typeof(obj) != 'undefined';
-}
+};
+function empty (string) {
+	return string == "";
+};
 
 var misTET = {
 	
-	version: "0.4.0",
+	version: ["0", "5", "0"].join("."),
 	
 	modFolder: "/modules",
 	modules: { },
@@ -38,17 +41,17 @@ var misTET = {
 			throw new Error("misTET has been already initialized.");
 		}
 		
-		misTET.location = window.location.hash;
+		misTET.location = location.hash;
 		misTET.initialized = false;
 	
-		eval('misTET.resources.load.init()');
+		eval('misTET.resources.init.load()');
 		var ops = $('sd_left');
 		var args = misTET.other.parseGET();
 		var menuOk = true, pagesOk = true;
 		ops.innerHTML = misTET['config']['loading'];
 		
 		try {
-			misTET.resources.load.menu();
+			misTET.resources.menu.load();
 		} catch (e) {
 			ops.innerHTML = e;
 			menuOk = false;
@@ -56,7 +59,7 @@ var misTET = {
 		
 		if (menuOk) {
 			try {
-				misTET.resources.load.pages();
+				misTET.resources.pages.load();
 			} catch (e) {
 				ops.innerHTML += e;
 				pagesOk = false;
@@ -66,63 +69,26 @@ var misTET = {
 		if (menuOk && pagesOk) {
 			/* No error while loading menu and pages */
 			var divMenu = $('menu');
-			divMenu.innerHTML = misTET.resources.parse.menu();
+			divMenu.innerHTML = misTET.resources.menu.parse();
 
-			var divpage = $('sd_left');
-			misTET.resources.load.modules();
+			misTET.resources.modules.load();
 			
-			if (misTET.location == "") {
-				misTET['resources'].set.page(misTET['config']['home']);
-			} else {
-				/* No page to include */
-				if (!isset(args['page'])) {
-					/* Deleting needless chars */
-					var href = misTET.location.match(/#\w+/);
-					/* Page loading */
-					misTET.resources.set.page(href[0].replace('#', ''));
-				} else {
-					var inner = misTET.resources.loadPageGET(args['page'], args['lan']);
-					divpage.innerHTML = inner;
-					if (isset(args['lan'])) {
-						/* Sintax Highlighting */
-						SyntaxHighlighter.highlight();
-					} 
-				}
-			}
+			misTET.go(misTET.location, args);
 			
 		}
 		
-		/* Yeah! */
-		misTET.intval = window.setInterval(misTET.refresh, 100);
+		new PeriodicalExecuter(misTET.refresh, 0,1);
 		/* Initialized */
-        	misTET.initialized = true;
+        misTET.initialized = true;
 	},
 	
 	refresh: function () {
-		var div = $('sd_left');
-		if (misTET.location != window.location.hash) {
-			
-			misTET.location = window.location.hash;
-			
-			if (misTET.location == "") {
-				misTET.resources.set.page(misTET['config']['home']);
-			} else {
-				var args = misTET.other.parseGET();
-				if (!isset(args['page'])) {
-						
-					var href = misTET.location.match(/#\w+/);
-					misTET.resources.set.page(href[0].replace('#', ''));	
-				} else {
-						
-					var inner = misTET.resources.loadPageGET(args['page'], args['lan']);
-					div.innerHTML = inner;
-					if (isset(args['lan'])) {
-						/* Sintax Highlighting */
-						SyntaxHighlighter.highlight();
-					} 
-				}
-			}
-		}
+
+		if (misTET.location !== location.hash) {
+			misTET.location = location.hash;
+			misTET.go(location.hash, misTET.other.parseGET());
+		} 
+
 	},
 	
 	check: {
@@ -146,11 +112,37 @@ var misTET = {
 		home: { },
 		title: { },
 	},
-	resources: {
-		load: {
+	
+	go: function (query, args) {
+		if (empty(query)) {
+			misTET.resources.pages.set(misTET['config']['home']);
+		} else {
 			
+			if (!isset(args['page'])) {
+				
+				var href = query.match(/#\w+/);
+				misTET.resources.pages.set(href[0].replace('#', ''));
+				
+			} else {
+				
+				var inner = misTET.resources.pages.loadGET(args['page'], args['lan']);
+				$('sd_left').innerHTML = inner;
+				
+				if (isset(args['lan'])) {
+					
+					/* Sintax Highlighting */
+					SyntaxHighlighter.highlight();
+					
+				} 
+			}
+		}
+	},
+	
+	resources: {
+		
+		init: {
 			/* init args */
-			init: function () {
+			load: function () {
 				var path = '/res/files/init.xml';
 				var test = false;
 				var error = false;
@@ -158,24 +150,24 @@ var misTET = {
 				new Ajax.Request(path, {
 					method: "get",
 					asynchronous: false,
-       	   				evalJS: false,
+       	   			evalJS: false,
                 
-             	   			onSuccess: function (http) {
+             		onSuccess: function (http) {
 						if (test = misTET.other.XMLtest(http.responseXML)) {
-              	      					misTET['config']['init'] = http.responseXML;
-              	      				} else {
-              	      				misTET.error(test)
-                        		}
-               	    			},
+              	      		misTET['config']['init'] = http.responseXML;
+              	      	} else {
+              	      		misTET.error(test)
+                       	}
+               		},
                 
-                			onFailure: function (http) {
-                    				error			 = new Error("Error while loading init.xml");
-                        			error.name		 = "initEttor";
-                    				error.fileName   	 = path;
-                			}
-            			});
-            			/* Error... */
-            			if (error) {
+                	onFailure: function (http) {
+                		rror			 = new Error("Error while loading init.xml");
+                    	error.name		 = "initEttor";
+                    	error.fileName   	 = path;
+                	}
+            	});
+            	/* Error... */
+            	if (error) {
 					$('sd_left').innerHTML += error;
 				}
 				
@@ -186,10 +178,12 @@ var misTET = {
 				if (!document.title) {
 					document.title = misTET['config']['title'];
 				}
-			},
+			}
+		},
+		
+		menu: {
 			
-			/* load menu.xml */
-			menu: function () {
+			load: function () {
 			
 				var path = '/res/files/menu.xml';
 				var test = false;
@@ -210,7 +204,7 @@ var misTET = {
                 
                 			onFailure: function (http) {
                     				error			 = new Error("Error while loading menu.xml");
-                        			error.name		 = "menuEttor";
+                        			error.name		 = "menuError";
                     				error.fileName   	 = path;
                 			}
             			});
@@ -220,8 +214,48 @@ var misTET = {
 				}
 			},
 			
-			/* load pages.xml */
-			pages: function() {
+			/* parse misTET.config.menu, and creates a menu string */
+			parse: function (id) {
+	
+				var Menu = misTET['config']['menu'].documentElement;
+				var len = Menu.getElementsByTagName('menu');
+				var output = "";
+				
+				for (var i = 0; i < len.length; i++) {
+					/* The first text node is the main menu */
+					var menuValue = len[i].getElementsByTagName('text');
+					/* Only a text node */
+					if (menuValue.length == 1) {
+						var id = menuValue[0].getAttribute('id');
+						var inner = menuValue[0].firstChild.nodeValue;
+						output += "\n\t\t<div class = \"menu\">\n\t\t\t<a href = \'#" + id + "\'>" + inner + "</a>\n\t\t</div>\n";
+
+					} else {
+						var sub = ""
+						var idPrincipale = menuValue[0].getAttribute('id');
+						var ciao = menuValue[0].firstChild.nodeValue;
+						output += "\n\t\t<div class = \"menu\">\n\t\t\t<a href = \'#" + idPrincipale+"\'>" + ciao + "</a>\n\t\t\t<div class = \"menu\">\n\t\t\t\t";
+
+						/* Scan all the sub menus */
+						for (var j = 1; j < menuValue.length; j++) {
+							var idSub = menuValue[j].getAttribute('id');
+							var inner2 = menuValue[j].firstChild.nodeValue;
+							output += "<a class = \'menu_element\' href = \'#" + idSub + "\'><div class = \"\">" + inner2 + "</div></a>\n\t\t\t\t";
+
+						}
+						output += "</div>\n\t\t</div>";
+					}
+				}
+				output += "";
+				
+				return output;
+			}
+			
+		},
+		
+		pages: {
+			
+			load: function () {
 			
 				var path = '/res/files/pages.xml';
 				var test = false;
@@ -252,9 +286,169 @@ var misTET = {
 				}
 			},
 			
-			/* load modules.xml */
-			modules: function() {
+			/* Find the page node with the specified id */
+			parse: function (id) {
+
+				var pagesXML = misTET['config']['pages'].documentElement;
+				var output = "";
+				var pages = pagesXML.getElementsByTagName('page');
+				var code = "";
+				
+				for (var i = 0; i < pages.length; i++) {
+					if (pages[i].getAttribute('id') == id) {
+						var list = pages[i].childNodes;
+						/* Easy parsing */
+						if (list.length == 1) {
+							output = pages[i].firstChild.nodeValue;
+						} else {
+							/* CData section */
+							for (var j = 0; j < list.length; j++) {
+							
+								if (list[j].nodeName == "#cdata-section") {
+									code = list[j].nodeValue;
+									output += code;
+								} else if (list[j].nodeName == "go") {
+									var href = list[j].getAttribute('href');
+									var lan = list[j].getAttribute('lan') || "";
+									var after = list[j].getAttribute('after');
+								
+									if (lan != "") {
+										output += 	"<a href = \'#"+id+"&page="+href+"&lan="+lan+"\' " +
+												    ">" + list[j].getAttribute('text')+"</a>"+after+"<br>";
+									
+									} else if (lan == "") {
+										output += 	"<a href = \'#"+id+"&page="+href+"\' >" +
+													list[j].getAttribute('text')+"</a>"+after+"<br>";
+										}	
+								} else if (list[j].nodeName == "text") { 
+									var href = list[j].getAttribute('href');
+									var lan = list[j].getAttribute('lan') || "";
+									if (misTET.other.isFile(misTET.extern+href)) {
+										var inner = misTET.other.encorp(misTET.extern+href);
+										if (lan == "") {
+											output += "<pre>" + inner + "</pre>";
+										} else if (lan != ""){
+											output += misTET.resources.pages.loadGET(misTET.extern+href, lan);
+											/* Sintax Highlighting */
+											SyntaxHighlighter.highlight();
+										}
+									} else {
+										misTET.error("404 - Not found");
+									}
+								} else {
+									output += list[j].nodeValue;	
+								}
+							}
+						}
+					}
+				}
+				return output;
+			},
 			
+			set: function (id) {
+				var divpage = $('sd_left');
+				var inner = misTET.resources.pages.parse(id);
+				if (inner == "") {
+					divpage.innerHTML = "404 - Not found";
+				} else {
+					try {
+						window.eval(inner);
+					} catch (e) {
+						divpage.innerHTML = inner;
+						if (inner.match(/brush: (.+);/i)) {
+							SyntaxHighlighter.highlight();
+						}
+					}
+				}
+			},
+			
+			/* load an extern page, specify lan argument if you want to include a source */
+			loadGET: function (res, lan) {
+		
+				var language = lan || "";
+				var div = $('sd_left');
+				var output = "";
+			
+				if (language == "") {
+					if (misTET.other.isFile(res)) {
+						var inner = misTET.other.encorp(res);
+						output = "<pre>"+inner+"</pre>";
+					} else {
+						misTET.error("404 - Not found");
+					}
+				
+				} else {
+				
+					/* Languages aliases */
+					var langs = {	
+							'bash'		: 'Bash', 
+							'cpp' 		: 'Cpp', 
+							'c'		: 'Cpp',
+							'c#' 		: 'CSharp', 
+							'css' 		: 'Css', 
+							'delphi' 	: 'Delphi', 
+							'java' 		: 'Java',
+							'js' 		: 'JScript', 
+							'jscript' 	: 'JScript',
+							'javascript'	: 'JSCript',
+							'php' 		: 'Php', 
+							'python' 	: 'Python', 
+							'py'		: 'Python',
+							'ruby' 		: 'Ruby', 
+							'rb'		: 'Ruby',
+							'sql' 		: 'Sql', 
+							'vb' 		: 'Vb', 
+							'xml' 		: 'Xml' 
+					};
+					if (misTET.other.isFile(res)) {			
+						if (language in langs) {
+					
+							misTET.other.include(misTET['modFolder']+'/sintax/scripts/shBrush'+langs[lan]+".js");
+					
+							var file = misTET.other.encorp(res);	
+							var inner = "<pre class = 'brush: "+lan+";'>"+file+"</pre>";
+							output = inner;
+					
+							/* Well, just fuck that */
+							SyntaxHighlighter.vars.discoveredBrushes = {};
+					
+							var brush = "";
+							/* scan all brushes */
+                    		for (brush in SyntaxHighlighter.brushes) {
+                    			/* alias copying */                        				
+                    			var alias = SyntaxHighlighter.brushes[brush].aliases;
+
+                        		/* scan all aliases */
+                        		for (var scan = 0; scan < alias.length; scan++) {
+                            		SyntaxHighlighter.vars.discoveredBrushes[alias[scan]] = brush;
+                        		}
+                   			}
+                    		/* End */
+               	 	
+                    		/* prepare the specified brush */
+							SyntaxHighlighter.defaults["brush"] = langs[lan];
+					
+						/* mah */
+						} else {
+							div.innerHTML = 'Error while loading source. Please specify one of the following languages:<br><br>';
+					
+							for (l in langs) {
+								div.innerHTML += "&nbsp;"+l+"<br>";
+							}
+						}
+					} else {
+						misTET.error("404 - Not found");
+					}	
+				}
+				return output;
+			}
+			
+		},
+		
+		modules: {
+			
+			/* load modules.xml */
+			load: function() {
 				var path = '/res/files/modules.xml';
 				var test = false;
 				var error = false;
@@ -298,210 +492,14 @@ var misTET = {
 					misTET.modules[moduleName].initialize();
 				}
 			}
-		},
-		parse: {
-			
-			/* parse misTET.config.menu, and creates a menu string */
-			menu: function (id) {
-	
-				var Menu = misTET['config']['menu'].documentElement;
-				var len = Menu.getElementsByTagName('menu');
-				var output = "";
 				
-				for (var i = 0; i < len.length; i++) {
-					/* The first text node is the main menu */
-					var menuValue = len[i].getElementsByTagName('text');
-					/* Only a text node */
-					if (menuValue.length == 1) {
-						var id = menuValue[0].getAttribute('id');
-						var inner = menuValue[0].firstChild.nodeValue;
-						output += "\n\t\t<div class = \"menu\">\n\t\t\t<a href = \'#" + id + "\'>" + inner + "</a>\n\t\t</div>\n";
-
-					} else {
-						var sub = ""
-						var idPrincipale = menuValue[0].getAttribute('id');
-						var ciao = menuValue[0].firstChild.nodeValue;
-						output += "\n\t\t<div class = \"menu\">\n\t\t\t<a href = \'#" + idPrincipale+"\'>" + ciao + "</a>\n\t\t\t<div class = \"menu\">\n\t\t\t\t";
-
-						/* Scan all the sub menus */
-						for (var j = 1; j < menuValue.length; j++) {
-							var idSub = menuValue[j].getAttribute('id');
-							var inner2 = menuValue[j].firstChild.nodeValue;
-							output += "<a class = \'menu_element\' href = \'#" + idSub + "\'><div class = \"\">" + inner2 + "</div></a>\n\t\t\t\t";
-
-						}
-						output += "</div>\n\t\t</div>";
-					}
-				}
-				output += "";
-				
-				return output;
-			},
-			
-			/* Find the page node with the specified id */
-			page: function (id) {
-
-				var pagesXML = misTET['config']['pages'].documentElement;
-				var output = "";
-				var pages = pagesXML.getElementsByTagName('page');
-				var code = "";
-				
-				for (var i = 0; i < pages.length; i++) {
-					if (pages[i].getAttribute('id') == id) {
-						var list = pages[i].childNodes;
-						/* Easy parsing */
-						if (list.length == 1) {
-							output = pages[i].firstChild.nodeValue;
-						} else {
-							/* CData section */
-							for (var j = 0; j < list.length; j++) {
-							
-								if (list[j].nodeName == "#cdata-section") {
-									code = list[j].nodeValue;
-									output += code;
-								} else if (list[j].nodeName == "go") {
-									var href = list[j].getAttribute('href');
-									var lan = list[j].getAttribute('lan') || "";
-									var after = list[j].getAttribute('after');
-								
-									if (lan != "") {
-										output += 	"<a href = \'#"+id+"&page="+href+"&lan="+lan+"\' " +
-												    ">" + list[j].getAttribute('text')+"</a>"+after+"<br>";
-									
-									} else if (lan == "") {
-										output += 	"<a href = \'#"+id+"&page="+href+"\' >" +
-													list[j].getAttribute('text')+"</a>"+after+"<br>";
-										}	
-								} else if (list[j].nodeName == "text") { 
-									var href = list[j].getAttribute('href');
-									var lan = list[j].getAttribute('lan') || "";
-									if (misTET.other.isFile(misTET.extern+href)) {
-										var inner = misTET.other.encorp(misTET.extern+href);
-										if (lan == "") {
-											output += "<pre>" + inner + "</pre>";
-										} else if (lan != ""){
-											output += misTET.resources.loadPageGET(misTET.extern+href, lan);
-											/* Sintax Highlighting */
-											SyntaxHighlighter.highlight();
-										}
-									} else {
-										misTET.error("404 - Not found");
-									}
-								} else {
-									output += list[j].nodeValue;	
-								}
-							}
-						}
-					}
-				}
-				return output;
-			}
-		},
-		set: {
-			
-			/* Get page contents, and set it in sd_left */
-			page: function (id) {
-				var divpage = $('sd_left');
-				var inner = misTET.resources.parse.page(id);
-				if (inner == "") {
-					divpage.innerHTML = "404 - Not found";
-				} else {
-					try {
-						window.eval(inner);
-					} catch (e) {
-						divpage.innerHTML = inner;
-						if (inner.match(/brush: (.+);/i)) {
-							SyntaxHighlighter.highlight();
-						}
-					}
-				}
-			}
-		},
-		
-		/* load an extern page, specify lan argument if you want to include a source */
-		loadPageGET: function (res, lan) {
-		
-			var language = lan || "";
-			var div = $('sd_left');
-			var output = "";
-			
-			if (language == "") {
-				if (misTET.other.isFile(res)) {
-					var inner = misTET.other.encorp(res);
-					output = "<pre>"+inner+"</pre>";
-				} else {
-					misTET.error("404 - Not found");
-				}
-				
-			} else {
-				
-				/* Languages aliases */
-				var langs = {	
-						'bash'		: 'Bash', 
-						'cpp' 		: 'Cpp', 
-						'c'		: 'Cpp',
-						'c#' 		: 'CSharp', 
-						'css' 		: 'Css', 
-						'delphi' 	: 'Delphi', 
-						'java' 		: 'Java',
-						'js' 		: 'JScript', 
-						'jscript' 	: 'JScript',
-						'javascript'	: 'JSCript',
-						'php' 		: 'Php', 
-						'python' 	: 'Python', 
-						'py'		: 'Python',
-						'ruby' 		: 'Ruby', 
-						'rb'		: 'Ruby',
-						'sql' 		: 'Sql', 
-						'vb' 		: 'Vb', 
-						'xml' 		: 'Xml' 
-						};
-				if (misTET.other.isFile(res)) {			
-					if (language in langs) {
-					
-						misTET.other.include(misTET['modFolder']+'/sintax/scripts/shBrush'+langs[lan]+".js");
-					
-						var file = misTET.other.encorp(res);	
-						var inner = "<pre class = 'brush: "+lan+";'>"+file+"</pre>";
-						output = inner;
-					
-						/* Well, just fuck that */
-						SyntaxHighlighter.vars.discoveredBrushes = {};
-					
-						var brush = "";
-						/* scan all brushes */
-                    				for (brush in SyntaxHighlighter.brushes) {
-                    					/* alias copying */                        				
-                    					var alias = SyntaxHighlighter.brushes[brush].aliases;
-
-                        				/* scan all aliases */
-                        				for (var scan = 0; scan < alias.length; scan++) {
-                            					SyntaxHighlighter.vars.discoveredBrushes[alias[scan]] = brush;
-                        				}
-                   				}
-                    				/* End */
-               	 	
-                    				/* prepare the specified brush */
-						SyntaxHighlighter.defaults["brush"] = langs[lan];
-					
-					/* mah */
-					} else {
-						div.innerHTML = 'Error while loading source. Please specify one of the following languages:<br><br>';
-					
-						for (l in langs) {
-							div.innerHTML += "&nbsp;"+l+"<br>";
-						}
-					}
-				} else {
-					misTET.error("404 - Not found");
-				}	
-			}
-			return output;
 		}
 	},
+	
 	error: function (message) {
 		$('sd_left').innerHTML = message+'<br><br';
 	},
+	
 	other: {
 		
 		/* True: you're using IE, False: you're not using IE :) */
@@ -564,7 +562,6 @@ var misTET = {
            		return result;
 		},
 		
-		/* Sometimes this helps me */
 		XMLtest: function (xml) {
 		
 			var error = false;
@@ -626,7 +623,7 @@ var misTET = {
 		parseGET: function () {
 		
 			var args = new Array();
-			var query = document.location.hash;
+			var query = location.hash;
 			
 			if (query) {
 				var strList = query.split('&');

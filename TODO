@@ -1,5 +1,6 @@
 TODO
 
-I must rewrite the feature of the blog/admin panel wich provides to delete
-a single post, because it doesn't work fine, but, well, it doesn't matter 
-so much now :P
+If you visit the blog, than another page, and again the blog, you have 
+to refresh the page.
+
+FIX IT AS SOON AS POSSIBLE!
