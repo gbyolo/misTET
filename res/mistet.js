@@ -496,7 +496,7 @@ var misTET = {
             
             refresh: function () {
             	for (var module in misTET.modules) {
-            		misTET.modules[module].initialize();
+            		misTET.modules[module].refresh();
 				}
 			}
                 

@@ -54,6 +54,22 @@ misTET.modules.blog = {
 		misTET.other.insertCSS(misTET.modules.blog.root + "resources/blog.css");
 		misTET.modules.blog.initialized = true;
 	},
+	
+	refresh: function () {
+		var args = misTET.other.parseGET();
+		
+		if (/#blog/.match(location.hash)) {
+			 
+			 if (/admin/.match(location.hash)) {
+				window.location.href = misTET.modules.blog.root + "admin";
+				
+			} else if (isset(args['id'])) {
+				misTET.modules.blog.display(args['id']);
+			} else {
+				misTET.modules.blog.display();
+			}
+		}
+	},
 
 	
 	initXML: function () {
