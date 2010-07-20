@@ -86,7 +86,7 @@ var misTET = {
 
         if (misTET.location !== location.hash) {
             misTET.location = location.hash;
-            misTET.resources.modules.load();
+            misTET.resources.modules.refresh();
             misTET.go(location.hash, misTET.other.parseGET());
         } 
 
@@ -492,7 +492,13 @@ var misTET = {
                     include(misTET.modFolder + "/" + moduleName + "/" + moduleName + ".js");
                     misTET.modules[moduleName].initialize();
                 }
-            }
+            },
+            
+            refresh: function () {
+            	for (var module in misTET.modules) {
+            		misTET.modules[module].initialize();
+				}
+			}
                 
         }
     },
