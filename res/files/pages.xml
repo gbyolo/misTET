@@ -30,6 +30,8 @@ node you can create a link to an extern file, and through the attribute
 <a href="">text</a>, while the attribute `after` specifies the text to show
 jsut after the link. You can use `text` node to import a file in a page,
 and use the `lan` attribute to include sources.
+If a page should show a module's executing output, you should declare the page as:
+<page id = 'module=moduleName'></page>
 
 WARNING: Don't use exclusively html code in your pages, it can cause some
 	 	 problems.
@@ -42,9 +44,9 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			news.
 		]]>
 	</page>
-	<page id = 'admin'>
+	<page id = 'module=admin'>
 	</page>
-	<page id = 'blog'>
+	<page id = 'module=blog'>
 	</page>
 	<page id = 'features'>
 		<![CDATA[
@@ -62,6 +64,8 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 		<![CDATA[
 			You can use the following syntax:<br>
 			<pre id = 'code'>#id&page=name.php</pre><br>
+			or:<br>
+			<pre id = 'code'>#page=name.php</pre><br><br>
 			name.php: name of the page in /res/files/stat<br>
 			The output is not the source, but what the server says getting the PHP page. Here's an example:<br>
 		]]>

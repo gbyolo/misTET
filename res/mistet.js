@@ -30,6 +30,8 @@ var misTET = {
     
     modFolder: "/modules",
     modules: { },
+    root: "/res",
+    loc: "/mistet.js",
     
     extern: "/res/files/stat/",
     
@@ -38,7 +40,13 @@ var misTET = {
         
         
         if (misTET.initialized) {
-            throw new Error("misTET has been already initialized.");
+        	
+        	var error = new Error;
+        	error.name = "initializing error";
+        	error.message = "misTET has been already initialized.";
+        	error.filename = "#{root}/#{loc}".interpolate(misTET);
+        	
+            misTET.error(error);
         }
         
         misTET.location = location.hash;
@@ -46,7 +54,7 @@ var misTET = {
     
         eval('misTET.resources.init.load()');
         var ops = $('sd_left');
-        var args = misTET.other.parseGET();
+        var args = misTET.other.getQueries(location.hash);
         var menuOk = true, pagesOk = true;
         ops.innerHTML = misTET['config']['loading'];
         
@@ -81,13 +89,13 @@ var misTET = {
         
         misTET.initialized = true;
     },
+    
     /* refresh */
     refresh: function () {
 
         if (misTET.location !== location.hash) {
             misTET.location = location.hash;
-            misTET.resources.modules.refresh();
-            misTET.go(location.hash, misTET.other.parseGET());
+            misTET.go(location.hash);
         } 
 
     },
@@ -96,11 +104,11 @@ var misTET = {
         
         /* html 4.01 */
         html: function (url) {
-            location.href = "http://validator.w3.org/check?uri=" + url;
+            location.href = "http://validator.w3.org/check?uri=#{uri}".interpolate({uri: url});
         },
         /* css */
         css: function (url) {
-            location.href = "http://jigsaw.w3.org/css-validator/validator?uri=" + url;
+            location.href = "http://jigsaw.w3.org/css-validator/validator?uri=#{uri}".interpolate({uri: url});
         }
     },
     /* Main files */
@@ -114,28 +122,41 @@ var misTET = {
         title: { },
     },
     
-    go: function (query, args) {
+    go: function (query) {
+    	
+    	var queries = misTET.other.getQueries(query);
+    	
         if (empty(query)) {
+        	
             misTET.resources.pages.set(misTET['config']['home']);
-        } else {
             
-            if (!isset(args['page'])) {
-                
-                var href = query.match(/#\w+/);
-                misTET.resources.pages.set(href[0].replace('#', ''));
-                
-            } else {
-                
-                var inner = misTET.resources.pages.loadGET(args['page'], args['lan']);
-                $('sd_left').innerHTML = inner;
-                
-                if (isset(args['lan'])) {
-                    
-                    /* Sintax Highlighting */
-                    SyntaxHighlighter.highlight();
-                    
-                } 
-            }
+        } else {
+        	
+        	if (queries.page) {
+        		
+        		var page = queries.page;
+        		var inner = misTET.resources.pages.loadGET(page, queries.lan);
+        		$('sd_left').innerHTML = inner;
+        		
+        		if (isset(queries.lan)) {
+        			SyntaxHighlighter.highlight();
+        		}
+        		
+        	} else if (queries.module) {
+        		
+        		try {
+        			misTET.modules[queries.module].execute();
+        		} catch (e) {
+        			misTET.error(e);
+				}
+        		
+        	} else {
+        		
+        		var ref = query.match(/#\w+/);
+        		misTET.resources.pages.set(ref[0].replace('#',''));
+        		
+			}
+            
         }
     },
     
@@ -169,7 +190,7 @@ var misTET = {
                 });
                 /* Error... */
                 if (error) {
-                    $('sd_left').innerHTML += error;
+                    misTET.error(error);
                 }
                 
                 var init = misTET.config.init.documentElement;
@@ -211,7 +232,7 @@ var misTET = {
                 });
                 /* Error... */
                 if (error) {
-                    $('sd_left').innerHTML += error;
+                    misTET.error(error);
                 }
             },
             
@@ -283,7 +304,7 @@ var misTET = {
                 });
                 /* Error... */
                 if (error) {
-                    $('sd_left').innerHTML += error;
+                    misTET.error(error);
                 }
             },
             
@@ -347,19 +368,25 @@ var misTET = {
             },
             
             set: function (id) {
+            	
                 var divpage = $('sd_left');
                 var inner = misTET.resources.pages.parse(id);
+                
                 if (inner == "") {
                     divpage.innerHTML = "404 - Not found";
+                    
                 } else {
+                	
                     try {
                         window.eval(inner);
+                        
                     } catch (e) {
                         divpage.innerHTML = inner;
                         if (inner.match(/brush: (.+);/i)) {
                             SyntaxHighlighter.highlight();
                         }
                     }
+                    
                 }
             },
             
@@ -475,7 +502,7 @@ var misTET = {
                 });
                 /* Error... */
                 if (error) {
-                    $('sd_left').innerHTML += error;
+                	misTET.error(error);
                 }
             
                 /* Parsing and loading */
@@ -483,45 +510,152 @@ var misTET = {
                 var modules = file.getElementsByTagName('module');
             
                 for (var i = 0; i < modules.length; i++) {
+                	
                     var moduleName = modules[i].getAttribute('name');
+                    
                     if (!moduleName) {
                         misTET.error('Error while parsing modules.xml');
                         return;
                     }
-                    $('sd_left').innerHTML = "Loading [`" + moduleName + "`]";
-                    include(misTET.modFolder + "/" + moduleName + "/" + moduleName + ".js");
-                    misTET.modules[moduleName].initialize();
+                    
+                    $('sd_left').innerHTML = "Loading [`#{module}`] [#{n}/#{tot}]".interpolate({
+                    	module: moduleName,
+                    	n: i +1,
+                    	tot: modules.length
+                    });
+                    
+                    try {
+                    	
+                    	include("#{modules}/#{name}/#{name2}.js".interpolate({
+                    		modules: misTET.modFolder,
+                    		name: moduleName,
+                    		name2: moduleName
+						}));
+						
+                    } catch (e) {
+						
+						var error = new Error;
+						error.message = "Error while loading `#{name}`".interpolate({name: moduleName});
+						error.name = "Module loading error";
+						error.line = e.lineNumber;
+						error.filename = e.fileName;
+						
+						misTET.error(error);
+						
+					}
                 }
             },
             
-            refresh: function () {
-            	for (var module in misTET.modules) {
-            		misTET.modules[module].refresh();
+            exists: function (name) {
+            	return Boolean(misTET.modules[name]);
+			},
+			
+			create: function (name, object) {
+				
+				if (!object) {
+					var error = new Error;
+					
+					error.message = "what should `#{name}` do when it's loaded?".interpolate({name: name});
+					error.file = "#{root}/#{name}/#{name2}.js".interpolate({
+						root: misTET.modFolder,
+						name: name,
+						name2: name
+					});
+					
+					misTET.error(error);
+					return false;
 				}
+				
+				/* load all functions */
+				for (var func in object) {
+					if (Object.isFunction(object[func])) {
+						object[func] = object[func].bind(object);
+					}
+				}
+				
+				/* load name and root folder */
+				object.name = name;
+				object.root = "#{path}/#{module}".interpolate({
+					path: misTET.modFolder,
+					module: name
+				});
+				
+				/* uat? */
+				if (!object.initialize) {
+					object.initialize = new Function();
+				}
+				
+				/* uat */
+				if (!object.execute) {
+					object.execute = new Function();
+				}
+				
+				if (object.initialize) {
+					try {
+						object.initialize();
+					} catch (e) {
+						e.filename = "#{root}/#{name}.js".interpolate({
+							root: object.root,
+							name: name
+						});
+						e.message = "Error while executing #{name}.initialize()".interpolate({name: object.name});
+						misTET.error(e);
+					}
+				}
+				misTET.modules[name] = object;
 			}
                 
         }
     },
     
-    error: function (message) {
-        $('sd_left').innerHTML = message+'<br><br';
+    res: {
+    	
+    	create: function (name, obj) {
+    		
+    		for (var sel in obj) {
+    			if (Object.isFunction(obj[sel])) {
+    				obj[name] = obj[name].bind(obj);
+				} 
+			}
+			
+			misTET.res[name] = obj;
+    		
+		}
+    	
+	},
+    
+    /* Show a detailed output for errors */
+    error: function (e) {
+        var div = $('sd_left');
+        
+        var string = "<br>#{name}:<br>#{message}<br>FILE: #{filename} @#{line}<br>".interpolate({
+        	name: e.name || "ERROR",
+        	message: e.message || "undefined message",
+        	filename: e.filename || e.fileName || e.file || "undefined file",
+        	line: e.line || e.lineNumber || "undefined line"
+        });
+        
+        div.innerHTML = string;
     },
     
     other: {
         
         /* True: you're using IE, False: you're not using IE :) */
         isIE: function () {
+        	
             if (Prototype.Browser.IE) {
                 return true;
             } else {
                 return false;
             }
+            
         },
         
         isFile: function (path) {
             var result = false;
  
              try {
+             	
                 new Ajax.Request(path, {
                     method: "GET",
                     asynchronous: false,
@@ -530,6 +664,7 @@ var misTET = {
                         result = true;
                     },
                 });
+                
             } catch (exception) { }
  
             return result;
@@ -563,7 +698,7 @@ var misTET = {
             });
 
             if (error) {
-                throw error;
+                misTET.error(error);
                }
             
                return result;
@@ -626,29 +761,30 @@ var misTET = {
             return result;
         },
         
-           /* parse GET arguments */
-        parseGET: function () {
+        getQueries: function (url) {
+        	var queries = {};
+        	var matches = url.match(/[?#](.*)$/);
         
-            var args = new Array();
-            var query = location.hash;
-            
-            if (query) {
-                var strList = query.split('&');
-                
-                for (var i=0; i<strList.length; i++) {
-                    var ok = strList[i];
-                    
-                    if (ok.match(/#\w+/) == null) { 
-                        var parts = ok.split('=');
-                        args[unescape(parts[0])] = unescape(parts[1]);
-                        
-                    } else {
-                        continue;
-                    }
-                }
-            }
-            return args;
-        }
+        	if (!matches) {
+            	return queries;
+        	}
+        
+        	var blocks = matches[1].split(/&/);
+        	for (var i = 0; i < blocks.length; i++) {
+           		var parts = blocks[i].split(/=/);
+            	var name = decodeURIComponent(parts[0]);
+            	
+            	if (parts[1]) {
+            		var ref = /\w+/.exec(parts[1]);
+            		queries[name] = decodeURIComponent(ref);
+            	} else {
+            		queries[name] = true
+            	}
+            	
+        	}
+        
+        	return queries;
+    	}
 
     }
 };

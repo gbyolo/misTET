@@ -19,61 +19,20 @@
 
 /** Blog **/
 
-misTET.modules.blog = {
+misTET.res.create("blog", {
+			file: { },
+			total: ""
+		});
+
+misTET.resources.modules.create("blog", {
 
 	version: ["0", "2", "0"].join("."),
-	name: "blog",
-	root: "/modules/blog/",
-	file: { },
-	total: "",
-	initialized: false,
 	
 	initialize: function () {
-		
-		if (misTET.modules.blog.initialized == true) {
-			throw new error("The blog module has already been initialized");
-		}
-		
-		misTET.modules.blog.initXML();
-		
-		var args = misTET.other.parseGET();
-		
-		
-		if (/#blog/.match(location.hash)) {
-			 
-			 if (/admin/.match(location.hash)) {
-				window.location.href = misTET.modules.blog.root + "admin";
-				
-			} else if (isset(args['id'])) {
-				misTET.modules.blog.display(args['id']);
-			} else {
-				misTET.modules.blog.display();
-			}
-		}
-		
-		misTET.other.insertCSS(misTET.modules.blog.root + "resources/blog.css");
-		misTET.modules.blog.initialized = true;
-	},
-	
-	refresh: function () {
-		var args = misTET.other.parseGET();
-		
-		if (/#blog/.match(location.hash)) {
-			 
-			 if (/admin/.match(location.hash)) {
-				window.location.href = misTET.modules.blog.root + "admin";
-				
-			} else if (isset(args['id'])) {
-				misTET.modules.blog.display(args['id']);
-			} else {
-				misTET.modules.blog.display();
-			}
-		}
-	},
 
-	
-	initXML: function () {
-		var path = misTET.modules.blog.root + "resources/blog.xml";
+		/* loading js and css files */
+		misTET.other.insertCSS(this.root + "/resources/blog.css");
+		var path = "/modules/blog/resources/blog.xml";
 		var test = false;
 		var error = false;
 				
@@ -83,26 +42,37 @@ misTET.modules.blog = {
        	   	evalJS: false,
                 
             onSuccess: function (http) {
-				if (test = misTET.other.XMLtest(http.responseXML)) {
-					misTET.modules.blog.file = http.responseXML;
-					misTET.modules.blog.total = parseInt(misTET.modules.blog.file.documentElement.getAttribute('n'));
-				} else {
-					misTET.error(test);
-				}
+				misTET.res['blog'].file = http.responseXML;
+				misTET.res['blog'].total = parseInt(misTET.res.blog.file.documentElement.getAttribute('n'));
             },
                 
-            onFailure: function (http) {
+           	 onFailure: function (http) {
             	misTET.error("Error while loading blog.xml (#{error})".interpolate({ error: http.status }));
             }
 		});
-        if (error) {
-			$('sd_left').innerHTML += error;
-		}
+		
 	},
 	
+	execute: function () {
+		
+		var queries = misTET.other.getQueries(location.hash);
+		
+		if (/admin/.match(location.hash)) {
+			location.href = this.root + "/admin";
+		}
+		
+		if (isset(queries.id)) {
+			this.display(queries.id);
+		} else {
+			this.display();
+		}
+
+	},
+
+		
 	getPost: function (id) {
 		
-		var XML = misTET.modules.blog.file.documentElement;
+		var XML = misTET.res['blog'].file.documentElement;
 		var posts = XML.getElementsByTagName('post');
 		var output = { };
 		
@@ -125,7 +95,7 @@ misTET.modules.blog = {
 		}
 		return output;
 	},
-	
+			
 	checkPost: function (map) {
 		var result = true;
 		['title', 'text', 'author', 'date'].each(function(obj) {
@@ -138,25 +108,25 @@ misTET.modules.blog = {
 	
 	display: function (id) {
 		if (id) {
-			var post = misTET.modules.blog.getPost(id);
-			if (misTET.modules.blog.checkPost(post)) {
+			var post = this.getPost(id);
+			if (this.checkPost(post)) {
 				var output = "<div class = 'post'><div class = 'title'>"+ post.title + "</div>" + post.text + "<div class = 'foot'>"+
-					 		"Posted by <span class = 'author'>" + post.author + "</span> on <span class = 'date'>" + post.date + "</span></div>";
+			 				"Posted by <span class = 'author'>" + post.author + "</span> on <span class = 'date'>" + post.date + "</span></div>";
 				$('sd_left').innerHTML = output;
 			} else {
 				$('sd_left').innerHTML = "<p id = 'error'>The selected post doesn\'t exist</p>";
 			}
 		} else {
 			$('sd_left').innerHTML = "";
-			for (var j = misTET.modules.blog.total; j > 0; j--) {
-				var currentPost = misTET.modules.blog.getPost(""+j+"");
-				if (misTET.modules.blog.checkPost(currentPost)) {
+			for (var j = misTET.total; j > 0; j--) {
+				var currentPost = this.getPost(""+j+"");
+				if (this.checkPost(currentPost)) {
 					var output = "<div class = 'post'><div class = 'title'>"+ currentPost.title + "</div>" + currentPost.text + "<div class = 'foot'>"+
-					 		 	"Posted by <span class = 'author'>" + currentPost.author + "</span> on <span class = 'date'>" + currentPost.date + "</span></div>";
+				 	 			"Posted by <span class = 'author'>" + currentPost.author + "</span> on <span class = 'date'>" + currentPost.date + "</span></div>";
 					$('sd_left').innerHTML += output;
 				}
 			}
 		}
-	},
+	}
 	
-}
+});

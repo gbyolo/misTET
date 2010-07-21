@@ -20,11 +20,11 @@ Don't use XML special characters.
 <menue>
 	<menu>
 		<text id = 'home'>Home</text>
-		<text id = 'admin'>Admin</text>
+		<text id = 'module=admin'>Admin</text>
 	</menu>
 	<menu>
-		<text id = 'blog'>Blog</text>
-		<text id = 'blog=admin'>Admin</text>
+		<text id = 'module=blog'>Blog</text>
+		<text id = 'module=blog/admin'>Admin</text>
 	</menu>
 	<menu>	
 		<text id = 'features'>Features</text>

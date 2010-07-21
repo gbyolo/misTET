@@ -19,26 +19,25 @@
 
 /** Admin panel script **/
 
-misTET.modules.admin = {
+misTET.resources.modules.create("admin", {
 	
-	version: "0.2.4",
-	name: "admin",
-	dir: "/modules/admin/",
+	version: ["0", "2", "4"].join("."),
 	
 	initialize: function () {
 		
-		if (/#admin/.match(document.location.href)) {
-			location.href = misTET.modules.admin.dir;
-		}
-		
-		misTET.modules.admin.intval = new PeriodicalExecuter(misTET.modules.admin.refresh, 1);
+		Event.observe(document, ":refresh", function () {
+			try {
+				this.execute();
+			} catch (e) {
+				misTET.error(e);
+			}
+		});
 		
 	},
 	
-	refresh: function () {
-		
-		if (/#admin/.match(document.location.hash)) {
-			location.href = "/modules/admin/";
-		}
-	}
-}
+	execute: function () {
+		location.href = this.root;
+	},
+
+	
+});
