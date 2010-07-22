@@ -26,14 +26,13 @@ function empty (string) {
 
 var misTET = {
     
-    version: ["0", "5", "1"].join("."),
+    version: ["0", "5", "5"].join("."),
     
     modFolder: "/modules",
     modules: { },
-    root: "/res",
-    loc: "/mistet.js",
-    
     extern: "/res/files/stat/",
+    root: location.href.match(/^(.*?)\/[^\/]*?(#|$)/)[1],
+    loc: "res/mistet.js",
     
     /* start misTET */
     init: function () {
@@ -47,6 +46,7 @@ var misTET = {
         	error.filename = "#{root}/#{loc}".interpolate(misTET);
         	
             misTET.error(error);
+            return false;
         }
         
         misTET.location = location.hash;
@@ -61,7 +61,7 @@ var misTET = {
         try {
             misTET.resources.menu.load();
         } catch (e) {
-            ops.innerHTML = e;
+        	misTET.error(e);
             menuOk = false;
         }
         
@@ -69,7 +69,7 @@ var misTET = {
             try {
                 misTET.resources.pages.load();
             } catch (e) {
-                ops.innerHTML += e;
+                misTET.error(e);
                 pagesOk = false;
             }
         } 
@@ -555,7 +555,7 @@ var misTET = {
 				if (!object) {
 					var error = new Error;
 					
-					error.message = "what should `#{name}` do when it's loaded?".interpolate({name: name});
+					error.message = "what should `#{name}` do?".interpolate({name: name});
 					error.file = "#{root}/#{name}/#{name2}.js".interpolate({
 						root: misTET.modFolder,
 						name: name,
@@ -585,11 +585,6 @@ var misTET = {
 					object.initialize = new Function();
 				}
 				
-				/* uat */
-				if (!object.execute) {
-					object.execute = new Function();
-				}
-				
 				if (object.initialize) {
 					try {
 						object.initialize();
@@ -612,14 +607,40 @@ var misTET = {
     	
     	create: function (name, obj) {
     		
+    		if (!obj) {
+    			var e = new Error("couldn't create misTET.res[#{name}] if you don't give an object".interpolate({name: name}));
+    			e.name = "resource error";
+    			misTET.error(e);
+    			return false;
+    		}
+    		
     		for (var sel in obj) {
     			if (Object.isFunction(obj[sel])) {
     				obj[name] = obj[name].bind(obj);
 				} 
 			}
 			
+			obj.name = name;
+			
 			misTET.res[name] = obj;
     		
+		},
+		
+		del: function (name) {
+			
+			if (!name) {
+				var e = new Error("couldn't delete a resource if you don't give a name");
+				e.name = "resource error";
+				misTET.error(e);
+				return false;
+			}
+			
+			for (var key in misTET.res[name]) {
+				delete misTET.res[name][key];
+			}
+			
+			misTET.res[name] = null;
+			
 		}
     	
 	},
@@ -762,28 +783,27 @@ var misTET = {
         },
         
         getQueries: function (url) {
-        	var queries = {};
+        	var result = {};
         	var matches = url.match(/[?#](.*)$/);
         
         	if (!matches) {
-            	return queries;
+            	return result;
         	}
         
-        	var blocks = matches[1].split(/&/);
-        	for (var i = 0; i < blocks.length; i++) {
-           		var parts = blocks[i].split(/=/);
+        	var splitted = matches[1].split(/&/);
+        	for (var i = 0; i < splitted.length; i++) {
+           		var parts = splitted[i].split(/=/);
             	var name = decodeURIComponent(parts[0]);
             	
             	if (parts[1]) {
-            		var ref = /\w+/.exec(parts[1]);
-            		queries[name] = decodeURIComponent(ref);
+            		result[name] = decodeURIComponent(parts[1]);
             	} else {
-            		queries[name] = true
+            		result[name] = true
             	}
             	
         	}
         
-        	return queries;
+        	return result;
     	}
 
     }
