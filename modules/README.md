@@ -11,8 +11,7 @@ edit /res/files/modules.xml and add your new module.
     initialize: function (/*...*/) { /*...*/ },
     execute: function (/*...*/) { /*...*/ },
     /* ... */
-});
-`
+});`
 
 The `execute` function will be executed
 when you want, or, if the module should show its output in a page like
