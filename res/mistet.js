@@ -39,12 +39,12 @@ var misTET = {
         
         
         if (misTET.initialized) {
-        	
-        	var error = new Error;
-        	error.name = "initializing error";
-        	error.message = "misTET has been already initialized.";
-        	error.filename = "#{root}/#{loc}".interpolate(misTET);
-        	
+                
+            var error = new Error;
+            error.name = "initializing error";
+            error.message = "misTET has been already initialized.";
+            error.filename = "#{root}/#{loc}".interpolate(misTET);
+                
             misTET.error(error);
             return false;
         }
@@ -61,7 +61,7 @@ var misTET = {
         try {
             misTET.resources.menu.load();
         } catch (e) {
-        	misTET.error(e);
+                misTET.error(e);
             menuOk = false;
         }
         
@@ -123,39 +123,39 @@ var misTET = {
     },
     
     go: function (query) {
-    	
-    	var queries = misTET.other.getQueries(query);
-    	
-        if (empty(query)) {
-        	
-            misTET.resources.pages.set(misTET['config']['home']);
             
-        } else {
-        	
-        	if (queries.page) {
-        		
-        		var page = queries.page;
-        		var inner = misTET.resources.pages.loadGET(page, queries.lan);
-        		$('sd_left').innerHTML = inner;
-        		
-        		if (isset(queries.lan)) {
-        			SyntaxHighlighter.highlight();
-        		}
-        		
-        	} else if (queries.module) {
-        		
-        		try {
-        			misTET.modules[queries.module].execute();
-        		} catch (e) {
-        			misTET.error(e);
-				}
-        		
-        	} else {
-        		
-        		var ref = query.match(/#\w+/);
-        		misTET.resources.pages.set(ref[0].replace('#',''));
-        		
-			}
+            var queries = misTET.other.getQueries(query);
+            
+            if (empty(query)) {
+                
+                misTET.resources.pages.set(misTET['config']['home']);
+            
+            } else {
+                
+                if (queries.page) {
+                        
+                    var page = queries.page;
+                     var inner = misTET.resources.pages.loadGET(page, queries.lan);
+                     $('sd_left').innerHTML = inner;
+                        
+                    if (isset(queries.lan)) {
+                        SyntaxHighlighter.highlight();
+                    }
+                        
+                } else if (queries.module) {
+                        
+                    try {
+                        misTET.modules[queries.module].execute();
+                    } catch (e) {
+                        misTET.error(e);
+                    }
+                        
+                } else {
+                        
+                    var ref = query.match(/#\w+/);
+                    misTET.resources.pages.set(ref[0].replace('#',''));
+                        
+                        }
             
         }
     },
@@ -368,7 +368,7 @@ var misTET = {
             },
             
             set: function (id) {
-            	
+                    
                 var divpage = $('sd_left');
                 var inner = misTET.resources.pages.parse(id);
                 
@@ -376,7 +376,7 @@ var misTET = {
                     divpage.innerHTML = "404 - Not found";
                     
                 } else {
-                	
+                        
                     try {
                         window.eval(inner);
                         
@@ -502,7 +502,7 @@ var misTET = {
                 });
                 /* Error... */
                 if (error) {
-                	misTET.error(error);
+                        misTET.error(error);
                 }
             
                 /* Parsing and loading */
@@ -510,7 +510,7 @@ var misTET = {
                 var modules = file.getElementsByTagName('module');
             
                 for (var i = 0; i < modules.length; i++) {
-                	
+                        
                     var moduleName = modules[i].getAttribute('name');
                     
                     if (!moduleName) {
@@ -519,141 +519,141 @@ var misTET = {
                     }
                     
                     $('sd_left').innerHTML = "Loading [`#{module}`] [#{n}/#{tot}]".interpolate({
-                    	module: moduleName,
-                    	n: i +1,
-                    	tot: modules.length
+                            module: moduleName,
+                            n: i +1,
+                            tot: modules.length
                     });
                     
                     try {
-                    	
-                    	include("#{modules}/#{name}/#{name2}.js".interpolate({
-                    		modules: misTET.modFolder,
-                    		name: moduleName,
-                    		name2: moduleName
-						}));
-						
+                            
+                        include("#{modules}/#{name}/#{name2}.js".interpolate({
+                            modules: misTET.modFolder,
+                            name: moduleName,
+                            name2: moduleName
+                        }));
+                                                
                     } catch (e) {
-						
-						var error = new Error;
-						error.message = "Error while loading `#{name}`".interpolate({name: moduleName});
-						error.name = "Module loading error";
-						error.line = e.lineNumber;
-						error.filename = e.fileName;
-						
-						misTET.error(error);
-						
-					}
+                                                
+                        var error = new Error;
+                        error.message = "Error while loading `#{name}`".interpolate({name: moduleName});
+                         error.name = "Module loading error";
+                         error.line = e.lineNumber;
+                         error.filename = e.fileName;
+                                                
+                          misTET.error(error);
+                                                
+                    }
                 }
             },
             
             exists: function (name) {
-            	return Boolean(misTET.modules[name]);
-			},
-			
-			create: function (name, object) {
-				
-				if (!object) {
-					var error = new Error;
-					
-					error.message = "what should `#{name}` do?".interpolate({name: name});
-					error.file = "#{root}/#{name}/#{name2}.js".interpolate({
-						root: misTET.modFolder,
-						name: name,
-						name2: name
-					});
-					
-					misTET.error(error);
-					return false;
-				}
-				
-				/* load all functions */
-				for (var func in object) {
-					if (Object.isFunction(object[func])) {
-						object[func] = object[func].bind(object);
-					}
-				}
-				
-				/* load name and root folder */
-				object.name = name;
-				object.root = "#{path}/#{module}".interpolate({
-					path: misTET.modFolder,
-					module: name
-				});
-				
-				/* uat? */
-				if (!object.initialize) {
-					object.initialize = new Function();
-				}
-				
-				if (object.initialize) {
-					try {
-						object.initialize();
-					} catch (e) {
-						e.filename = "#{root}/#{name}.js".interpolate({
-							root: object.root,
-							name: name
-						});
-						e.message = "Error while executing #{name}.initialize()".interpolate({name: object.name});
-						misTET.error(e);
-					}
-				}
-				misTET.modules[name] = object;
-			}
+                return Boolean(misTET.modules[name]);
+            },
+                        
+            create: function (name, object) {
+                                
+                if (!object) {
+                    var error = new Error;
+                                        
+                    error.message = "what should `#{name}` do?".interpolate({name: name});
+                    error.file = "#{root}/#{name}/#{name2}.js".interpolate({
+                                        root: misTET.modFolder,
+                                        name: name,
+                                        name2: name
+                                     });
+                                        
+                    misTET.error(error);
+                    return false;
+                }
+                                
+                /* load all functions */
+                for (var func in object) {
+                    if (Object.isFunction(object[func])) {
+                        object[func] = object[func].bind(object);
+                    }
+                }
+                                
+                /* load name and root folder */
+                object.name = name;
+                object.root = "#{path}/#{module}".interpolate({
+                                    path: misTET.modFolder,
+                                    module: name
+                                    });
+                                
+                /* uat? */
+                if (!object.initialize) {
+                    object.initialize = new Function();
+                }
+                                
+                if (object.initialize) {
+                    try {
+                        object.initialize();
+                    } catch (e) {
+                        e.filename = "#{root}/#{name}.js".interpolate({
+                                            root: object.root,
+                                            name: name
+                                            });
+                        e.message = "Error while executing #{name}.initialize()".interpolate({name: object.name});
+                        misTET.error(e);
+                    }
+                }
+                misTET.modules[name] = object;
+            }
                 
         }
     },
     
     res: {
-    	
-    	create: function (name, obj) {
-    		
-    		if (!obj) {
-    			var e = new Error("couldn't create misTET.res[#{name}] if you don't give an object".interpolate({name: name}));
-    			e.name = "resource error";
-    			misTET.error(e);
-    			return false;
-    		}
-    		
-    		for (var sel in obj) {
-    			if (Object.isFunction(obj[sel])) {
-    				obj[name] = obj[name].bind(obj);
-				} 
-			}
-			
-			obj.name = name;
-			
-			misTET.res[name] = obj;
-    		
-		},
-		
-		del: function (name) {
-			
-			if (!name) {
-				var e = new Error("couldn't delete a resource if you don't give a name");
-				e.name = "resource error";
-				misTET.error(e);
-				return false;
-			}
-			
-			for (var key in misTET.res[name]) {
-				delete misTET.res[name][key];
-			}
-			
-			misTET.res[name] = null;
-			
-		}
-    	
-	},
+            
+            create: function (name, obj) {
+                    
+                    if (!obj) {
+                        var e = new Error("couldn't create misTET.res[#{name}] if you don't give an object".interpolate({name: name}));
+                        e.name = "resource error";
+                        misTET.error(e);
+                        return false;
+                    }
+                    
+                    for (var sel in obj) {
+                        if (Object.isFunction(obj[sel])) {
+                            obj[name] = obj[name].bind(obj);
+                        } 
+                    }
+                        
+                    obj.name = name;
+                        
+                    misTET.res[name] = obj;
+                    
+                },
+                
+                del: function (name) {
+                        
+                        if (!name) {
+                                var e = new Error("couldn't delete a resource if you don't give a name");
+                                e.name = "resource error";
+                                misTET.error(e);
+                                return false;
+                        }
+                        
+                        for (var key in misTET.res[name]) {
+                                delete misTET.res[name][key];
+                        }
+                        
+                        misTET.res[name] = null;
+                        
+                }
+            
+        },
     
     /* Show a detailed output for errors */
     error: function (e) {
         var div = $('sd_left');
         
         var string = "<br>#{name}:<br>#{message}<br>FILE: #{filename} @#{line}<br>".interpolate({
-        	name: e.name || "ERROR",
-        	message: e.message || "undefined message",
-        	filename: e.filename || e.fileName || e.file || "undefined file",
-        	line: e.line || e.lineNumber || "undefined line"
+                name: e.name || "ERROR",
+                message: e.message || "undefined message",
+                filename: e.filename || e.fileName || e.file || "undefined file",
+                line: e.line || e.lineNumber || "undefined line"
         });
         
         div.innerHTML = string;
@@ -663,7 +663,7 @@ var misTET = {
         
         /* True: you're using IE, False: you're not using IE :) */
         isIE: function () {
-        	
+                
             if (Prototype.Browser.IE) {
                 return true;
             } else {
@@ -676,7 +676,7 @@ var misTET = {
             var result = false;
  
              try {
-             	
+                     
                 new Ajax.Request(path, {
                     method: "GET",
                     asynchronous: false,
@@ -783,28 +783,28 @@ var misTET = {
         },
         
         getQueries: function (url) {
-        	var result = {};
-        	var matches = url.match(/[?#](.*)$/);
+                var result = {};
+                var matches = url.match(/[?#](.*)$/);
         
-        	if (!matches) {
-            	return result;
-        	}
+                if (!matches) {
+                    return result;
+                }
         
-        	var splitted = matches[1].split(/&/);
-        	for (var i = 0; i < splitted.length; i++) {
-           		var parts = splitted[i].split(/=/);
-            	var name = decodeURIComponent(parts[0]);
-            	
-            	if (parts[1]) {
-            		result[name] = decodeURIComponent(parts[1]);
-            	} else {
-            		result[name] = true
-            	}
-            	
-        	}
+                var splitted = matches[1].split(/&/);
+                for (var i = 0; i < splitted.length; i++) {
+                           var parts = splitted[i].split(/=/);
+                    var name = decodeURIComponent(parts[0]);
+                    
+                    if (parts[1]) {
+                            result[name] = decodeURIComponent(parts[1]);
+                    } else {
+                            result[name] = true
+                    }
+                    
+                }
         
-        	return result;
-    	}
+                return result;
+            }
 
     }
 };
