@@ -32,7 +32,7 @@ misTET.resources.modules.create("blog", {
 
 		/* loading js and css files */
 		misTET.other.insertCSS(this.root + "/resources/blog.css");
-		var path = "/modules/blog/resources/blog.xml";
+		var path = this.root + "/resources/blog.xml";
 		var test = false;
 		var error = false;
 				
@@ -47,7 +47,10 @@ misTET.resources.modules.create("blog", {
             },
                 
            	 onFailure: function (http) {
-            	misTET.error("Error while loading blog.xml (#{error})".interpolate({ error: http.status }));
+            	misTET.error({
+            		message: "Error while loading blog.xml (#{error})".interpolate({ error: http.status }), 
+            		name: "blog error"
+            	});
             }
 		});
 		
