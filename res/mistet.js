@@ -386,6 +386,15 @@ var misTET = {
             },
             
             set: function (id) {
+            	
+            	if (!Object.isset(id) || !Object.isString(id)) {
+            		
+            		var e = new Error("couldn't set a page if you don't give a real id");
+            		e.name = "page error";
+            		misTET.error(e);
+            		return false;
+            		
+				}
                     
                 var divpage = $('sd_left');
                 var inner = misTET.resources.pages.parse(id);
@@ -583,6 +592,20 @@ var misTET = {
                     misTET.error(error);
                     return false;
                 }
+                
+                if (!name || !Object.isString(name)) {
+                	
+                	var e = new Error("not a string");
+                	e.name = "module error";
+                	e.file = "#{root}/#{name}/#{file}.js".interpolate({
+                		root: misTET.modFolder,
+                		name: name,
+                		file: name
+                	});
+                	misTET.error(e);
+                	return false;
+                	
+				}
                                 
                 /* load all functions */
                 for (var func in object) {
@@ -632,6 +655,13 @@ var misTET = {
                         return false;
                     }
                     
+                    if (misTET.res.exists(name)) {
+                    	var e = new Error("misTET.res[\'#{name}\'] already exists".interpolate({name: name}));
+                    	e.name = "resource error";
+                    	misTET.error(e);
+                    	return false;
+                    }
+                    
                     for (var sel in obj) {
                         if (Object.isFunction(obj[sel])) {
                             obj[name] = obj[name].bind(obj);
@@ -646,20 +676,44 @@ var misTET = {
                 
                 del: function (name) {
                         
-                        if (!name) {
-                                var e = new Error("couldn't delete a resource if you don't give a name");
+                        if (!name || !Object.isString(name)) {
+                                var e = new Error("couldn't delete a resource if you don't give a real name");
                                 e.name = "resource error";
                                 misTET.error(e);
                                 return false;
                         }
                         
-                        for (var key in misTET.res[name]) {
+                        if (misTET.res.exists(name)) {
+                        	for (var key in misTET.res[name]) {
                                 delete misTET.res[name][key];
-                        }
+                        	}
+                        	
+                        	delete misTET.res[name];
+                        } else {
+                        	
+                        	var e = new Error("misTET.res[\'#{name}\'] is not defined".interpolate({name: name}));
+                        	e.name = "resource error";
+                        	misTET.error(e);
+                        	return false;
+                        	
+						}
                         
-                        misTET.res[name] = null;
+                        return Boolean(!Object.isset(misTET.res[name]));
                         
-                }
+                },
+                
+                exists: function (name) {
+                	
+                	if (!name) {
+                		var e = new Error("what resource?");
+                		e.name = "resource error";
+                		misTET.error(e);
+                		return false;
+                	}
+                	
+                	return Boolean(misTET.res[name]);
+                	
+				},
             
         },
     
@@ -674,7 +728,7 @@ var misTET = {
                 line: e.line || e.lineNumber || "undefined line"
         });
         
-        div.innerHTML = string;
+        div.update(string);
     },
     
     utils: {
@@ -801,9 +855,10 @@ var misTET = {
         },
         
         getQueries: function (url) {
+        	
                 var result = {};
                 
-                if (!Object.isset(url)) {
+                if (!Object.isset(url) || !Object.isString(url)) {
                 	
                 	var e = new Error("what url should the function parse?");
                 	e.name = "parsing error";
