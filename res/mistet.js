@@ -47,23 +47,23 @@ var misTET = {
         eval('misTET.resources.init.load()');
         
         if (!Object.isset(misTET.config['home'])) {
-        	misTET.config['home'] = 'home';
+                misTET.config['home'] = 'home';
         }
         
         if (!Object.isset(misTET.config['title'])) {
-        	misTET.config['title'] = "misTET #{version}".interpolate(misTET);
+                misTET.config['title'] = "misTET #{version}".interpolate(misTET);
         }
         
         if (!Object.isset(misTET.config['loading'])) {
-        	misTET.config['loading'] = "Loading...";
+                misTET.config['loading'] = "Loading...";
         }
         
         if (misTET.config['home'].charAt(0) == '#') {
-        	misTET.config['home'].slice(1, misTET.config['home'].length);
+                misTET.config['home'].slice(1, misTET.config['home'].length);
         }
         
         if (!document.title) {
-        	document.title = misTET.config['title'];
+                document.title = misTET.config['title'];
         }
         
         var ops = $('sd_left');
@@ -263,24 +263,24 @@ var misTET = {
                         var id = menuValue[0].getAttribute('id');
                         var inner = menuValue[0].firstChild.nodeValue;
                         output +=   "\n\t\t<div class = \"menu\">\n\t\t\t" +
-                        			"<a href = \'#"+id+"\'>"+inner+
-                        			"</a>\n\t\t</div>";
+                                                "<a href = \'#"+id+"\'>"+inner+
+                                                "</a>\n\t\t</div>";
 
                     } else {
                         var sub = ""
                         var idPrincipale = menuValue[0].getAttribute('id');
                         var ciao = menuValue[0].firstChild.nodeValue;
-                        output += 	"\n\t\t<div class = \"menu\">\n\t\t\t" + 
-                        			"<a href = \'#"+idPrincipale+"\'>"+ciao+"</a>" +
-                        			"\n\t\t\t<div class = \"menu\">\n\t\t\t\t";
+                        output +=         "\n\t\t<div class = \"menu\">\n\t\t\t" + 
+                                                "<a href = \'#"+idPrincipale+"\'>"+ciao+"</a>" +
+                                                "\n\t\t\t<div class = \"menu\">\n\t\t\t\t";
 
                         /* Scan all the sub menus */
                         for (var j = 1; j < menuValue.length; j++) {
                             var idSub = menuValue[j].getAttribute('id');
                             var inner2 = menuValue[j].firstChild.nodeValue;
-                            output += 	"<a class = \'menu_element\' href" +
-                            			" = \'#"+idSub+"\'><div class = \"\">" +
-                            			inner2 + "</div></a>\n\t\t\t";
+                            output +=         "<a class = \'menu_element\' href" +
+                                                    " = \'#"+idSub+"\'><div class = \"\">" +
+                                                    inner2 + "</div></a>\n\t\t\t";
 
                         }
                         output += "</div>\n\t\t</div>";
@@ -386,15 +386,15 @@ var misTET = {
             },
             
             set: function (id) {
-            	
-            	if (!Object.isset(id) || !Object.isString(id)) {
-            		
-            		var e = new Error("couldn't set a page if you don't give a real id");
-            		e.name = "page error";
-            		misTET.error(e);
-            		return false;
-            		
-				}
+                    
+                if (!Object.isset(id) || !Object.isString(id)) {
+                            
+                    var e = new Error("couldn't set a page if you don't give a real id");
+                    e.name = "page error";
+                        misTET.error(e);
+                        return false;
+                            
+                }
                     
                 var divpage = $('sd_left');
                 var inner = misTET.resources.pages.parse(id);
@@ -594,18 +594,18 @@ var misTET = {
                 }
                 
                 if (!name || !Object.isString(name)) {
-                	
-                	var e = new Error("not a string");
-                	e.name = "module error";
-                	e.file = "#{root}/#{name}/#{file}.js".interpolate({
-                		root: misTET.modFolder,
-                		name: name,
-                		file: name
-                	});
-                	misTET.error(e);
-                	return false;
-                	
-				}
+                        
+                    var e = new Error("not a string");
+                    e.name = "module error";
+                    e.file = "#{root}/#{name}/#{file}.js".interpolate({
+                            root: misTET.modFolder,
+                            name: name,
+                            file: name
+                    });
+                    misTET.error(e);
+                    return false;
+                        
+                }
                                 
                 /* load all functions */
                 for (var func in object) {
@@ -646,76 +646,76 @@ var misTET = {
     
     res: {
             
-            create: function (name, obj) {
+        create: function (name, obj) {
                     
-                    if (!obj) {
-                        var e = new Error("couldn't create misTET.res[#{name}] if you don't give an object".interpolate({name: name}));
+            if (!obj) {
+                var e = new Error("couldn't create misTET.res[#{name}] if you don't give an object".interpolate({name: name}));
+                e.name = "resource error";
+                misTET.error(e);
+                return false;
+            }
+                    
+            if (misTET.res.exists(name)) {
+                    var e = new Error("misTET.res[\'#{name}\'] already exists".interpolate({name: name}));
+                    e.name = "resource error";
+                    misTET.error(e);
+                    return false;
+            }
+                    
+            for (var sel in obj) {
+                if (Object.isFunction(obj[sel])) {
+                    obj[name] = obj[name].bind(obj);
+                } 
+            }
+                        
+            obj.name = name;
+                        
+            misTET.res[name] = obj;
+                    
+        },
+                
+        del: function (name) {
+                        
+                if (!name || !Object.isString(name)) {
+                        var e = new Error("couldn't delete a resource if you don't give a real name");
                         e.name = "resource error";
                         misTET.error(e);
                         return false;
+                }
+                        
+                if (misTET.res.exists(name)) {
+                    for (var key in misTET.res[name]) {
+                    delete misTET.res[name][key];
                     }
-                    
-                    if (misTET.res.exists(name)) {
-                    	var e = new Error("misTET.res[\'#{name}\'] already exists".interpolate({name: name}));
-                    	e.name = "resource error";
-                    	misTET.error(e);
-                    	return false;
-                    }
-                    
-                    for (var sel in obj) {
-                        if (Object.isFunction(obj[sel])) {
-                            obj[name] = obj[name].bind(obj);
-                        } 
-                    }
+                                
+                    delete misTET.res[name];
+                } else {
+                                
+                    var e = new Error("misTET.res[\'#{name}\'] is not defined".interpolate({name: name}));
+                    e.name = "resource error";
+                    misTET.error(e);
+                    return false;
+                                
+                }
                         
-                    obj.name = name;
+                return Boolean(!Object.isset(misTET.res[name]));
                         
-                    misTET.res[name] = obj;
-                    
-                },
-                
-                del: function (name) {
-                        
-                        if (!name || !Object.isString(name)) {
-                                var e = new Error("couldn't delete a resource if you don't give a real name");
-                                e.name = "resource error";
-                                misTET.error(e);
-                                return false;
-                        }
-                        
-                        if (misTET.res.exists(name)) {
-                        	for (var key in misTET.res[name]) {
-                                delete misTET.res[name][key];
-                        	}
-                        	
-                        	delete misTET.res[name];
-                        } else {
-                        	
-                        	var e = new Error("misTET.res[\'#{name}\'] is not defined".interpolate({name: name}));
-                        	e.name = "resource error";
-                        	misTET.error(e);
-                        	return false;
-                        	
-						}
-                        
-                        return Boolean(!Object.isset(misTET.res[name]));
-                        
-                },
-                
-                exists: function (name) {
-                	
-                	if (!name) {
-                		var e = new Error("what resource?");
-                		e.name = "resource error";
-                		misTET.error(e);
-                		return false;
-                	}
-                	
-                	return Boolean(misTET.res[name]);
-                	
-				},
-            
         },
+                
+        exists: function (name) {
+                        
+            if (!name) {
+                var e = new Error("what resource?");
+                e.name = "resource error";
+                misTET.error(e);
+                return false;
+            }
+                        
+            return Boolean(misTET.res[name]);
+                        
+        }
+            
+    },
     
     /* Show a detailed output for errors */
     error: function (e) {
@@ -855,17 +855,17 @@ var misTET = {
         },
         
         getQueries: function (url) {
-        	
+                
                 var result = {};
                 
                 if (!Object.isset(url) || !Object.isString(url)) {
-                	
-                	var e = new Error("what url should the function parse?");
-                	e.name = "parsing error";
-                	e.file = "#{root}/#{loc}".interpolate(misTET);
-                	misTET.error(e);
+                        
+                        var e = new Error("what url should the function parse?");
+                        e.name = "parsing error";
+                        e.file = "#{root}/#{loc}".interpolate(misTET);
+                        misTET.error(e);
       
-                	return false;
+                        return false;
                 }
                 
                 var matches = url.match(/[?#](.*)$/);
