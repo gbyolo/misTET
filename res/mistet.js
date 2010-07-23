@@ -17,13 +17,6 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
-function isset (obj) {
-    return typeof(obj) != 'undefined';
-};
-function empty (string) {
-    return string == "";
-};
-
 var misTET = {
     
     version: ["0", "5", "5"].join("."),
@@ -36,7 +29,6 @@ var misTET = {
     
     /* start misTET */
     init: function () {
-        
         
         if (misTET.initialized) {
                 
@@ -53,10 +45,31 @@ var misTET = {
         misTET.initialized = false;
     
         eval('misTET.resources.init.load()');
+        
+        if (!Object.isset(misTET.config['home'])) {
+        	misTET.config['home'] = 'home';
+        }
+        
+        if (!Object.isset(misTET.config['title'])) {
+        	misTET.config['title'] = "misTET #{version}".interpolate(misTET);
+        }
+        
+        if (!Object.isset(misTET.config['loading'])) {
+        	misTET.config['loading'] = "Loading...";
+        }
+        
+        if (misTET.config['home'].charAt(0) == '#') {
+        	misTET.config['home'].slice(1, misTET.config['home'].length);
+        }
+        
+        if (!document.title) {
+        	document.title = misTET.config['title'];
+        }
+        
         var ops = $('sd_left');
-        var args = misTET.other.getQueries(location.hash);
+        var args = misTET.utils.getQueries(location.hash);
         var menuOk = true, pagesOk = true;
-        ops.innerHTML = misTET['config']['loading'];
+        ops.innerHTML = misTET.config['loading'];
         
         try {
             misTET.resources.menu.load();
@@ -81,7 +94,7 @@ var misTET = {
 
             misTET.resources.modules.load();
             
-            misTET.go(misTET.location, args);
+            misTET.go(misTET.location);
             
         }
         
@@ -124,9 +137,9 @@ var misTET = {
     
     go: function (query) {
             
-            var queries = misTET.other.getQueries(query);
+            var queries = misTET.utils.getQueries(query);
             
-            if (empty(query)) {
+            if (query.isEmpty()) {
                 
                 misTET.resources.pages.set(misTET['config']['home']);
             
@@ -138,7 +151,7 @@ var misTET = {
                      var inner = misTET.resources.pages.loadGET(page, queries.lan);
                      $('sd_left').innerHTML = inner;
                         
-                    if (isset(queries.lan)) {
+                    if (Object.isset(queries.lan)) {
                         SyntaxHighlighter.highlight();
                     }
                         
@@ -175,7 +188,7 @@ var misTET = {
                           evalJS: false,
                 
                     onSuccess: function (http) {
-                        if (test = misTET.other.XMLtest(http.responseXML)) {
+                        if (test = misTET.utils.XMLtest(http.responseXML)) {
                                 misTET['config']['init'] = http.responseXML;
                             } else {
                                 misTET.error(test)
@@ -188,6 +201,7 @@ var misTET = {
                         error.fileName        = path;
                     }
                 });
+                
                 /* Error... */
                 if (error) {
                     misTET.error(error);
@@ -197,9 +211,7 @@ var misTET = {
                 misTET['config']['home'] = init.getElementsByTagName('homePage')[0].firstChild.nodeValue;
                 misTET['config']['loading'] = init.getElementsByTagName('loadMessage')[0].firstChild.nodeValue;
                 misTET['config']['title'] = init.getElementsByTagName('title')[0].firstChild.nodeValue;
-                if (!document.title) {
-                    document.title = misTET['config']['title'];
-                }
+                
             }
         },
         
@@ -217,7 +229,7 @@ var misTET = {
                           evalJS: false,
                 
                         onSuccess: function (http) {
-                            if (test = misTET.other.XMLtest(http.responseXML)) {
+                            if (test = misTET.utils.XMLtest(http.responseXML)) {
                                 misTET['config']['menu'] = http.responseXML;
                             } else {
                                 misTET.error(test)
@@ -250,19 +262,25 @@ var misTET = {
                     if (menuValue.length == 1) {
                         var id = menuValue[0].getAttribute('id');
                         var inner = menuValue[0].firstChild.nodeValue;
-                        output += "\n\t\t<div class = \"menu\">\n\t\t\t<a href = \'#" + id + "\'>" + inner + "</a>\n\t\t</div>\n";
+                        output +=   "\n\t\t<div class = \"menu\">\n\t\t\t" +
+                        			"<a href = \'#"+id+"\'>"+inner+
+                        			"</a>\n\t\t</div>";
 
                     } else {
                         var sub = ""
                         var idPrincipale = menuValue[0].getAttribute('id');
                         var ciao = menuValue[0].firstChild.nodeValue;
-                        output += "\n\t\t<div class = \"menu\">\n\t\t\t<a href = \'#" + idPrincipale+"\'>" + ciao + "</a>\n\t\t\t<div class = \"menu\">\n\t\t\t\t";
+                        output += 	"\n\t\t<div class = \"menu\">\n\t\t\t" + 
+                        			"<a href = \'#"+idPrincipale+"\'>"+ciao+"</a>" +
+                        			"\n\t\t\t<div class = \"menu\">\n\t\t\t\t";
 
                         /* Scan all the sub menus */
                         for (var j = 1; j < menuValue.length; j++) {
                             var idSub = menuValue[j].getAttribute('id');
                             var inner2 = menuValue[j].firstChild.nodeValue;
-                            output += "<a class = \'menu_element\' href = \'#" + idSub + "\'><div class = \"\">" + inner2 + "</div></a>\n\t\t\t\t";
+                            output += 	"<a class = \'menu_element\' href" +
+                            			" = \'#"+idSub+"\'><div class = \"\">" +
+                            			inner2 + "</div></a>\n\t\t\t";
 
                         }
                         output += "</div>\n\t\t</div>";
@@ -289,7 +307,7 @@ var misTET = {
                           evalJS: false,
                     
                         onSuccess: function (http) {
-                            if (test = misTET.other.XMLtest(http.responseXML)) {
+                            if (test = misTET.utils.XMLtest(http.responseXML)) {
                                 misTET['config']['pages'] = http.responseXML;
                             } else {
                                 misTET.error(test)
@@ -345,8 +363,8 @@ var misTET = {
                                 } else if (list[j].nodeName == "text") { 
                                     var href = list[j].getAttribute('href');
                                     var lan = list[j].getAttribute('lan') || "";
-                                    if (misTET.other.isFile(misTET.extern+href)) {
-                                        var inner = misTET.other.encorp(misTET.extern+href);
+                                    if (misTET.utils.isFile(misTET.extern+href)) {
+                                        var inner = misTET.utils.encorp(misTET.extern+href);
                                         if (lan == "") {
                                             output += "<pre>" + inner + "</pre>";
                                         } else if (lan != ""){
@@ -398,9 +416,9 @@ var misTET = {
                 var output = "";
             
                 if (language == "") {
-                    if (misTET.other.isFile(res)) {
-                        var inner = misTET.other.encorp(res);
-                        output = "<pre>"+inner+"</pre>";
+                    if (misTET.utils.isFile(res)) {
+                        var inner = misTET.utils.encorp(res);
+                        output = "<pre>#{code}</pre>".interpolate({code: inner});
                     } else {
                         misTET.error("404 - Not found");
                     }
@@ -428,12 +446,12 @@ var misTET = {
                             'vb'            : 'Vb', 
                             'xml'          : 'Xml' 
                     };
-                    if (misTET.other.isFile(res)) {            
+                    if (misTET.utils.isFile(res)) {            
                         if (language in langs) {
                     
-                            misTET.other.include(misTET['modFolder']+'/sintax/scripts/shBrush'+langs[lan]+".js");
+                            misTET.utils.include(misTET['modFolder']+'/sintax/scripts/shBrush'+langs[lan]+".js");
                     
-                            var file = misTET.other.encorp(res);    
+                            var file = misTET.utils.encorp(res);    
                             var inner = "<pre class = 'brush: "+lan+";'>"+file+"</pre>";
                             output = inner;
                     
@@ -487,7 +505,7 @@ var misTET = {
                           evalJS: false,
                 
                         onSuccess: function (http) {
-                            if (test = misTET.other.XMLtest(http.responseXML)) {
+                            if (test = misTET.utils.XMLtest(http.responseXML)) {
                                 misTET['config']['modules'] = http.responseXML;
                             } else {
                                 misTET.error(test)
@@ -526,7 +544,7 @@ var misTET = {
                     
                     try {
                             
-                        include("#{modules}/#{name}/#{name2}.js".interpolate({
+                        misTET.utils.include("#{modules}/#{name}/#{name2}.js".interpolate({
                             modules: misTET.modFolder,
                             name: moduleName,
                             name2: moduleName
@@ -659,7 +677,7 @@ var misTET = {
         div.innerHTML = string;
     },
     
-    other: {
+    utils: {
         
         /* True: you're using IE, False: you're not using IE :) */
         isIE: function () {
@@ -768,7 +786,7 @@ var misTET = {
             
             var result = false;
  
-            if (misTET.other.isFile(path)) {
+            if (misTET.utils.isFile(path)) {
                 var style = new Element("link", {
                     rel: "stylesheet",
                     href: path,
@@ -784,6 +802,12 @@ var misTET = {
         
         getQueries: function (url) {
                 var result = {};
+                
+                if (!Object.isset(url)) {
+                	var e = new Error();
+                	return false;
+                }
+                
                 var matches = url.match(/[?#](.*)$/);
         
                 if (!matches) {
@@ -809,4 +833,4 @@ var misTET = {
     }
 };
 
-var include = misTET.other.include;
+misTET.utils.include('res/utils.js');
