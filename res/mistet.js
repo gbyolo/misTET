@@ -804,7 +804,12 @@ var misTET = {
                 var result = {};
                 
                 if (!Object.isset(url)) {
-                	var e = new Error();
+                	
+                	var e = new Error("what url should the function parse?");
+                	e.name = "parsing error";
+                	e.file = "#{root}/#{loc}".interpolate(misTET);
+                	misTET.error(e);
+      
                 	return false;
                 }
                 
