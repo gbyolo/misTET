@@ -31,7 +31,7 @@ misTET.resources.modules.create("blog", {
 	initialize: function () {
 
 		/* loading js and css files */
-		misTET.other.insertCSS(this.root + "/resources/blog.css");
+		misTET.utils.insertCSS(this.root + "/resources/blog.css");
 		var path = this.root + "/resources/blog.xml";
 		var test = false;
 		var error = false;
@@ -58,13 +58,13 @@ misTET.resources.modules.create("blog", {
 	
 	execute: function () {
 		
-		var queries = misTET.other.getQueries(location.hash);
+		var queries = misTET.utils.getQueries(location.hash);
 		
 		if (/admin/.match(location.hash)) {
 			location.href = this.root + "/admin";
 		}
 		
-		if (isset(queries.id)) {
+		if (Object.isset(queries.id)) {
 			this.display(queries.id);
 		} else {
 			this.display();
@@ -121,7 +121,7 @@ misTET.resources.modules.create("blog", {
 			}
 		} else {
 			$('sd_left').innerHTML = "";
-			for (var j = misTET.total; j > 0; j--) {
+			for (var j = misTET.res['blog'].total; j > 0; j--) {
 				var currentPost = this.getPost(""+j+"");
 				if (this.checkPost(currentPost)) {
 					var output = "<div class = 'post'><div class = 'title'>"+ currentPost.title + "</div>" + currentPost.text + "<div class = 'foot'>"+
