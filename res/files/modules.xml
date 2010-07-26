@@ -17,6 +17,6 @@
 -->
 
 <modules>
-	<module name="admin"></module>
+	<module name="security"></module>
 	<module name="blog"></module>
 </modules>

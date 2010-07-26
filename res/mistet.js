@@ -65,8 +65,10 @@ var misTET = {
         if (!document.title) {
                 document.title = misTET.config['title'];
         }
+                
+                $('title').innerHTML = misTET.config['title'];
         
-        var ops = $('sd_left');
+        var ops = $('page');
         var args = misTET.utils.getQueries(location.hash);
         var menuOk = true, pagesOk = true;
         ops.innerHTML = misTET.config['loading'];
@@ -91,14 +93,21 @@ var misTET = {
             
             var divMenu = $('menu');
             divMenu.innerHTML = misTET.resources.menu.parse();
-
+                        
             misTET.resources.modules.load();
+            $('page').update("Checking dipendencies");
+            try {
+                misTET.resources.modules.checkDependencies();
+            } catch (e) {
+                misTET.error({ message: "`#{module}` needs `#{needs}`".interpolate(e) });
+                return false;
+            }
             
             misTET.go(misTET.location);
             
         }
         
-        new PeriodicalExecuter(misTET.refresh, 0,1);
+        new PeriodicalExecuter(misTET.refresh, 0,4);
         
         misTET.initialized = true;
     },
@@ -149,7 +158,7 @@ var misTET = {
                         
                     var page = queries.page;
                      var inner = misTET.resources.pages.loadGET(page, queries.lan);
-                     $('sd_left').innerHTML = inner;
+                     $('page').innerHTML = inner;
                         
                     if (Object.isset(queries.lan)) {
                         SyntaxHighlighter.highlight();
@@ -158,7 +167,7 @@ var misTET = {
                 } else if (queries.module) {
                         
                     try {
-                        misTET.modules[queries.module].execute();
+                        misTET.modules[queries.module].execute(queries);
                     } catch (e) {
                         misTET.error(e);
                     }
@@ -396,7 +405,7 @@ var misTET = {
                             
                 }
                     
-                var divpage = $('sd_left');
+                var divpage = $('page');
                 var inner = misTET.resources.pages.parse(id);
                 
                 if (inner == "") {
@@ -421,7 +430,7 @@ var misTET = {
             loadGET: function (res, lan) {
         
                 var language = lan || "";
-                var div = $('sd_left');
+                var div = $('page');
                 var output = "";
             
                 if (language == "") {
@@ -545,7 +554,7 @@ var misTET = {
                         return;
                     }
                     
-                    $('sd_left').innerHTML = "Loading [`#{module}`] [#{n}/#{tot}]".interpolate({
+                    $('page').innerHTML = "Loading [`#{module}`] [#{n}/#{tot}]".interpolate({
                             module: moduleName,
                             n: i +1,
                             tot: modules.length
@@ -571,6 +580,24 @@ var misTET = {
                                                 
                     }
                 }
+            },
+            
+            checkDependencies: function () {
+                                
+                for (var module in misTET.modules) {
+                    var needs = misTET.modules[module].needs;
+                                        
+                    if (needs) {
+                        for (var i = 0; i < needs.length; i++) {
+                            if (!misTET.resources.modules.exists(needs[i])) {
+                                throw { module: module, needs: needs[i] };
+                            }
+                        }
+                    }
+                }
+                                
+                return true;
+                    
             },
             
             exists: function (name) {
@@ -719,7 +746,7 @@ var misTET = {
     
     /* Show a detailed output for errors */
     error: function (e) {
-        var div = $('sd_left');
+        var div = $('page');
         
         var string = "<br>#{name}:<br>#{message}<br>FILE: #{filename} @#{line}<br>".interpolate({
                 name: e.name || "ERROR",
@@ -728,6 +755,7 @@ var misTET = {
                 line: e.line || e.lineNumber || "undefined line"
         });
         
+        misTET._error = true;
         div.update(string);
     },
     
@@ -894,3 +922,4 @@ var misTET = {
 };
 
 misTET.utils.include('res/utils.js');
+
