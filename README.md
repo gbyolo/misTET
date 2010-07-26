@@ -23,15 +23,6 @@ I have, and I will have no intention to write IE support for misTET, since I nev
 <h2>Modules</h2>
 misTET is also a modular cms, so you can write your own module without edit the main source. View /modules/README.md for more instructions.
 
-<h2>Admin Panel</h2>
-View /modules/admin/README.md
-
-<h2>Blog</h2>
-View /modules/blog/README.md
-
-<h2>SintaxHighlighting</h2>
-View /modules/sintax/README.md
-
 <h2>Site</h2>
 misTET developing site is here:
 <a href = "http://mistet.altervista.org" target = "_blank">http://mistet.altervista.org</a>
