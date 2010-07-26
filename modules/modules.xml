@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE modules [
+    <!ELEMENT modules (module*)>
+
+    <!ELEMENT module (release+)>
+    <!ATTLIST module
+        name    CDATA   #REQUIRED
+    >
+    
+    <!ELEMENT module (author+)>
+    <!ATTLIST author
+    	name		CDATA	#REQUIRED
+    	email		CDATA	#IMPLIED
+    	homepage	CDATA	#IMPLIED
+    >
+    
+    <!ELEMENT release (description*)>
+    <!ELEMENT description ANY>
+    
+    <!ELEMENT release (license+)>
+    <!ELEMENT license ANY>
+    <!ATTLIST license
+    	href 	CDATA	#IMPLIED
+    >
+
+    <!ELEMENT release ANY>
+    <!ATTLIST release
+        version CDATA   #REQUIRED
+        date    CDATA   #IMPLIED
+    >
+]>
+
+<!-- In this file you can find all official modules of misTET -->
+<!-- Each module should contain a simple documentation about how using it -->
+
+<modules>
+	<module name="security">
+		<author>
+			<name>lostpassword</name>
+			<email>gdb.lost@gmail.com</email>
+			<homepage>http://github.com/lostpassword</homepage>
+		</author>
+		<release version="0.2.5">
+			<description>A module to get more security on your site</description>
+			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
+		</release>
+	</module>
+	
+	<module name="blog">
+		<author>
+			<name>lostpassword</name>
+			<email>gdb.lost@gmail.com</email>
+			<homepage>http://github.com/lostpassword</homepage>
+		</author>
+		<release version="0.3.0">
+			<description>A blog</description>
+			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
+		</release>
+	</module>
+</modules>
