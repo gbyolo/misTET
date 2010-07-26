@@ -1,0 +1,113 @@
+body
+{
+    background-color:ffffff;
+    color:#000000;
+    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+    font-size:12px;
+    margin:30px;
+}
+div#title
+{
+    font-size : 25px;
+    text-align: center;
+    margin : 0px auto;
+    padding:10px;
+    
+}
+div#page
+{
+    background-color:#ffffff;
+    color:#000000;
+    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+    width : 600px;
+    height: 350px;
+    font-size : 12px;
+    margin : 0px auto;
+    padding:10px;
+    border-left:1px solid #ABABAB;
+    overflow: auto;
+}
+
+div.footer
+{
+    background-color:#ffffff;
+    color:#000000;
+    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+    width : 600px;
+    height: 20px;
+    font-size : 10px;
+    margin : 20px auto;
+    padding:10px;
+    border-top:1px solid #ABABAB;
+    border-bottom:1px solid #ABABAB;
+}
+
+div.footer#padding {
+	padding: 40px 0 0 0;
+				
+}
+
+#code {
+	border: 1px solid #000;
+}
+
+#menu a:link {
+	color:#000000; ; 
+    text-decoration: none;
+}	
+
+#menu a:visited
+{
+    color:#000000;
+    text-decoration: none;
+}
+#menu a:hover
+{
+    color: #F64521; 
+    text-decoration: underline;
+}
+
+a:link
+{
+    color:#F64521; 
+    text-decoration: none;
+}		
+a:visited
+{
+    color:#F64521;
+    text-decoration: none;
+}
+a:hover
+{
+    color: #F64521; 
+    text-decoration: underline;
+}
+a{
+    color: #F64521;
+}
+
+#error {
+	color: #990000;
+	background-color: #FFF0F0;
+	padding: 7px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 1px dashed #990000;
+}
+#error h2 {
+	color: #990000;
+	background: inherit;
+}
+
+#success {
+	color: #000000;
+	background: #F5FBE1;
+	padding: 7px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: 1px dashed #7BA813;
+}
+#success h2 {
+	color: #7BA813;
+	background: inherit;
+}
