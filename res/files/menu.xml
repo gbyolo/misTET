@@ -31,4 +31,10 @@ Don't use XML special characters.
 		<text id = 'go'>`go`</text>
 		<text id = 'nigger'>NIGGER_NIGGER</text>
 	</menu>
+	<menu>
+		<text id = 'modules'>Modules</text>
+		<text id = 'security'>Security</text>
+		<text id = 'blog'>Blog</text>
+		<text id = 'syntax'>SyntaxHighlighter</text>
+	</menu>
 </menue>
