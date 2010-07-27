@@ -65,7 +65,7 @@
 			<email>gdb.lost@gmail.com</email>
 			<homepage>http://github.com/lostpassword</homepage>
 		</author>
-		<release version="0.1.0">
+		<release version="0.1.1">
 			<description>A syntax highlighter</description>
 			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
 		</release>

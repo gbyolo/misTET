@@ -19,7 +19,7 @@
 
 misTET.resources.modules.create("SyntaxHighlighter", {
         
-    version: "0.1",
+    version: "0.1.1",
         
     initialize: function () {
                 
@@ -86,6 +86,7 @@ misTET.resources.modules.create("SyntaxHighlighter", {
                     if (matches) {
                         var lan = matches[1];
                         pre[i].setAttribute("class", "brush: "+lan);
+                                                pre[i].innerHTML = this.textFilter(pre[i]);
                         this.loadBrush(langs[lan]);
                         SyntaxHighlighter.highlight();
                     }
@@ -97,6 +98,12 @@ misTET.resources.modules.create("SyntaxHighlighter", {
                     }
                 }
                 
+    },
+        
+    textFilter: function (element) {
+        var text = element.innerHTML;
+        text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return text;
     }
         
 });
