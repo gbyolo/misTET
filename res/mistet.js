@@ -261,15 +261,15 @@ var misTET = {
                     if (menuValue.length == 1) {
                         var id = menuValue[0].getAttribute('id');
                         var inner = menuValue[0].firstChild.nodeValue;
-                        output +=    "\n\t\t<div class = \"menu\">\n\t\t\t" +
-                                          "<a href = \'#"+id+"\'>"+inner+
-                                          "</a>\n\t\t</div>";
+                        output +=	"\n\t\t<div class = \"menu\">\n\t\t\t" +
+                                    "<a href = \'#"+id+"\'>"+inner+
+                                    "</a>\n\t\t</div>";
 
                     } else {
                         var sub = ""
                         var idPrincipale = menuValue[0].getAttribute('id');
                         var ciao = menuValue[0].firstChild.nodeValue;
-                        output +=    "\n\t\t<div class = \"menu\">\n\t\t\t" + 
+                        output +=	"\n\t\t<div class = \"menu\">\n\t\t\t" + 
                                           "<a href = \'#"+idPrincipale+"\'>"+ciao+"</a>" +
                                           "\n\t\t\t<div class = \"menu\">\n\t\t\t\t";
 
@@ -277,9 +277,9 @@ var misTET = {
                         for (var j = 1; j < menuValue.length; j++) {
                             var idSub = menuValue[j].getAttribute('id');
                             var inner2 = menuValue[j].firstChild.nodeValue;
-                            output +=    "<a class = \'menu_element\' href" +
-                                              " = \'#"+idSub+"\'><div class = \"\">" +
-                                              inner2 + "</div></a>\n\t\t\t";
+                            output +=	"<a class = \'menu_element\' href" +
+                                        " = \'#"+idSub+"\'><div class = \"\">" +
+                                        inner2 + "</div></a>\n\t\t\t";
 
                         }
                         output += "</div>\n\t\t</div>";
@@ -354,8 +354,8 @@ var misTET = {
                                     }
                                     var after = list[j].getAttribute('after');
                                     
-                                    output +=    "<a href = \'#page="+href+args+"\' " +
-                                                      ">" + list[j].getAttribute('text')+"</a>"+after+"<br>";
+                                    output += "<a href = \'#page="+href+args+"\' " +
+                                              ">" + list[j].getAttribute('text')+"</a>"+after+"<br>";
 
                                 } else if (list[j].nodeName == "text") { 
                                     var href = list[j].getAttribute('href');
