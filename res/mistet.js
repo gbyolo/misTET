@@ -408,8 +408,11 @@ var misTET = {
             
             /* load an extern page(/res/files/stat) */
             loadGET: function (res, args) {
-                    
-                delete args.page;
+            	
+            	args = Object.isArray(args) ? args : [args];
+            	if (args.page) {
+            		delete args.page;
+            	}
                     
                 var result = "";
                 if (!Object.isString(args)) {
