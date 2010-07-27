@@ -261,7 +261,7 @@ var misTET = {
                     if (menuValue.length == 1) {
                         var id = menuValue[0].getAttribute('id');
                         var inner = menuValue[0].firstChild.nodeValue;
-                        output +=	"\n\t\t<div class = \"menu\">\n\t\t\t" +
+                        output +=        "\n\t\t<div class = \"menu\">\n\t\t\t" +
                                     "<a href = \'#"+id+"\'>"+inner+
                                     "</a>\n\t\t</div>";
 
@@ -269,7 +269,7 @@ var misTET = {
                         var sub = ""
                         var idPrincipale = menuValue[0].getAttribute('id');
                         var ciao = menuValue[0].firstChild.nodeValue;
-                        output +=	"\n\t\t<div class = \"menu\">\n\t\t\t" + 
+                        output +=        "\n\t\t<div class = \"menu\">\n\t\t\t" + 
                                           "<a href = \'#"+idPrincipale+"\'>"+ciao+"</a>" +
                                           "\n\t\t\t<div class = \"menu\">\n\t\t\t\t";
 
@@ -277,7 +277,7 @@ var misTET = {
                         for (var j = 1; j < menuValue.length; j++) {
                             var idSub = menuValue[j].getAttribute('id');
                             var inner2 = menuValue[j].firstChild.nodeValue;
-                            output +=	"<a class = \'menu_element\' href" +
+                            output +=        "<a class = \'menu_element\' href" +
                                         " = \'#"+idSub+"\'><div class = \"\">" +
                                         inner2 + "</div></a>\n\t\t\t";
 
@@ -408,11 +408,10 @@ var misTET = {
             
             /* load an extern page(/res/files/stat) */
             loadGET: function (res, args) {
-            	
-            	args = Object.isArray(args) ? args : [args];
-            	if (args.page) {
-            		delete args.page;
-            	}
+
+                if (args.page) {
+                    delete args.page;
+                }
                     
                 var result = "";
                 if (!Object.isString(args)) {
@@ -852,3 +851,4 @@ var misTET = {
 };
 
 misTET.utils.include('res/utils.js');
+
