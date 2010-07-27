@@ -86,7 +86,7 @@ misTET.resources.modules.create("SyntaxHighlighter", {
                     if (matches) {
                         var lan = matches[1];
                         pre[i].setAttribute("class", "brush: "+lan);
-                                                pre[i].innerHTML = this.textFilter(pre[i]);
+                        pre[i].innerHTML = this.textFilter(pre[i]);
                         this.loadBrush(langs[lan]);
                         SyntaxHighlighter.highlight();
                     }
