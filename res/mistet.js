@@ -23,7 +23,7 @@ var misTET = {
     
     modFolder: "/modules",
     modules: { },
-    extern: "/res/files/stat/",
+    extern: "/res/files/stat",
     root: location.href.match(/^(.*?)\/[^\/]*?(#|$)/)[1],
     loc: "res/mistet.js",
     
@@ -147,39 +147,29 @@ var misTET = {
     go: function (query) {
             
             var queries = misTET.utils.getQueries(query);
-            
             if (query.isEmpty()) {
-                
                 misTET.resources.pages.set(misTET['config']['home']);
-            
-            } else {
                 
-                if (queries.page) {
-                        
+            } else {
+                if (queries.page) {    
                     var page = queries.page;
-                     var inner = misTET.resources.pages.loadGET(page, queries.lan);
-                     $('page').innerHTML = inner;
-                        
-                    if (Object.isset(queries.lan)) {
-                        SyntaxHighlighter.highlight();
-                    }
-                        
-                } else if (queries.module) {
-                        
+                     var inner = misTET.resources.pages.loadGET(page, queries);
+                     $('page').innerHTML = inner;  
+                     
+                } else if (queries.module) { 
                     try {
                         misTET.modules[queries.module].execute(queries);
                     } catch (e) {
                         misTET.error(e);
-                    }
-                        
+                    }         
+                    
                 } else {
-                        
                     var ref = query.match(/#\w+/);
-                    misTET.resources.pages.set(ref[0].replace('#',''));
-                        
+                    misTET.resources.pages.set(ref[0].replace('#','')); 
                         }
             
         }
+        Event.fire(document, ":change", query);
     },
     
     resources: {
@@ -358,29 +348,21 @@ var misTET = {
                                     output += code;
                                 } else if (list[j].nodeName == "go") {
                                     var href = list[j].getAttribute('href');
-                                    var lan = list[j].getAttribute('lan') || "";
+                                    var args = list[j].getAttribute('args') || "";
+                                    if (!args.isEmpty()) {
+                                            args = "&" + args;
+                                    }
                                     var after = list[j].getAttribute('after');
-                                
-                                    if (lan != "") {
-                                        output +=     "<a href = \'#"+id+"&page="+href+"&lan="+lan+"\' " +
-                                                    ">" + list[j].getAttribute('text')+"</a>"+after+"<br>";
                                     
-                                    } else if (lan == "") {
-                                        output +=     "<a href = \'#"+id+"&page="+href+"\' >" +
-                                                    list[j].getAttribute('text')+"</a>"+after+"<br>";
-                                        }    
+                                    output +=                 "<a href = \'#page="+href+args+"\' " +
+                                                                        ">" + list[j].getAttribute('text')+"</a>"+after+"<br>";
+
                                 } else if (list[j].nodeName == "text") { 
                                     var href = list[j].getAttribute('href');
-                                    var lan = list[j].getAttribute('lan') || "";
+                                    var args = list[j].getAttribute('args') || "";
                                     if (misTET.utils.isFile(misTET.extern+href)) {
                                         var inner = misTET.utils.encorp(misTET.extern+href);
-                                        if (lan == "") {
-                                            output += "<pre>" + inner + "</pre>";
-                                        } else if (lan != ""){
-                                            output += misTET.resources.pages.loadGET(misTET.extern+href, lan);
-                                            /* Sintax Highlighting */
-                                            SyntaxHighlighter.highlight();
-                                        }
+                                        output += "<pre id = \'"+args+"\'>" + inner + "</pre";
                                     } else {
                                         misTET.error("404 - Not found");
                                     }
@@ -418,92 +400,37 @@ var misTET = {
                         
                     } catch (e) {
                         divpage.innerHTML = inner;
-                        if (inner.match(/brush: (.+);/i)) {
-                            SyntaxHighlighter.highlight();
-                        }
                     }
                     
                 }
+                Event.fire(document, ":change", id);
             },
             
-            /* load an extern page, specify lan argument if you want to include a source */
-            loadGET: function (res, lan) {
-        
-                var language = lan || "";
-                var div = $('page');
+            /* load an extern page(/res/files/stat) */
+            loadGET: function (res, args) {
+                    
+                delete args.page;
+                    
+                var result = "";
+                if (!Object.isString(args)) {
+                    for (var arg in args) {
+                        result += arg+"="+args[arg].toString().escapeHTML()+"&";
+                    }
+                    result = result.slice(0, result.length - 1);
+                } else {
+                    result = args;
+                }
+                                        
+
                 var output = "";
             
-                if (language == "") {
-                    if (misTET.utils.isFile(res)) {
-                        var inner = misTET.utils.encorp(res);
-                        output = "<pre>#{code}</pre>".interpolate({code: inner});
-                    } else {
-                        misTET.error("404 - Not found");
-                    }
-                
+                if (misTET.utils.isFile(misTET.extern + res)) {
+                    var inner = misTET.utils.encorp(misTET.extern + res);
+                    output += "<pre id=\'" + result + "\'>#{code}</pre>".interpolate({code: inner});
                 } else {
-                
-                    /* Languages aliases */
-                    var langs = {    
-                            'bash'       : 'Bash', 
-                            'cpp'         : 'Cpp', 
-                            'c'             : 'Cpp',
-                            'c#'           : 'CSharp', 
-                            'css'         : 'Css', 
-                            'delphi'      : 'Delphi', 
-                            'java'         : 'Java',
-                            'js'            : 'JScript', 
-                            'jscript'      : 'JScript',
-                            'javascript' : 'JSCript',
-                            'php'         : 'Php', 
-                            'python'     : 'Python', 
-                            'py'           : 'Python',
-                            'ruby'        : 'Ruby', 
-                            'rb'            : 'Ruby',
-                            'sql'           : 'Sql', 
-                            'vb'            : 'Vb', 
-                            'xml'          : 'Xml' 
-                    };
-                    if (misTET.utils.isFile(res)) {            
-                        if (language in langs) {
-                    
-                            misTET.utils.include(misTET['modFolder']+'/sintax/scripts/shBrush'+langs[lan]+".js");
-                    
-                            var file = misTET.utils.encorp(res);    
-                            var inner = "<pre class = 'brush: "+lan+";'>"+file+"</pre>";
-                            output = inner;
-                    
-                            /* Well, just fuck that */
-                            SyntaxHighlighter.vars.discoveredBrushes = {};
-                    
-                            var brush = "";
-                            /* scan all brushes */
-                            for (brush in SyntaxHighlighter.brushes) {
-                                /* alias copying */                                        
-                                var alias = SyntaxHighlighter.brushes[brush].aliases;
-
-                                    /* scan all aliases */
-                                    for (var scan = 0; scan < alias.length; scan++) {
-                                        SyntaxHighlighter.vars.discoveredBrushes[alias[scan]] = brush;
-                                    }
-                            }
-                            /* End */
-                        
-                            /* prepare the specified brush */
-                            SyntaxHighlighter.defaults["brush"] = langs[lan];
-                    
-                        /* mah */
-                        } else {
-                            div.innerHTML = 'Error while loading source. Please specify one of the following languages:<br><br>';
-                    
-                            for (l in langs) {
-                                div.innerHTML += "&nbsp;"+l+"<br>";
-                            }
-                        }
-                    } else {
-                        misTET.error("404 - Not found");
-                    }    
+                    misTET.error("404 - Not found");
                 }
+                    
                 return output;
             }
             
@@ -922,4 +849,3 @@ var misTET = {
 };
 
 misTET.utils.include('res/utils.js');
-

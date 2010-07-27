@@ -11,7 +11,7 @@
 	<!ELEMENT go ANY>
 	<!ATTLIST go
 		href	CDATA	#REQUIRED
-		lan		CDATA	#IMPLIED
+		args	CDATA	#IMPLIED
 		text	CDATA	#REQUIRED
 		after	CDATA	#IMPLIED
 	>
@@ -19,20 +19,24 @@
 	<!ELEMENT text ANY>
 	<!ATTLIST text
 		href	CDATA	#REQUIRED
-		lan		CDATA	#IMPLIED
+		args	CDATA	#IMPLIED
 	>
 ]>
 <!--
 To create a new page, just use <page> node with the page content. The 
 attribute `id` has to be the same you specified in menu.xml. Through <go>
-node you can create a link to an extern file, and through the attribute
-`lan` you can include sources. The attribute `text` is equivalent to 
+node you can create a link to an extern file. The attribute `text` is equivalent to 
 <a href="">text</a>, while the attribute `after` specifies the text to show
-jsut after the link. You can use `text` node to import a file in a page,
-and use the `lan` attribute to include sources.
+jsut after the link. You can use `text` node to import a file in a page.
+The attribute args, both used in `text` and `go`, indicates the arguments you want
+to put in location.hash.
+
 If a page should show a module's executing output, you should declare the page as:
 <page id = 'module=moduleName'></page>
 
+WARNING: When you load an extern page with `text` and `go`, be sure that the page
+		 is located in /res/files/stat
+		 
 WARNING: Don't use exclusively html code in your pages, it can cause some
 	 	 problems.
 -->
@@ -58,30 +62,67 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 		<![CDATA[
 			This is an example of how including an extern file, with Syntax Highlighting :P
 		]]>
-		<text href = "notes.txt" lan = "python"></text>
+		<text href = "/notes.txt" args = "lan=python"></text>
 	</page>
 	<page id = 'PHP'>
 		<![CDATA[
 			You can use the following syntax:<br>
-			<pre id = 'code'>#id&page=name.php</pre><br>
-			or:<br>
-			<pre id = 'code'>#page=name.php</pre><br><br>
+			<pre id = 'code'>#id&page=name.php</pre>
+			or:
+			<pre id = 'code'>#page=name.php</pre>
 			name.php: name of the page in /res/files/stat<br>
 			The output is not the source, but what the server says getting the PHP page. Here's an example:<br>
 		]]>
-		<go href = "/res/files/stat/lol.php" text = "View" after = " ~ This is a PHP page which shows your IP"></go>
+		<go href = "/lol.php" text = "View" after = " ~ This is a PHP page which shows your IP"></go>
 	</page>
 	<page id = 'go'>
 		<![CDATA[
 			Using `go` attribute. As you can see, you can also include a file using:<br>
 			<pre id = 'code'>#id&page=pageRef</pre><br>where pageRef is a link of a file in this server :P<br><br>
 		]]>
-		<go href = "/res/files/stat/notes.txt" lan = "python" text = "View" after = " ~ This is an external link, a source"></go>
-		<go href = "/res/files/stat/well" text = "View" after = " ~ This is an external link, a simple file"></go>
+		<go href = "/notes.txt" args = "lan=python" text = "View" after = " ~ This is an external link, a source"></go>
+		<go href = "/well" text = "View" after = " ~ This is an external link, a simple file"></go>
 	</page>
 	<page id = 'nigger'>
 		<![CDATA[
 			NIGGER page, this is just useless.
+		]]>
+	</page>
+	<page id = 'modules'>
+		<![CDATA[
+			You can find here all the officials modules for misTET.
+		]]>
+	</page>
+	<page id = 'security'>
+		<![CDATA[
+			This is the security module. When you use it for the first time, go on
+			<i>#module=security&login</i>, and type "password" (without quotes). Then go
+			on `#module=security&changePassword` and choose your new password and
+			your encryption algorithm(sha512 is the best). The password is located in
+			config.php.<br><br>
+
+			Possibly actions:<br>
+			<i>#module=security&login</i> -> logging in<br>
+			<i>#module=security&connected</i> -> chech if you're logged<br>
+			<i>#module=security&logout</i> -> logout<br>
+			<i>#module=security&changePassword</i> -> change your password<br>
+		]]>
+	</page>
+	<page id = 'blog'>
+		<![CDATA[
+			This is the blog module for mistet. As you can see, is simple, very simle, just
+			something to write some news on your site.<br><br>
+
+			Options:<br>
+			<i>#module=blog</i>: display all posts<br>
+			<i>#module=blog&id=idN</i>: display the post with the specified id<br>
+			<i>#module=blog&id=idN&del</i>: delete the post with the specified id<br>
+			<i>#module=blog&id=idN&edit</i>: edit the post with the specified id<br>
+			<i>#module=blog&show</i>: show all posts with the options of editing and deleting<br>
+			<i>#module=blog&post</i>: post a news<br><br>
+
+			The blog module requires the security module, since all the functions above works only
+			with it.
 		]]>
 	</page>
 </pages>

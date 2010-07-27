@@ -19,4 +19,5 @@
 <modules>
 	<module name="security"></module>
 	<module name="blog"></module>
+	<module name="SyntaxHighlighter"></module>
 </modules>
