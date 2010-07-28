@@ -23,9 +23,9 @@ var misTET = {
     
     modFolder: "/modules",
     modules: { },
-    extern: "/res/files/stat",
+    extern: "/stat",
     root: location.href.match(/^(.*?)\/[^\/]*?(#|$)/)[1],
-    loc: "res/mistet.js",
+    loc: "system/mistet.js",
     
     /* start misTET */
     init: function () {
@@ -177,7 +177,7 @@ var misTET = {
         init: {
             /* init args */
             load: function () {
-                var path = '/res/files/init.xml';
+                var path = '/resources/init.xml';
                 var test = false;
                 var error = false;
             
@@ -218,7 +218,7 @@ var misTET = {
             
             load: function () {
             
-                var path = '/res/files/menu.xml';
+                var path = '/resources/menu.xml';
                 var test = false;
                 var error = false;
                 
@@ -296,7 +296,7 @@ var misTET = {
             
             load: function () {
             
-                var path = '/res/files/pages.xml';
+                var path = '/resources/pages.xml';
                 var test = false;
                 var error = false;
                 
@@ -406,7 +406,7 @@ var misTET = {
                 Event.fire(document, ":change", id);
             },
             
-            /* load an extern page(/res/files/stat) */
+            /* load an extern page(/stat) */
             loadGET: function (res, args) {
 
                 if (args.page) {
@@ -442,7 +442,7 @@ var misTET = {
             
             /* load modules.xml */
             load: function() {
-                var path = '/res/files/modules.xml';
+                var path = '/resources/modules.xml';
                 var test = false;
                 var error = false;
                 
@@ -850,5 +850,5 @@ var misTET = {
     }
 };
 
-misTET.utils.include('res/utils.js');
+misTET.utils.include('system/utils.js');
 

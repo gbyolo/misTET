@@ -24,12 +24,12 @@
 		<meta http-equiv = "Content-Type" content = "text/html; charset=iso-8859-1">
 
 			<!-- Prototype core -->
-		<script type = "text/javascript" src = "/res/prototype.js" charset = "utf-8"></script>
+		<script type = "text/javascript" src = "/system/prototype.js" charset = "utf-8"></script>
 		<!-- misTET core -->
-		<script type = "text/javascript" src = "/res/mistet.js" charset = "utf-8"></script>
+		<script type = "text/javascript" src = "/system/mistet.js" charset = "utf-8"></script>
 
-		<link rel = "stylesheet" href = "/res/styles/light.css" type = "text/css">
-		<link rel = "stylesheet" href = "/res/styles/menu.css" type = "text/css">
+		<link rel = "stylesheet" href = "/styles/light.css" type = "text/css">
+		<link rel = "stylesheet" href = "/styles/menu.css" type = "text/css">
 
 		<title></title>
 	</head>
