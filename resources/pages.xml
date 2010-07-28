@@ -130,6 +130,8 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			With this module you can get a syntax highlighter on your misTET based site.<br>
 			What you have to do is create a `pre` tag, with the id `lan=language`, where
 			language is the language to highlight. Then the module will do all the rest.
+			<br>P.S: use the `args` attribute in pages.xml, with `lan=language` as content to
+			link a source.
 		]]>
 	</page>
 </pages>

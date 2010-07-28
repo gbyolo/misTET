@@ -1,6 +1,6 @@
 /****************************************************************************
  * Copyleft lostpassword                                                    *
- * [gdb.lost@gmail.com]                                                                                                *
+ * [gdb.lost@gmail.com]                                                     *
  *                                                                          *
  *                                                                          *
  * misTET is free software: you can redistribute it and/or modify           *

@@ -1,7 +1,7 @@
 <?php
 /****************************************************************************
- * Copyright (C) <2010>  <lostpassword>                                     *
- * [gdb.lost@gmail.com]                										*
+ * Copyleft lostpassword                                                    *
+ * [gdb.lost@gmail.com]                                                     *
  *                                                                          *
  *                                                                          *
  * misTET is free software: you can redistribute it and/or modify           *
