@@ -365,7 +365,7 @@ var misTET = {
                                     var inner = misTET.utils.encorp(misTET.extern+href);
                                     output += "<pre id = \'"+args+"\'>" + inner + "</pre";
                                 } else {
-                                    misTET.errors.create("404 - Not found");
+                                    misTET.errors.create({name: "404 - Not found", message: "couldn't find "+misTET.extern+href});
                                 }
                             } else {
                                 output += list[j].nodeValue;    
@@ -392,7 +392,7 @@ var misTET = {
             var inner = misTET.pages.parse(id);
                 
             if (inner == "") {
-                misTET.errors.create("404 - Not found");
+                misTET.errors.create({name: "404 - Not found", message: "couldn't find #"+id});
                     
             } else {
                         
@@ -431,7 +431,7 @@ var misTET = {
                 var inner = misTET.utils.encorp(misTET.extern + res);
                 output += "<pre id=\'" + result + "\'>#{code}</pre>".interpolate({code: inner});
             } else {
-                misTET.errors.create("404 - Not found");
+                misTET.errors.create({name: "404 - Not found", message: "couldn't find "+misTET.extern+res});
             }
                     
             return output;
