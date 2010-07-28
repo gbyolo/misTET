@@ -678,10 +678,10 @@ var misTET = {
         var div = $('page');
         
         var string = "<br>#{name}:<br>#{message}<br>FILE: #{filename} @#{line}<br>".interpolate({
-                name: e.name || "ERROR",
-                message: e.message || "undefined message",
-                filename: e.filename || e.fileName || e.file || "undefined file",
-                line: e.line || e.lineNumber || "undefined line"
+                name: (e.name || e.toString() || "ERROR").toString().escapeHTML(),
+                message: (e.message || "undefined message").toString().escapeHTML(),
+                filename: (e.filename || e.fileName || e.file || "undefined file").toString().escapeHTML(),
+                line: (e.line || e.lineNumber || "undefined line").toString().escapeHTML()
         });
         
         misTET._error = true;

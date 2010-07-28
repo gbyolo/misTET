@@ -17,7 +17,7 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
-misTET.res.create("SyntaxHighlighter", brush: { });
+misTET.res.create("SyntaxHighlighter", { brush: { } });
 
 misTET.resources.modules.create("SyntaxHighlighter", {
         
@@ -35,7 +35,6 @@ misTET.resources.modules.create("SyntaxHighlighter", {
     },
         
     loadBrush: function (name) {
-    	/* If the brush has been already included, stop */
     	if (misTET.res.SyntaxHighlighter.brush[name]) {
     		return true;
     	}
@@ -54,6 +53,7 @@ misTET.resources.modules.create("SyntaxHighlighter", {
                         SyntaxHighlighter.vars.discoveredBrushes[alias] = brush;
                     });
             }
+            misTET.res.SyntaxHighlighter.brush[name] = true;
         }
 
     },

@@ -51,6 +51,20 @@ div.footer#padding {
 	border: 1px solid #000;
 }
 
+#menu
+{
+    background-color:#ffffff;
+    color:#000000;
+    font-family: Courier New,Courier;
+    width : 600px;
+    height: 20px;
+    font-size : 13px;
+    margin : 1px auto;
+    padding:10px;
+    font-weight:bold;
+    border-top:1px solid #ABABAB;
+    border-bottom:1px solid #ABABAB;
+}
 #menu a:link {
 	color:#000000; ; 
     text-decoration: none;
