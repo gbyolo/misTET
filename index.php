@@ -22,16 +22,12 @@
 <html>
 	<head>
 		<meta http-equiv = "Content-Type" content = "text/html; charset=iso-8859-1">
-		
-		<!-- Sintax HighLighting core -->
-		<script type = "text/javascript" src = "/modules/sintax/scripts/shCore.js" charset = "utf-8"></script>
+
 			<!-- Prototype core -->
 		<script type = "text/javascript" src = "/res/prototype.js" charset = "utf-8"></script>
 		<!-- misTET core -->
 		<script type = "text/javascript" src = "/res/mistet.js" charset = "utf-8"></script>
 
-		<link rel = "stylesheet" href = "/modules/sintax/styles/shCore.css" type = "text/css">
-		<link rel = "stylesheet" href = "/modules/sintax/styles/shThemeEclipse.css" type = "text/css" >
 		<link rel = "stylesheet" href = "/res/styles/light.css" type = "text/css">
 		<link rel = "stylesheet" href = "/res/styles/menu.css" type = "text/css">
 

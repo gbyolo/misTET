@@ -17,6 +17,8 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
+misTET.res.create("SyntaxHighlighter", brush: { });
+
 misTET.resources.modules.create("SyntaxHighlighter", {
         
     version: "0.1.1",
@@ -33,6 +35,10 @@ misTET.resources.modules.create("SyntaxHighlighter", {
     },
         
     loadBrush: function (name) {
+    	/* If the brush has been already included, stop */
+    	if (misTET.res.SyntaxHighlighter.brush[name]) {
+    		return true;
+    	}
         if (misTET.utils.include(this.root+"/scripts/shBrush"+name+".js")) {
 
             SyntaxHighlighter.vars.discoveredBrushes = {};
