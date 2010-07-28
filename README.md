@@ -1,15 +1,10 @@
 <h2>Info:</h2>
 misTET is a simple Ajax cms with XML support as regards menu and pages contents. Each XML file contain some instructions whose aim is to help you write something.<br>
-/res folder:<br>
-	- misTET.js
-	- prototype.js
-	- files
-
-/res/files folder:
+/resources folder:<br>
 	- menu.xml
 	- pages.xml
-	- styles
-	- stat
+	- modules.xml
+	- init.xml
 <br>
 The stat folder contains all the files such as extern documents, sources, archives, and the styles folder contains misTET's styles.<br>
 <h2>Browsers</h2>
