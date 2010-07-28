@@ -19,7 +19,7 @@
 
 misTET.res.create("SyntaxHighlighter", { brush: { } });
 
-misTET.resources.modules.create("SyntaxHighlighter", {
+misTET.modules.create("SyntaxHighlighter", {
         
     version: "0.1.1",
         
