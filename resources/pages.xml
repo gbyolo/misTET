@@ -97,8 +97,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 		<![CDATA[
 			This is the security module. When you use it for the first time, go on
 			<i>#module=security&login</i>, and type "password" (without quotes). Then go
-			on `#module=security&changePassword` and choose your new password and
-			your encryption algorithm(sha512 is the best). The password is located in
+			on `#module=security&changePassword` and choose your new password. The password is located in
 			config.php.<br><br>
 
 			Possibly actions:<br>
