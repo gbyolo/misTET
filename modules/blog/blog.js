@@ -24,7 +24,7 @@ misTET.res.create("blog", {
     total: ""
 });
 
-misTET.resources.modules.create("blog", {
+misTET.modules.create("blog", {
 
     version: ["0", "3", "0"].join("."),
     
@@ -48,7 +48,7 @@ misTET.resources.modules.create("blog", {
             },
                 
             onFailure: function (http) {
-                misTET.error({
+                misTET.errors.create({
                     message: "Error while loading blog.xml (#{error})".interpolate({ error: http.status }), 
                     name: "blog error"
                 });
@@ -74,7 +74,7 @@ misTET.resources.modules.create("blog", {
                     },
                                         
                     onFailure: function (http) {
-                        misTET.error({message: http.responseText})
+                        misTET.errors.create({message: http.responseText})
                     }
                 });
                                 
@@ -92,7 +92,7 @@ misTET.resources.modules.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.error({message: http.responseText})
+                            misTET.errors.create({message: http.responseText})
                         }
                                                 
                     });
@@ -105,7 +105,7 @@ misTET.resources.modules.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.error({message: http.responseText})
+                            misTET.errors.create({message: http.responseText})
                         }
                     });
                 }
@@ -117,7 +117,7 @@ misTET.resources.modules.create("blog", {
         else if (Object.isset(args['post'])) {
             var result = misTET.modules.security.execute({connected: 1});
             if (!result) {
-                misTET.error({ message: "you're doing it wrong baby" });
+                misTET.errors.create({ message: "you're doing it wrong baby" });
                 return false;
             }
             else {
@@ -132,7 +132,7 @@ misTET.resources.modules.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.error({message: http.responseText})
+                            misTET.errors.create({message: http.responseText})
                         }
                     });
                 } else {
@@ -144,7 +144,7 @@ misTET.resources.modules.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.error({message: http.responseText})
+                            misTET.errors.create({message: http.responseText})
                         }
                     });
                 }
@@ -160,7 +160,7 @@ misTET.resources.modules.create("blog", {
                 },
                                 
                 onFailure: function (http) {
-                    misTET.error({message: http.responseText})
+                    misTET.errors.create({message: http.responseText})
                 }
             });
                 
