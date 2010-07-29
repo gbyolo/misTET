@@ -134,4 +134,12 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			link a source.
 		]]>
 	</page>
+	<page id = 'logger'>
+		<![CDATA[
+			This is the logging module.<br><br>
+			<i>/modules/logger/logger.php?read</i>: read the log as a xml file<br>
+			<pre id='code'>Event.observe(res, "event", function() { misTET.modules.logger.execute(args) })</pre><br>
+			use this to observe an event and log it. args must be an array
+		]]>
+	</page>
 </pages>

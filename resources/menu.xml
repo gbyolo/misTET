@@ -36,5 +36,6 @@ Don't use XML special characters.
 		<text id = 'security'>Security</text>
 		<text id = 'blog'>Blog</text>
 		<text id = 'syntax'>SyntaxHighlighter</text>
+		<text id = 'logger'>Logger</text>
 	</menu>
 </menue>
