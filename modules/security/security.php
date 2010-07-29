@@ -18,13 +18,12 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
  
- session_start();
+session_start();
  
- define("VERSION", "0.2.5");
- define("__NAME__", "Security");
- define("ROOT", realpath(dirname(__FILE__)));
+define("VERSION", "0.2.5");
+define("__NAME__", "Security");
+define("ROOT", realpath(dirname(__FILE__)));
 
-/* Thanks to meh for this function */
 function getData () {
 	$xml = file(ROOT.'/system/config.php');
 	array_shift($xml);
@@ -53,25 +52,31 @@ if (isset($_REQUEST['initialize'])) {
 	}
 	exit;
 	
-} else if (isset($_REQUEST['login']) && isset($_REQUEST['password'])) {
+} else if (isset($_REQUEST['login'])) {
+	
+	if (!isset($_REQUEST['password'])) {
+	
+		echo "<center>
+			<div class=\"login\">
+    			<div>Password</div>
 
-	$_SESSION['misTET']['admin'] = simplexml_load_string(getData());
-	$password = stripslashes($_REQUEST['password']);
-	
-	if ($_SESSION['misTET']['admin']->hash != "plain") {
-		$password = @hash(strtolower($_SESSION['misTET']['admin']->hash, $password));
-		
-		if (!password) {
-			echo "unexisting hashing algorithm";
-			exit;
-		}
-	}
-	
-	if ($password == $_SESSION['misTET']['admin']->password) {
-		$_SESSION['misTET']['logged'] = true;
-		echo "Logged in";
+    			<form onsubmit=\"misTET.modules.security.execute({ login: 1, action: 1, password: $('passwd').value });\">
+        		<input id=\"passwd\" type=\"password\"/><input type=\"submit\" value=\"login\"/>
+    			</form>
+
+			</div>
+		</center>";
 	} else {
-		echo "wrong password";
+	
+		$_SESSION['misTET']['admin'] = simplexml_load_string(getData());
+		$password = stripslashes($_REQUEST['password']);
+	
+		if ($password == $_SESSION['misTET']['admin']->password) {
+			$_SESSION['misTET']['logged'] = true;
+			echo "Logged in";
+		} else {
+			echo "wrong password";
+		}
 	}
 	
 	exit;
@@ -82,24 +87,33 @@ if (isset($_REQUEST['initialize'])) {
 	echo "Logged out successful";
 	exit;
 	
-} else if (isset($_REQUEST['change']) && isset($_REQUEST['password']) && isset($_REQUEST['hash'])) {
+} else if (isset($_REQUEST['change'])) {
 
 	if (!$_SESSION['misTET']['logged']) {
 		die("go away");
 		exit;
 	}
 	
-	$hash = stripslashes($_REQUEST['hash']);
-	$config = simplexml_load_string(getData());
-	$config->hash = $hash;
-	$config->password = ($hash == 'plain') ? stripslashes($_REQUEST['password']) : @hash(strtolower($hash),stripslashes($_REQUEST['password']));
+	if (!isset($_REQUEST['password'])) {
 	
-	if (!$config->password) {
-		echo "unexisting hashing algorithm";
+		echo "<center>
+			<div class=\"change\">
+    			<div>Write the new password</div>
+
+    			<form onsubmit=\"misTET.modules.security.execute({ changePassword: 1, action: 1, password: $('passwd').value});\">
+        		<input id=\"passwd\" type=\"password\"/><br/><input type=\"submit\" value=\"change\"/>
+   	 			</form>
+
+			</div>
+		</center>";
+	} else {
+	
+		$config = simplexml_load_string(getData());
+		$config->password = stripslashes($_REQUEST['password']);
+	
+		saveData("\n".$config->asXML(), ROOT.'/system/config.php');
+		echo "password changed";
 	}
-	
-	saveData("\n".$config->asXML(), ROOT.'/system/config.php');
-	echo "password changed";
 	exit;
 }
  

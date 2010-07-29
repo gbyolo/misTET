@@ -74,7 +74,7 @@ misTET.modules.create("security", {
                 });
             } else {
                         
-                new Ajax.Request(this.root + "/system/action.php?login", {
+                new Ajax.Request(this.root + "/security.php?login", {
                     method: "get",
                                 
                     onSuccess: function (http) {
@@ -108,13 +108,13 @@ misTET.modules.create("security", {
                         
             if (Object.isset(args['action'])) {
                                 
-                if (!Object.isset(args['password']) || !Object.isset(args['hash'])) {
+                if (!Object.isset(args['password'])) {
                     misTET.errors.create({    name: "security error",
-                                            message: "missing password or hash" });
+                                            message: "missing password" });
                     return false;
                 }
                         
-                new Ajax.Request(this.root + "/security.php?change&hash=#{0}&password=#{1}".interpolate([encodeURIComponent(args['hash']), encodeURIComponent(args['password'])]), {
+                new Ajax.Request(this.root + "/security.php?change&password=#{1}".interpolate({password: encodeURIComponent(args['password'])}), {
                     method: "get",
                                 
                     onSuccess: function (http) {
@@ -129,7 +129,7 @@ misTET.modules.create("security", {
                     });
                 } else {
                         
-                    new Ajax.Request(this.root + "/system/action.php?change", {
+                    new Ajax.Request(this.root + "/security.php?change", {
                         method: "get",
                                 
                         onSuccess: function (http) {
@@ -159,6 +159,8 @@ misTET.modules.create("security", {
                         
                 return misTET.res['security'].connected;
                 
+            } else {
+                misTET.errors.create("not valid args for security");
             }
     }
 });

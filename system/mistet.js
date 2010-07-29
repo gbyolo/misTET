@@ -100,7 +100,7 @@ var misTET = {
             try {
                 misTET.modules.checkDependencies();
             } catch (e) {
-                misTET.errors.create({ message: "`#{module}` needs `#{needs}`".interpolate(e) });
+                misTET.errors.create(e);
                 return false;
             }
             
@@ -520,7 +520,12 @@ var misTET = {
                 if (needs) {
                     for (var i = 0; i < needs.length; i++) {
                         if (!misTET.modules.exists(needs[i])) {
-                            throw { module: module, needs: needs[i] };
+                            var e = new Error();
+                            e.message = "`#{module}` requires `#{needs}`".interpolate({module: module, needs: needs[i]});
+                            e.name = "modules error";
+                            e.file = misTET.modules[module].root;
+                                                        
+                            throw e;
                         }
                     }
                 }
@@ -531,6 +536,13 @@ var misTET = {
         },
             
         exists: function (name) {
+            if (!name) {
+                misTET.errors.create({
+                    name: "module error",
+                    message: "0 of 1 parameters sent to misTET.modules.exists"
+                });
+                 return false;
+            }
             return Boolean(misTET.modules[name]);
         },
                         
@@ -578,11 +590,6 @@ var misTET = {
                                 module: name
                                 });
                                 
-            /* uat? */
-            if (!object.initialize) {
-                object.initialize = new Function();
-            }
-                                
             if (object.initialize) {
                 try {
                     object.initialize();
@@ -594,6 +601,9 @@ var misTET = {
                     e.message = "Error while executing #{name}.initialize()".interpolate({name: object.name});
                     misTET.errors.create(e);
                 }
+            }
+            else {
+                object.initialize = new Function()
             }
             misTET.modules[name] = object;
         }
