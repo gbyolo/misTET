@@ -20,4 +20,5 @@
 	<module name="security"></module>
 	<module name="blog"></module>
 	<module name="SyntaxHighlighter"></module>
+	<module name="logger"></module>
 </modules>

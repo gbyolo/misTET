@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE configuration [
+    <!ELEMENT configuration ANY>
+    <!ATTLIST configuration
+        domain CDATA #REQUIRED
+    >
+]>
+
+<configuration domain="Logger">
+    <logFile>logs.php</logFile>
+    <protected>true</protected>
+</configuration>
