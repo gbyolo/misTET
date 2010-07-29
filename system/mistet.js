@@ -630,31 +630,91 @@ var misTET = {
                     
         },
                 
+        /* Load a config.xml file of a resource */
+        /* Syntax must be as follows:
+            <configuration>
+                <nodeName>nodeValue</nodeName>
+                etc...
+            </configuration>
+        */
+        loadXML: function (name, file) {
+                
+            if (!name) {
+                misTET.errors.create("You should give a name");
+                return false;
+            }
+                        
+            if (!misTET.res.exists(name)) {
+                misTET.errors.create("`#{0}` doesn't exist".interpolate(name));
+                return false;
+            }
+                        
+            var xml = file;
+                        
+            new Ajax.Request(xml, {
+                method: "get",
+                asynchronous: false,
+                evalJS: false,
+                                
+                onSuccess: function (http) {
+                    if (test = misTET.utils.XMLtest(http.responseXML)) {
+                        misTET.res[name]['config'] = http.responseXML;
+                    } else {
+                        misTET.errors.create(test);
+                    }
+                },
+                                
+                onFailure: function (http) {
+                    misTET.errors.create({
+                        name: "resourceXMLoading", 
+                        message: "failed to retrieve (#{status} - #{statusText})".interpolate(http),
+                        file: xml
+                    });
+                }
+            });
+                        
+            misTET.res[name]['confs'] = new Array();
+                        
+            var configuration = misTET.res[name]['config'].documentElement;
+            var list = configuration.childNodes;
+                        
+            for (var j = 1; j < list.length; j = j+2) {
+                if (j == (list.length -1)) {
+                    break;
+                }
+                var node = list[j].nodeName;
+                var value = list[j].childNodes[0].nodeValue;
+                                
+                misTET.res[name]['confs'][node] = value;
+            }        
+                
+        },
+                
         del: function (name) {
                         
-                if (!name || !Object.isString(name)) {
-                        var e = new Error("couldn't delete a resource if you don't give a real name");
-                        e.name = "resource error";
-                        misTET.errors.create(e);
-                        return false;
-                }
+            if (!name || !Object.isString(name)) {
+                var e = new Error("couldn't delete a resource if you don't give a real name");
+                e.name = "resource error";
+                misTET.errors.create(e);
+                return false;
+            }
                         
-                if (misTET.res.exists(name)) {
-                    for (var key in misTET.res[name]) {
+            if (misTET.res.exists(name)) {
+                for (var key in misTET.res[name]) {
                     delete misTET.res[name][key];
-                    }
-                                
-                    delete misTET.res[name];
-                } else {
-                                
-                    var e = new Error("misTET.res[\'#{name}\'] is not defined".interpolate({name: name}));
-                    e.name = "resource error";
-                    misTET.errors.create(e);
-                    return false;
-                                
                 }
+                                
+                delete misTET.res[name];
+            } else {
+                                
+                var e = new Error("misTET.res[\'#{name}\'] is not defined".interpolate({name: name}));
+                e.name = "resource error";
+                misTET.errors.create(e);
+                return false;
+                                
+            }
                         
-                return Boolean(!Object.isset(misTET.res[name]));
+            return Boolean(!Object.isset(misTET.res[name]));
                         
         },
                 
