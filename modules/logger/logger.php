@@ -19,7 +19,7 @@
  ****************************************************************************/
 
 define("__NAME__", "logger");
-define("VERSION", "0.1.0");
+define("VERSION", "0.2");
 
 session_start();
 
@@ -41,7 +41,7 @@ if (!file_exists($file)) {
     fclose($fp);
 }
 
-if (!isset($_REQUEST["data"]) || !isset($_REQUEST["date"])) {
+if (!isset($_REQUEST["date"])) {
     if ($_SESSION["misTET"]["logged"]) {
         if (isset($_REQUEST["read"])) {
             header("Content-Type: text/xml");
@@ -69,31 +69,21 @@ $xml = new XMLWriter();
 $xml->openMemory();
 $xml->startElement("log");
 
-$xml->startElement("args");
-
 $i = 0;
 while ($_REQUEST[$i]) {
-    $xml->startElement("argument");
+    $xml->startElement("args");
     $xml->writeCData(str_replace("]]>", "]&#93;>", $_REQUEST[$i]));
     $xml->endElement();
     $i++;
 }
 
+$xml->startElement("data");
+	$string = "\nDate: ". $_REQUEST['date']."\n".
+	          "Ip: ".$_SERVER['REMOTE_ADDR']."\n".
+			  "User-agent: ".$_SERVER['HTTP_USER_AGENT']."\n".
+			  "Referer: ".$_SERVER['HTTP_REFERER']."\n";
+	$xml->writeCData(str_replace("]]>", "]&#93;>", $string));
 $xml->endElement();
-
-$xml->startElement("user");
-    $xml->startElement("date"); 
-		$xml->writeCData(str_replace("]]>", "]&#93;>", $_REQUEST["date"])); 
-	$xml->endElement();
-    $xml->startElement("ip"); 
-		$xml->writeCData($_SERVER["REMOTE_ADDR"]); 
-	$xml->endElement();
-    $xml->startElement("agent"); 
-		$xml->writeCData(str_replace("]]>", "]&#93;>", $_SERVER["HTTP_USER_AGENT"])); 
-	$xml->endElement();
-$xml->endElement();
-
-$xml->startElement("referer"); $xml->writeCData(str_replace("]]>", "]&#93;>", $_SERVER["HTTP_REFERER"])); $xml->endElement();
 
 $xml->endElement();
 

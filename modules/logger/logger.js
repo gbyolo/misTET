@@ -23,7 +23,7 @@ misTET.res.create("logger", {
 
 misTET.modules.create("logger", {
 
-    version: "0.1.0",
+    version: "0.2",
 
     needs: ["security"],
 
@@ -46,16 +46,16 @@ misTET.modules.create("logger", {
 
     },
 
-    execute: function (args) {
+    execute: function () {
     
         var argv = '';
                 
         for (var i = 0; i < $A(arguments).length; i++) {
-            argv += i + "=" + encodeURIComponent((typeof($A(arguments)[i]) != "object") ? $A(arguments)[i] : Object.toJSON($A(arguments)[i])) + "&";
+            argv += i + "=" + (Object.toJSON($A(arguments)[i])).encodeURI() + "&";
         }
         argv = argv.slice(0, argv.length -1);
     
-        var date = encodeURIComponent(new Date().toString());
+        var date = (new Date().toString()).encodeURI();
     
         new Ajax.Request(this.root+"/logger.php?data&" + argv + "&date=" + date, {
             method: "get"
