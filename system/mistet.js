@@ -34,7 +34,7 @@ var misTET = {
         if (misTET.initialized) {
                 
             var error = new Error;
-            error.name = "initializing error";
+            error.name = "misTET.init";
             error.message = "misTET has been already initialized.";
             error.filename = "#{root}/#{loc}".interpolate(misTET);
                 
@@ -64,7 +64,7 @@ var misTET = {
         }
         
         if (!document.title) {
-                document.title = misTET.config['title'];
+            document.title = misTET.config['title'];
         }
                 
         $('title').innerHTML = misTET.config['title'];
@@ -382,9 +382,9 @@ var misTET = {
             if (!Object.isset(id) || !Object.isString(id)) {
                             
                 var e = new Error("couldn't set a page if you don't give a real id");
-                e.name = "page error";
-                    misTET.errors.create(e);
-                    return false;
+                e.name = "misTET.pages.set";
+                misTET.errors.create(e);
+                return false;
                             
             }
                     
@@ -480,7 +480,10 @@ var misTET = {
                 var moduleName = modules[i].getAttribute('name');
                     
                 if (!moduleName) {
-                    misTET.errors.create('Error while parsing modules.xml');
+                    misTET.errors.create({
+                        name: "misTET.modules.load",
+                        message: 'Error while parsing modules.xml'
+                    });
                     return;
                 }
                     
@@ -502,7 +505,7 @@ var misTET = {
                                                 
                     var error = new Error;
                     error.message = "Error while loading `#{name}`".interpolate({name: moduleName});
-                    error.name = "Module loading error";
+                    error.name = "misTET.modules.load";
                     error.line = e.lineNumber;
                     error.filename = e.fileName;
                                                 
@@ -522,7 +525,7 @@ var misTET = {
                         if (!misTET.modules.exists(needs[i])) {
                             var e = new Error();
                             e.message = "`#{module}` requires `#{needs}`".interpolate({module: module, needs: needs[i]});
-                            e.name = "modules error";
+                            e.name = "misTET.modules.checkDependencies";
                             e.file = misTET.modules[module].root;
                                                         
                             throw e;
@@ -538,7 +541,7 @@ var misTET = {
         exists: function (name) {
             if (!name) {
                 misTET.errors.create({
-                    name: "module error",
+                    name: "misTET.modules.exists",
                     message: "0 of 1 parameters sent to misTET.modules.exists"
                 });
                  return false;
@@ -550,7 +553,8 @@ var misTET = {
                                 
             if (!object) {
                 var error = new Error;
-                                        
+                
+                e.name = "misTET.modules.create";
                 error.message = "what should `#{name}` do?".interpolate({name: name});
                 error.file = "#{root}/#{name}/#{name2}.js".interpolate({
                                     root: misTET.modFolder,
@@ -564,8 +568,8 @@ var misTET = {
                 
             if (!name || !Object.isString(name)) {
                         
-                var e = new Error("not a string");
-                e.name = "module error";
+                var e = new Error("the first parameter must be a string");
+                e.name = "misTET.modules.create";
                 e.file = "#{root}/#{name}/#{file}.js".interpolate({
                         root: misTET.modFolder,
                         name: name,
@@ -594,10 +598,11 @@ var misTET = {
                 try {
                     object.initialize();
                 } catch (e) {
+                    e.name = "misTET.modules.create";
                     e.filename = "#{root}/#{name}.js".interpolate({
-                                        root: object.root,
-                                        name: name
-                                        });
+                        root: object.root,
+                        name: name
+                    });
                     e.message = "Error while executing #{name}.initialize()".interpolate({name: object.name});
                     misTET.errors.create(e);
                 }
@@ -616,16 +621,16 @@ var misTET = {
                     
             if (!obj) {
                 var e = new Error("couldn't create misTET.res[#{name}] if you don't give an object".interpolate({name: name}));
-                e.name = "resource error";
+                e.name = "misTET.res.create";
                 misTET.errors.create(e);
                 return false;
             }
                     
             if (misTET.res.exists(name)) {
-                    var e = new Error("misTET.res[\'#{name}\'] already exists".interpolate({name: name}));
-                    e.name = "resource error";
-                    misTET.errors.create(e);
-                    return false;
+                var e = new Error("misTET.res[\'#{name}\'] already exists".interpolate({name: name}));
+                e.name = "misTET.res.create";
+                misTET.errors.create(e);
+                return false;
             }
                     
             for (var sel in obj) {
@@ -650,12 +655,18 @@ var misTET = {
         loadXML: function (name, file) {
                 
             if (!name) {
-                misTET.errors.create("You should give a name");
+                misTET.errors.create({
+                    name: "misTET.res.loadXML",
+                    message: "the first parameter must be a real resource name"
+                });
                 return false;
             }
                         
             if (!misTET.res.exists(name)) {
-                misTET.errors.create("`#{0}` doesn't exist".interpolate(name));
+                misTET.errors.create({
+                    name: "misTET.res.loadXML",
+                    message: "`#{0}` doesn't exist".interpolate(name)
+                });
                 return false;
             }
                         
@@ -676,7 +687,7 @@ var misTET = {
                                 
                 onFailure: function (http) {
                     misTET.errors.create({
-                        name: "resourceXMLoading", 
+                        name: "misTET.res.loadXML", 
                         message: "failed to retrieve (#{status} - #{statusText})".interpolate(http),
                         file: xml
                     });
@@ -704,7 +715,7 @@ var misTET = {
                         
             if (!name || !Object.isString(name)) {
                 var e = new Error("couldn't delete a resource if you don't give a real name");
-                e.name = "resource error";
+                e.name = "misTET.res.del";
                 misTET.errors.create(e);
                 return false;
             }
@@ -718,7 +729,7 @@ var misTET = {
             } else {
                                 
                 var e = new Error("misTET.res[\'#{name}\'] is not defined".interpolate({name: name}));
-                e.name = "resource error";
+                e.name = "misTET.res.del";
                 misTET.errors.create(e);
                 return false;
                                 
@@ -732,7 +743,7 @@ var misTET = {
                         
             if (!name) {
                 var e = new Error("what resource?");
-                e.name = "resource error";
+                e.name = "misTET.res.exists";
                 misTET.errors.create(e);
                 return false;
             }
@@ -918,10 +929,10 @@ var misTET = {
                 var splitted = matches[1].split(/&/);
                 for (var i = 0; i < splitted.length; i++) {
                            var parts = splitted[i].split(/=/);
-                    var name = decodeURIComponent(parts[0]);
+                    var name = parts[0].decodeURI();
                     
                     if (parts[1]) {
-                            result[name] = decodeURIComponent(parts[1]);
+                            result[name] = parts[1].decodeURI();
                     } else {
                             result[name] = true
                     }

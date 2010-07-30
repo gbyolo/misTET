@@ -32,4 +32,15 @@ Object.extend(String.prototype, {
 		return this == "";
 	},
 	
+	encodeURI: function () {
+		return encodeURIComponent(this);
+	},
+	
+	decodeURI: function () {
+		return decodeURIComponent(this);
+	},
+	
+	stripslashes: function () {
+		return this.replace(/\\/g, '');
+	}
 });
