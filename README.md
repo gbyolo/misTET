@@ -12,8 +12,8 @@ Supported Browsers:<br>
 	- Google Chrome >= 3 (testing previous versions)
 	- Firefox >= 3.5.6 (testing previous versions)
 	- Epiphany >= 2.22.3
-	
-I have, and I will have no intention to write IE support for misTET, since I never cared about that. If someone wants to help me do this, well, it would be beautiful :D.
+	- Opera
+	- IE => 6 (still not SyntaxHighlighter)
 
 <h2>Modules</h2>
 misTET is also a modular cms, so you can write your own module without edit the main source. View /modules/README.md for more instructions.

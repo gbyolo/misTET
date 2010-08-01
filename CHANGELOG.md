@@ -1,4 +1,5 @@
 <h2>Changelog</h2><br>
+	-	[08-01-2010]	-	0.6		Added IE support
 	-	[07-19-2010]	-	0.5.1	Fixed a bug
 	-	[07-19-2010]	-	0.5		Better as regards modules
 									added blog

@@ -21,26 +21,61 @@
 
 Object.extend(Object, {
 
-	isset: function (obj) {
-		return typeof(obj) != "undefined";
-	}
+        /* return true if obj is defined, false otherwise */
+        isset: function (obj) {
+                return typeof(obj) !== "undefined";
+        },
+        
+        /* isBoolean: return true if `o` is boolean, false otherwise */
+        isBoolean: function (o) {
+                return ((typeof o === "boolean") && (o.constructor === Boolean));
+        },	
+        
+        /* Usage: 
+        Object.getID = Object.getID.bind(element);
+        examples:
+        Object.getID = Object.getID.bind(document); -> now the function searchs in the document
+        Object.getID = Object.getID.bind(misTET.config.menu); -> now the function searchs through the xml file
+        Object.getID = Object.getID.bind(object) -> now the function searchs through a general object
+                
+        Or you can use the following syntax:
+        Object.getID.call(document, id); -> search in the document
+        Object.getID.call(misTET.config.menu, id); -> search through the xml document
+        */
+        getID: function (id) {
+                
+            var array = $A(this.getElementsByTagName('*'));
+            for (var i = 0; i < array.length; i++) {
+                if (array[i].getAttribute('id') == id) {
+                    return array[i];
+                    break;;
+                }
+            }
+            return false;
+        }
+        
 });
 
 Object.extend(String.prototype, {
-	
-	isEmpty: function () {
-		return this == "";
-	},
-	
-	encodeURI: function () {
-		return encodeURIComponent(this);
-	},
-	
-	decodeURI: function () {
-		return decodeURIComponent(this);
-	},
-	
-	stripslashes: function () {
-		return this.replace(/\\/g, '');
-	}
+        
+        /* string.isEmpty() return true if the string is "", false otherwise */
+        isEmpty: function () {
+                return this == "";
+        },
+        
+        /* return encoded string */
+        encodeURI: function () {
+                return encodeURIComponent(this);
+        },
+        
+        /* return decoded string */
+        decodeURI: function () {
+                return decodeURIComponent(this);
+        },
+        
+        /* srip slashes */
+        stripslashes: function () {
+                return this.replace(/\\/g, '');
+        }
 });
+
