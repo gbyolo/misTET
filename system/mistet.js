@@ -879,7 +879,7 @@ var misTET = {
                 
                 onSuccess: function (http) {
                     try {
-                        result = http.responseText;
+                        result = http.responseText.toString().escapeHTML();
                     }
                     catch (e) {
                          error             = e;
