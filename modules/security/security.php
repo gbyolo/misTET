@@ -38,6 +38,10 @@ function saveData($config, $file)
 	file_put_contents($file, "<?php die('You are doing it wrong baby.'); /*\n" . $config . "\n*/?>");
 }
 
+/* CSRF fix */
+$token = sha1(uniqid(rand(),TRUE));
+$_SESSION['token'] = $token;
+
 if (isset($_REQUEST['initialize'])) {
 
 	$_SESSION['misTET']['admin'] = simplexml_load_string(getData());
@@ -100,13 +104,21 @@ if (isset($_REQUEST['initialize'])) {
 			<div class=\"change\">
     			<div>Write the new password</div>
 
-    			<form onsubmit=\"misTET.modules.security.execute({ changePassword: 1, action: 1, password: $('passwd').value});\">
-        		<input id=\"passwd\" type=\"password\"/><br/><input type=\"submit\" value=\"change\"/>
+    			<form onsubmit=\"misTET.modules.security.execute({ changePassword: 1, action: 1, password: $('passwd').value, token: $('token').value});\">
+        		<input id=\"passwd\" type=\"password\"/><br/>
+        		<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"/></input>
+        		<input type=\"submit\" value=\"change\"/>
    	 			</form>
 
 			</div>
 		</center>";
 	} else {
+		
+		/* CSRF Fix */
+		if (!$_POST['token'] == $_SESSION['token']) {
+			die("you're doing it wrong");
+			exit;
+		}
 	
 		$config = simplexml_load_string(getData());
 		$config->password = stripslashes($_REQUEST['password']);

@@ -113,9 +113,11 @@ misTET.modules.create("security", {
                                             message: "missing password" });
                     return false;
                 }
-                        
-                new Ajax.Request(this.root + "/security.php?change&password=#{1}".interpolate({password: encodeURIComponent(args['password'])}), {
-                    method: "get",
+                
+                var data = { password: args['password'].encodeURI(), token: args['token'] };
+                new Ajax.Request(this.root + "/security.php?change&", {
+                    method: "post",
+                    parameters: data,
                                 
                     onSuccess: function (http) {
                         $('page').innerHTML = http.responseText;
