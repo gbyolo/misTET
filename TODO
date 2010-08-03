@@ -1,11 +1,3 @@
 TODO
 
-FIX: Found CSRF in:
-	-	security
-	-	blog
-	
-Someone can change your admin password by using a hidden iframe and an auto submitting form, but ONLY if you've
-logged in, otherwise nothing happens. 
-This is the same for the blog module, if you've logged, someone can add, delete, edit a post.
-
-I'll fix as soon it's possible.
+fail
