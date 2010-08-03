@@ -42,19 +42,30 @@ if (!$_SESSION['misTET']['logged']) {
 		}
 		return $result;
 	};
+	
+	$token = sha1(uniqid(rand(),TRUE));
+	$_SESSION['token'] = $token;
 
 	/* Remember to give the permissions to this file in order not to receive any error */
 	$file = DOMDocument::load('../resources/blog.xml');
 
 	if (isset($_GET['new'])) {
 		if (no_parameters()) {
-			echo "<form onsubmit=\"misTET.modules.blog.execute({post: 1, action: 1, title: $('titl').value, author: $('author').value, text: $('text').value});\">".
+			echo "<form onsubmit=\"misTET.modules.blog.execute({post: 1, action: 1, title: $('titl').value, author: $('author').value, text: $('text').value, token: $('token').value});\">".
 				 "Title: <input type = 'text' id = 'titl'></input>".
 				 "<br>Author: <input type = 'text' id = 'author'></input>".
 				 "<br><textarea rows = '15' cols = '60' id = 'text'></textarea>".
 				 "<br><input type = 'submit' value = 'submit'></input>".
+				 "<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"/></input>".
 				 "</form>";
 		} else {
+			
+			/* CSRF fix */
+			if (!$_POST['token'] == $_SESSION['token']) {
+				die("you're doing it wrong");
+				exit;
+			}
+			
 			$newPost = $file->createElement('post');
 	
 			/* The only way to do this, thanks ikos */
@@ -96,13 +107,21 @@ been created!</p>";
 				if (no_parameters()) {
 					$title = $post->getAttribute('title');
 					$author = $post->getAttribute('author');
-					echo "<form onsubmit=\"misTET.modules.blog.execute({id: {$_REQUEST['id']}, edit: 1, action: 1, title: $('titl').value, author: $('author').value, text: $('text').value});\">".
+					echo "<form onsubmit=\"misTET.modules.blog.execute({id: {$_REQUEST['id']}, edit: 1, action: 1, title: $('titl').value, author: $('author').value, text: $('text').value, token: $('token').value});\">".
 				 		 "Title: <input type = 'text' id = 'titl' value = '{$title}'></input>".
 				 		 "<br>Author: <input type = 'text' id = 'author' value = '${author}'></input>".
 				 		 "<br><textarea id = 'text' rows = '15' cols = '60'>{$post->nodeValue}</textarea>".
+				 		 "<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"/></input>".
 				 		 "<br><input type = 'submit' value = 'submit'></input>".
 				 		 "</form>";
 				} else {
+					
+					/* CSRF fix */
+					if (!$_POST['token'] == $_SESSION['token']) {
+						die("You're doing it wrong baby");
+						exit;
+					}
+			
 					$post = $file->getElementById($_REQUEST['id']);
 					$post->setAttribute('title', htmlentities(urldecode($_POST['title']), ENT_QUOTES, 'UTF-8'));
 					$post->setAttribute('author', htmlentities(urldecode($_POST['author']), ENT_QUOTES, 'UTF-8'));
@@ -117,9 +136,25 @@ been created!</p>";
 				}
 	
 			} else if (isset($_REQUEST['del'])) {
-				$file->documentElement->removeChild($post);
-				$file->save('../resources/blog.xml');
-				echo "<p id = 'success'>{$_REQUEST['id']} has been deleted!</p>";
+				
+				if (!isset($_POST['token'])) {
+					
+					echo "<form onsubmit=\"misTET.modules.blog.execute({id: {$_REQUEST['id']}, del: 1, action: 1, token: $('token').value});\">".
+						 "<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"/></input>".
+						 "<input type = 'submit' value = 'delete'></input>".
+					 	 "</form>";
+					 	 
+				} else {
+					
+					if (!$_POST['token'] == $_SESSION['token']) {
+						die("you're doing it wrong");
+						exit;
+					}
+					
+					$file->documentElement->removeChild($post);
+					$file->save('../resources/blog.xml');
+					echo "<p id = 'success'>{$_REQUEST['id']} has been deleted!</p>";
+				}
 			}
 		}	
 	} else {

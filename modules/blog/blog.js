@@ -65,23 +65,44 @@ misTET.modules.create("blog", {
                 
         if (Object.isset(args['id'])) {
             if (args['del']) {
+                    
+                    if (args['action']) {
+                               
+                    var data = { token: args['token'] };
+                        new Ajax.Request(this.root + "/system/blog.php?id=#{id}&del".interpolate({id: args['id']}), {
+                            method: "post",
+                            parameters: data,
+                                        
+                            onSuccess: function (http) {
+                                $('page').update(http.responseText);
+                            },
+                                        
+                            onFailure: function (http) {
+                                misTET.errors.create({message: http.responseText});
+                            }
+                        });
+                        
+                } else {
+                        
+                    new Ajax.Request(this.root + "/system/blog.php?id=#{id}&del".interpolate({id: args['id']}), {
+                        method: "get",
                                 
-                new Ajax.Request(this.root + "/system/blog.php?id=#{id}&del".interpolate({id: args['id']}), {
-                    method: "get",
-                                        
-                    onSuccess: function (http) {
-                        $('page').update(http.responseText);
-                    },
-                                        
-                    onFailure: function (http) {
-                        misTET.errors.create({message: http.responseText})
-                    }
-                });
+                        onSuccess: function (http) {
+                            $('page').update(http.responseText);
+                        },
+                                
+                        onFailure: function (http) {
+                            misTET.errors.create(http.responseText);
+                        }
+                                
+                    });
+                        
+                }
                                 
             } else if (args['edit']) {
                         
                 if (args['action']) {
-                    var data = { title: args['title'], author: args['author'], text: args['text'] };
+                    var data = { title: args['title'], author: args['author'], text: args['text'], token: args['token'] };
                     new Ajax.Request(this.root + "/system/blog.php?id=#{id}&edit&".interpolate({id: args['id']}), {
                                                 
                         method: "post",                        
@@ -92,7 +113,7 @@ misTET.modules.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.errors.create({message: http.responseText})
+                            misTET.errors.create({message: http.responseText});
                         }
                                                 
                     });
@@ -105,7 +126,7 @@ misTET.modules.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.errors.create({message: http.responseText})
+                            misTET.errors.create({message: http.responseText});
                         }
                     });
                 }
@@ -122,7 +143,7 @@ misTET.modules.create("blog", {
             }
             else {
                 if (args['action']) {
-                    var data = { title: args['title'], author: args['author'], text: args['text'] };
+                    var data = { title: args['title'], author: args['author'], text: args['text'], token: args['token'] };
                     new Ajax.Request(this.root + "/system/blog.php?new&", {
                         method: "post",
                         parameters: data,
@@ -132,7 +153,7 @@ misTET.modules.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.errors.create({message: http.responseText})
+                            misTET.errors.create({message: http.responseText});
                         }
                     });
                 } else {
@@ -144,7 +165,7 @@ misTET.modules.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.errors.create({message: http.responseText})
+                            misTET.errors.create({message: http.responseText});
                         }
                     });
                 }
@@ -160,7 +181,7 @@ misTET.modules.create("blog", {
                 },
                                 
                 onFailure: function (http) {
-                    misTET.errors.create({message: http.responseText})
+                    misTET.errors.create({message: http.responseText});
                 }
             });
                 
@@ -230,3 +251,4 @@ misTET.modules.create("blog", {
     }
         
 });
+
