@@ -637,6 +637,33 @@ var misTET = {
                 object.initialize = new Function()
             }
             misTET.modules[name] = object;
+        },
+        
+        /* misTET.modules[name].execute(args) */
+        run: function (name, args) {
+                
+            if (!Object.isset(name) || !Object.isset(args)) {
+                misTET.errors.create({
+                    name: "misTET.modules.run",
+                    message: "wrong number of arguments"
+                    });
+                return false;
+            }
+                
+            if (!misTET.modules.exists(name)) {
+                misTET.errors.create({
+                    name: "misTET.modules.run",
+                    message: "[`#{0}`] doesn't exist".interpolate(name)
+                });
+                return false;
+                }
+                        
+                try {
+                    misTET.modules[name].execute(args);
+                                
+                } catch (exception) {
+                    misTET.errors.create(exception);
+                }
         }
                 
     },
