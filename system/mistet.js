@@ -171,7 +171,7 @@ var misTET = {
                      
             } else if (queries.module) { 
                 try {
-                    misTET.modules[queries.module].execute(queries);
+                    misTET.modules.run(queries.module, queries);
                 } catch (e) {
                     misTET.errors.create(e);
                 }         
@@ -656,14 +656,37 @@ var misTET = {
                     message: "[`#{0}`] doesn't exist".interpolate(name)
                 });
                 return false;
-                }
+            }
                         
-                try {
-                    misTET.modules[name].execute(args);
-                                
-                } catch (exception) {
-                    misTET.errors.create(exception);
-                }
+            if (!Object.isArray(args)) {
+                args = [args];
+            }
+                        
+            try {
+                /* 
+                * Mozilla Javascript Core Reference:
+                * apply is very similar to call, except for the 
+                * type of arguments it supports. You can use an 
+                * arguments array instead of a named set of parameters.
+                * So, if we call apply with [{post: 1, ciao: 1], 
+                * {post: 1, ciao: 1} will be the parameter sent to 
+                * the module.
+                * */
+                misTET.modules[name].execute.apply(misTET.modules[name], args);           
+            } catch (exception) {
+                        
+                misTET.errors.create({
+                    name: "misTET.modules.run", 
+                        message: exception.message.toString(),
+                        line: exception.lineNumber,
+                        file: "#{modFolder}/#{name}/#{module}.js".interpolate({
+                            modFolder: misTET.modFolder,
+                            name: name,
+                            module: name
+                        })
+                });
+                   
+            }
         }
                 
     },
@@ -880,7 +903,11 @@ var misTET = {
              try {
                      
                 new Ajax.Request(path, {
-                    method: "GET",
+                        /* The HTTP head method is identical to GET, except
+                         * that the server must not return a message-body in
+                         * the response.
+                         */
+                    method: "head",
                     asynchronous: false,
  
                     onSuccess: function () {

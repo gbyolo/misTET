@@ -36,11 +36,11 @@ misTET.modules.create("logger", {
         }
                 
         Event.observe(document, ":change", function (event) {
-            misTET.modules['logger'].execute(["page", "view", event.memo]);
+            misTET.modules.run("logger", ["page", "view", event.memo]);
         });
                 
         Event.observe(document, ":error", function (error) {
-            misTET.modules['logger'].execute(["error", error.memo]);
+            misTET.modules.run("logger", ["error", error.memo]);
         });
                         
 

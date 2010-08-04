@@ -64,7 +64,7 @@ if (isset($_REQUEST['initialize'])) {
 			<div class=\"login\">
     			<div>Password</div>
 
-    			<form onsubmit=\"misTET.modules.security.execute({ login: 1, action: 1, password: $('passwd').value });\">
+    			<form onsubmit=\"misTET.modules.run('security', { login: 1, action: 1, password: $('passwd').value });\">
         		<input id=\"passwd\" type=\"password\"/><input type=\"submit\" value=\"login\"/>
     			</form>
 
@@ -104,7 +104,7 @@ if (isset($_REQUEST['initialize'])) {
 			<div class=\"change\">
     			<div>Write the new password</div>
 
-    			<form onsubmit=\"misTET.modules.security.execute({ changePassword: 1, action: 1, password: $('passwd').value, token: $('token').value});\">
+    			<form onsubmit=\"misTET.modules.run('security',{ changePassword: 1, action: 1, password: $('passwd').value, token: $('token').value});\">
         		<input id=\"passwd\" type=\"password\"/><br/>
         		<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"/></input>
         		<input type=\"submit\" value=\"change\"/>

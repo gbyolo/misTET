@@ -136,7 +136,7 @@ misTET.modules.create("blog", {
             }
         }
         else if (Object.isset(args['post'])) {
-            var result = misTET.modules.security.execute({connected: 1});
+            var result = misTET.modules.run("security", {conneceted: 1});
             if (!result) {
                 misTET.errors.create({ message: "you're doing it wrong baby" });
                 return false;
