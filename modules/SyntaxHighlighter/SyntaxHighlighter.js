@@ -30,7 +30,7 @@ misTET.modules.create("SyntaxHighlighter", {
         misTET.utils.insertCSS(this.root + "/styles/shThemeEclipse.css");
                 
         Event.observe(document, ":change", function () {
-            misTET.modules.SyntaxHighlighter.execute();
+            misTET.modules.run("SyntaxHighlighter", []);
         });
     },
         
