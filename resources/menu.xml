@@ -37,5 +37,6 @@ Don't use XML special characters.
 		<text id = 'blog'>Blog</text>
 		<text id = 'syntax'>SyntaxHighlighter</text>
 		<text id = 'logger'>Logger</text>
+		<text id = 'cooler'>Cooler</text>
 	</menu>
 </menue>

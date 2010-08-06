@@ -82,4 +82,16 @@
 			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
 		</release>
 	</module>
+	
+	<module name="cooler">
+		<author>
+			<name>lostpassword</name>
+			<email>gdb.lost@gmail.com</email>
+			<homepage>http://github.com/lostpassword</homepage>
+		</author>
+		<release version="0.0.1">
+			<description>bbcode and emoticons support</description>
+			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
+		</release>
+	</module>
 </modules>

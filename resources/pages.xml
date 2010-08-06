@@ -138,4 +138,18 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			use this to observe an event and log it. args must be an array
 		]]>
 	</page>
+	<page id = 'cooler'>
+		<![CDATA[
+			Cooler. This module provides bbcode and emoticon support.<br>
+			Here some examples.<br><br>
+			[b]bold text[/b]<br>
+			[i]italic[/i]<br>
+			[u]underlined[/u]<br>
+			[b][u]bold underlined[/u][/b]
+			[code=javascript]var string = 'tag `code`, javascript language'[/code]
+			[url=http://www.mistet.altervista.org]link (misTET)[/url]
+			<br><br>Supported emoticon: <br>
+			:) :( ;) :P :D :O :S :lol: :asd:
+		]]>
+	</page>
 </pages>

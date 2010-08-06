@@ -21,4 +21,5 @@
 	<module name="blog"></module>
 	<module name="SyntaxHighlighter"></module>
 	<module name="logger"></module>
+	<module name="cooler"></module>
 </modules>
