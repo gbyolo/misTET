@@ -67,7 +67,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			<pre id = 'code'>#id&page=name.php</pre>
 			or:
 			<pre id = 'code'>#page=name.php</pre>
-			name.php: name of the page in /res/files/stat<br>
+			name.php: name of the page in /stat<br>
 			The output is not the source, but what the server says getting the PHP page. Here's an example:<br>
 		]]>
 		<go href = "/lol.php" text = "View" after = " ~ This is a PHP page which shows your IP"></go>
@@ -75,7 +75,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 	<page id = 'go'>
 		<![CDATA[
 			Using `go` attribute. As you can see, you can also include a file using:<br>
-			<pre id = 'code'>#id&page=pageRef</pre><br>where pageRef is a link of a file in this server :P<br><br>
+			<pre id = 'code'>#id&page=pageRef</pre><br>where pageRef is a link of a file in /stat :P<br><br>
 		]]>
 		<go href = "/notes.txt" args = "lan=python" text = "View" after = " ~ This is an external link, a source"></go>
 		<go href = "/well" text = "View" after = " ~ This is an external link, a simple file"></go>
