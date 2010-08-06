@@ -24,12 +24,9 @@
 ]>
 <!--
 To create a new page, just use <page> node with the page content. The 
-attribute `id` has to be the same you specified in menu.xml. Through <go>
-node you can create a link to an extern file. The attribute `text` is equivalent to 
-<a href="">text</a>, while the attribute `after` specifies the text to show
-jsut after the link. You can use `text` node to import a file in a page.
-The attribute args, both used in `text` and `go`, indicates the arguments you want
-to put in location.hash.
+attribute `id` has to be the same you specified in menu.xml.
+`go` creates a new link such as: <a href="href+args">text</a>after.
+`text` includes a file in the current page.
 
 If a page should show a module's executing output, you should declare the page as:
 <page id = 'module=moduleName'></page>
