@@ -56,7 +56,7 @@ if (!$_SESSION['misTET']['logged']) {
 				 "<br>Author: <input type = 'text' id = 'author'></input>".
 				 "<br><textarea rows = '15' cols = '60' id = 'text'></textarea>".
 				 "<br><input type = 'submit' value = 'submit'></input>".
-				 "<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"/></input>".
+				 "<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"></input>".
 				 "</form>";
 		} else {
 			
@@ -111,7 +111,7 @@ been created!</p>";
 				 		 "Title: <input type = 'text' id = 'titl' value = '{$title}'></input>".
 				 		 "<br>Author: <input type = 'text' id = 'author' value = '${author}'></input>".
 				 		 "<br><textarea id = 'text' rows = '15' cols = '60'>{$post->nodeValue}</textarea>".
-				 		 "<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"/></input>".
+				 		 "<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"></input>".
 				 		 "<br><input type = 'submit' value = 'submit'></input>".
 				 		 "</form>";
 				} else {
@@ -140,7 +140,7 @@ been created!</p>";
 				if (!isset($_POST['token'])) {
 					
 					echo "<form onsubmit=\"misTET.modules.run('blog',{id: {$_REQUEST['id']}, del: 1, action: 1, token: $('token').value});\">".
-						 "<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"/></input>".
+						 "<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"></input>".
 						 "<input type = 'submit' value = 'delete'></input>".
 					 	 "</form>";
 					 	 
