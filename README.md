@@ -14,6 +14,10 @@ Supported Browsers:<br>
 	- Epiphany >= 2.22.3
 	- Opera
 	- IE => 6 (still not SyntaxHighlighter)
+	
+<h2>Compiling</h2>
+`chmod +x compile.sh`
+`./compile.sh`
 
 <h2>Modules</h2>
 misTET is also a modular cms, so you can write your own module without edit the main source. View /modules/README.md for more instructions.
