@@ -641,11 +641,13 @@ var misTET = {
         
         /* misTET.modules[name].execute(args) */
         run: function (name, args) {
+        	
+        	var result = false;
                 
             if (!Object.isset(name) || !Object.isset(args)) {
                 misTET.errors.create({
                     name: "misTET.modules.run",
-                    message: "wrong number of arguments"
+                    message: "Running `#{0}`: wrong number of arguments".interpolate(name)
                     });
                 return false;
             }
@@ -672,7 +674,8 @@ var misTET = {
                 * {post: 1, ciao: 1} will be the parameter sent to 
                 * the module.
                 * */
-                misTET.modules[name].execute.apply(misTET.modules[name], args);           
+                /* Does the module return some shit? */
+                result = misTET.modules[name].execute.apply(misTET.modules[name], args);           
             } catch (exception) {
                         
                 misTET.errors.create({
@@ -687,6 +690,8 @@ var misTET = {
                 });
                    
             }
+            
+            return result;
         }
                 
     },

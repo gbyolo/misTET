@@ -47,8 +47,8 @@ misTET.modules.create("cooler", {
     initialize: function () {
                 
         Event.observe(document, ":change", function () {
-            $('page').innerHTML = misTET.modules.cooler.execute($('page').innerHTML);
-        });
+            $('page').innerHTML = misTET.modules.run("cooler", $('page').innerHTML);
+        }.bind(this));
                 
     },
         
