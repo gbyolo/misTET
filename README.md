@@ -13,10 +13,10 @@ Supported Browsers:<br>
 	- Firefox >= 3.5.6 (testing previous versions)
 	- Epiphany >= 2.22.3
 	- Opera
-	- IE => 6 (still not SyntaxHighlighter)
+	- IE => 6
 	
 <h2>Compiling</h2>
-`chmod +x compile.sh`
+`chmod +x compile.sh`<br>
 `./compile.sh`
 
 <h2>Modules</h2>
