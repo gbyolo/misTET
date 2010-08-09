@@ -26,7 +26,7 @@ hook_tmp() {
         
     touch $1
     chmod 0600 $1 || {
-        error "Unable to chmod ${TMP} "
+        error "Unable to chmod ${1} "
         exit -1
     }
         
@@ -46,7 +46,7 @@ error() {
     echo -ne "\e[1;31m${1}\e\n[0m"
 }
 
-# New section of compiling
+# Information
 sec() {
     echo -e "\e[1;32m${1}\e\n[0m"
 }
