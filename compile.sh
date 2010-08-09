@@ -26,7 +26,7 @@ hook_tmp() {
         
     touch $1
     chmod 0600 $1 || {
-        error "\033[1;31m'Unable to chmod ${TMP} \033][0m\]"
+        error "Unable to chmod ${TMP} "
         exit -1
     }
         
