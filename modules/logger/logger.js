@@ -18,7 +18,7 @@
  ****************************************************************************/
 
 misTET.res.create("logger", {
-        config: { },
+        config: { }
 });
 
 misTET.modules.create("logger", {
