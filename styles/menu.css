@@ -1,19 +1,28 @@
 #menu .menu {
-	top: 10px;
+
     position: relative;
     float: left;
     margin-right: 5px;
     text-align: left;
+    padding-left: 5px;
 }
 
 #menu .menu > div.menu {
-	background-color: #FFF;
-	padding: 5px;
+
+    background-color: rgba(122, 122, 122, .9);
+    color: #fff;
+    padding: 5px;
     position: absolute;
     display: none;
-    opacity: 0.9;
     top: 15px;
     z-index: 42;
+    border-radius: 1.4em;
+    -webkit-border-radius: 1.4em;
+    -moz-border-radius: 1.4em;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
 }
 
 #menu div.menu:hover > div.menu {
@@ -22,6 +31,7 @@
 
 #menu .menu a.menu_element {
     padding: 0;
+    color: #000;
 }
 
 #menu .menu a.menu_element div {
@@ -37,4 +47,17 @@
     border-top: solid 1px #BFBFBF;
 }
 
+#menu a:link {
+    color:#000000; ; 
+    text-decoration: none;
+}        
 
+#menu a:visited {
+    color:#000000;
+    text-decoration: none;
+}
+
+#menu a:hover {
+    color: #666; 
+    text-decoration: underline;
+}

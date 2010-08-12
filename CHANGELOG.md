@@ -1,4 +1,9 @@
 <h2>Changelog</h2><br>
+	-	[08-00-2010]	-	0.7		CSS3 (Only Mozilla, Safari and Webkit, with IE you will see the site as it was before)
+									Checked Konqueror => 4.3 support
+									added Object.getsID
+									Other events fired
+									Improved misTET.modules.run
 	-	[08-01-2010]	-	0.6		Added IE support
 	-	[07-19-2010]	-	0.5.1	Fixed a bug
 	-	[07-19-2010]	-	0.5		Better as regards modules

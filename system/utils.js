@@ -17,7 +17,7 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
-/* Some utils */
+/* Faggot things */
 
 Object.extend(Object, {
 
@@ -29,7 +29,7 @@ Object.extend(Object, {
         /* isBoolean: return true if `o` is boolean, false otherwise */
         isBoolean: function (o) {
                 return ((typeof o === "boolean") && (o.constructor === Boolean));
-        },	
+        },        
         
         /* Usage: 
         Object.getID = Object.getID.bind(element);
@@ -52,6 +52,27 @@ Object.extend(Object, {
                 }
             }
             return false;
+        },
+                
+        /* Use it as it's written above about Object.getID */
+        /* Return an array containing all the elements with the specifiec id */
+        getsID: function (id) {
+                
+            var array = $A(this.getElementsByTagName('*'));
+             var result = new Array();
+                        
+            for (var i = 0; i < array.length; i++) {
+                if (array[i].getAttribute('id') == id) {
+                    result.push(array[i]);
+                }
+            }
+                        
+            if (result.length != 0) {
+                return result;
+            } else {
+                return false;
+            }
+                
         }
         
 });
@@ -78,4 +99,3 @@ Object.extend(String.prototype, {
                 return this.replace(/\\/g, '');
         }
 });
-

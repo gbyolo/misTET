@@ -1,127 +1,140 @@
-body
-{
-    background-color:ffffff;
-    color:#000000;
+body {
+    background-color: rgba(122, 122, 122, 0.5);
+    width: 50%;
+    color: #000;
     font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
     font-size:12px;
-    margin:30px;
-}
-div#title
-{
-    font-size : 25px;
-    text-align: center;
-    margin : 0px auto;
-    padding:10px;
-    
-}
-div#page
-{
-    background-color:#ffffff;
-    color:#000000;
-    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
-    width : 600px;
-    height: 350px;
-    font-size : 12px;
-    margin : 0px auto;
-    padding:10px;
-    border-left:1px solid #ABABAB;
-    overflow: auto;
+    margin:30px auto;
 }
 
-div.footer
-{
+div#title {
+    width: 100%;
+    margin: 0px;
+    font-size : 25px;
+    text-align: center;
+    padding:10px;
+    background-color: rgba(122, 122, 122, .2);
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+}
+
+div#page {
     background-color:#ffffff;
-    color:#000000;
+    color: #666;
     font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
-    width : 600px;
+    height: 350px;
+    overflow: auto;
+    width: 100%;
+    padding: 10px;
+    margin: 0px auto 0 auto;
+    font-size: 12px;
+    border: 1px solid #8b8b8b;
+    
+    border-radius: 1.4em;
+    -webkit-border-radius: 1.4em;
+    -moz-border-radius: 1.4em;
+
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+
+    text-align: left;
+}
+
+div.footer {
+    background-color:#ffffff;
+    color:#666;
+    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+    width : 100%;
     height: 20px;
-    font-size : 10px;
+    font-size : 12px;
     margin : 20px auto;
     padding:10px;
-    border-top:1px solid #ABABAB;
-    border-bottom:1px solid #ABABAB;
+        
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+        
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
 }
 
 div.footer#padding {
-	padding: 40px 0 0 0;
-				
+    padding: 40px 0 0 0;                          
 }
 
 #code {
-	border: 1px solid #000;
+    border: 1px solid #000;
 }
 
-#menu
-{
+#menu {
     background-color:#ffffff;
     color:#000000;
     font-family: Courier New,Courier;
-    width : 600px;
+    width : 100%;
     height: 20px;
     font-size : 13px;
-    margin : 1px auto;
+    margin : 5px auto;
     padding:10px;
     font-weight:bold;
-    border-top:1px solid #ABABAB;
-    border-bottom:1px solid #ABABAB;
-}
-#menu a:link {
-	color:#000000; ; 
-    text-decoration: none;
-}	
+    list-style: none;
 
-#menu a:visited
-{
-    color:#000000;
-    text-decoration: none;
-}
-#menu a:hover
-{
-    color: #F64521; 
-    text-decoration: underline;
+    border-radius: 2em;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+
+    border: solid 1px #6d6d6d;
 }
 
-a:link
-{
-    color:#F64521; 
+a:link {
+    color: #000; 
     text-decoration: none;
-}		
-a:visited
-{
-    color:#F64521;
+}   
+             
+a:visited {
+    color: #000; 
     text-decoration: none;
 }
+
 a:hover
 {
-    color: #F64521; 
+    color: #000; 
     text-decoration: underline;
 }
-a{
+
+a {
     color: #F64521;
 }
 
 #error {
-	color: #990000;
-	background-color: #FFF0F0;
-	padding: 7px;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 1px dashed #990000;
+    color: #990000;
+    background-color: #FFF0F0;
+    padding: 7px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px dashed #990000;
 }
+
 #error h2 {
-	color: #990000;
-	background: inherit;
+    color: #990000;
+    background: inherit;
 }
 
 #success {
-	color: #000000;
-	background: #F5FBE1;
-	padding: 7px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	border: 1px dashed #7BA813;
+    color: #000000;
+    background: #F5FBE1;
+    padding: 7px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px dashed #7BA813;
 }
+
 #success h2 {
-	color: #7BA813;
-	background: inherit;
+    color: #7BA813;
+    background: inherit;
 }

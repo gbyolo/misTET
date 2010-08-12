@@ -20,7 +20,7 @@
 
 var misTET = {
     
-    version: ["0", "6", "0"].join("."),
+    version: ["0", "7", "0"].join("."),
     
     modFolder: "/modules",
     modules: { },
@@ -48,26 +48,26 @@ var misTET = {
         eval('misTET.init.load()');
         
         if (!Object.isset(misTET.config['home'])) {
-                misTET.config['home'] = 'home';
+            misTET.config['home'] = 'home';
         }
         
         if (!Object.isset(misTET.config['title'])) {
-                misTET.config['title'] = "misTET #{version}".interpolate(misTET);
+            misTET.config['title'] = "misTET #{version}".interpolate(misTET);
         }
         
         if (!Object.isset(misTET.config['loading'])) {
-                misTET.config['loading'] = "Loading...";
+            misTET.config['loading'] = "Loading...";
         }
         
         if (misTET.config['home'].charAt(0) == '#') {
-                misTET.config['home'].slice(1, misTET.config['home'].length);
+            misTET.config['home'].slice(1, misTET.config['home'].length);
         }
         
         if (!document.title) {
-            document.title = misTET.config['title'];
+            document.title = "#{config.title}".interpolate(misTET);
         }
                 
-        $('title').innerHTML = misTET.config['title'];
+        $('title').innerHTML = "<a href='#{root}'>#{config.title}</a>".interpolate(misTET);
         
         var ops = $('page');
         var args = misTET.utils.getQueries(location.hash);
@@ -77,7 +77,7 @@ var misTET = {
         try {
             misTET.menu.load();
         } catch (e) {
-                misTET.errors.create(e);
+            misTET.errors.create(e);
             menuOk = false;
         }
         
@@ -112,7 +112,7 @@ var misTET = {
         /* Unfortunately IE sucks very much, I'm using this cause it */
         unFocus.History.addEventListener("historyChange", function ($hash) {
             if ($hash) {
-                    misTET.go("#" + $hash);
+                misTET.go("#" + $hash);
             } else {
                 misTET.pages.set(misTET.config['home']);
             }
@@ -120,6 +120,7 @@ var misTET = {
                 
         /* new PeriodicalExecuter(misTET.refresh, 0,4); */
         
+        Event.fire(document, ":initialized");
         misTET.initialized = true;
     },
     
@@ -152,7 +153,7 @@ var misTET = {
         modules: { },
         loading: { },
         home: { },
-        title: { },
+        title: { }
     },
     
     go: function (query) {
@@ -235,7 +236,7 @@ var misTET = {
             
             var path = '/resources/menu.xml';
             var test = false;
-             var error = false;
+            var error = false;
                 
             new Ajax.Request(path, {
                 method: "get",
@@ -290,7 +291,7 @@ var misTET = {
                     var ciao = menuValue[0].firstChild.nodeValue;
                     output +=        "\n\t\t<div class = \"menu\">\n\t\t\t" + 
                                           "<a href = \'#"+idPrincipale+"\'>"+ciao+"</a>" +
-                                          "\n\t\t\t<div class = \"menu\">\n\t\t\t\t";
+                                          "\n\t\t\t<div id = 'drop' class = \"menu\"><div>\n\t\t\t\t";
 
                     /* Scan all the sub menus */
                     for (var j = 1; j < menuValue.length; j++) {
@@ -301,7 +302,7 @@ var misTET = {
                                         inner2 + "</div></a>\n\t\t\t";
 
                     }
-                    output += "</div>\n\t\t</div>";
+                    output += "</div></div>\n\t\t</div>";
                 }
             }
             output += "";
@@ -427,6 +428,7 @@ var misTET = {
                     
             }
             Event.fire(document, ":change", id);
+            Event.fire(document, ":page.set", { name: id });
         },
             
         /* load an extern page(/stat) */
@@ -456,6 +458,7 @@ var misTET = {
                 misTET.errors.create({name: "404 - Not found", message: "couldn't find "+misTET.extern+res});
             }
                     
+            Event.fire(document, ":page.set", { name: id, args: args });
             return output;
         }
             
@@ -526,6 +529,8 @@ var misTET = {
                         name: moduleName,
                         name2: moduleName
                     }));
+                                        
+                    Event.fire(document, ":modules.load", { name: moduleName });
                                                 
                 } catch (e) {
                                                 
@@ -637,12 +642,13 @@ var misTET = {
                 object.initialize = new Function()
             }
             misTET.modules[name] = object;
+            Event.fire(document, ":modules.create", object);
         },
         
         /* misTET.modules[name].execute(args) */
         run: function (name, args) {
-        	
-        	var result = false;
+                
+            var result;
                 
             if (!Object.isset(name) || !Object.isset(args)) {
                 misTET.errors.create({
@@ -675,7 +681,8 @@ var misTET = {
                 * the module.
                 * */
                 /* Does the module return some shit? */
-                result = misTET.modules[name].execute.apply(misTET.modules[name], args);           
+                result = misTET.modules[name].execute.apply(misTET.modules[name], args);    
+                                
             } catch (exception) {
                         
                 misTET.errors.create({
@@ -688,9 +695,14 @@ var misTET = {
                             module: name
                         })
                 });
+                                return false;
                    
             }
             
+            if (!Object.isset(result)) {
+                result = true;
+            }
+                        
             return result;
         }
                 
@@ -723,6 +735,8 @@ var misTET = {
             obj.name = name;
                         
             misTET.res[name] = obj;
+                        
+            Event.fire(document, ":res.create", obj);
                     
         },
                 
@@ -917,7 +931,7 @@ var misTET = {
  
                     onSuccess: function () {
                         result = true;
-                    },
+                    }
                 });
                 
             } catch (exception) { }
@@ -1066,3 +1080,4 @@ var misTET = {
 };
 
 misTET.utils.include('system/utils.js');
+
