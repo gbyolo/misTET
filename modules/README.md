@@ -7,11 +7,7 @@ edit /res/files/modules.xml and add your new module.
 
 `moduleName.js`:
 
-`misTET.resources.modules.create("name", {
-    initialize: function (/*...*/) { /*...*/ },
-    execute: function (/*...*/) { /*...*/ },
-    /* ... */
-});`
+`misTET..modules.create("name", { initialize: function (/*...*/) { /*...*/ }, execute: function (/*...*/) { /*...*/ }, /* ... */ });`
 
 The `execute` function will be executed
 when you want, or, if the module should show its output in a page like
@@ -23,4 +19,4 @@ If the module uses a XML file(or something else) as a global variable, so after 
 
 `misTET.res.create("name", { globalResource: { } });`
 
-Then, when you load your XML file, you save it in misTET.res[name].globalResource, and you can use it whenever you want.
+Then, when you load your XML file(use misTET.res.loadXML if you want), you save it in misTET.res[name].globalResource, and you can use it whenever you want.
