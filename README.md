@@ -14,6 +14,7 @@ Supported Browsers:<br>
 	- Epiphany >= 2.22.3
 	- Opera
 	- IE => 6
+	- Konqueror => 4.3
 	
 <h2>Compiling</h2>
 `chmod +x compile.sh`<br>
