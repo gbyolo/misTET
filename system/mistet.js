@@ -458,7 +458,7 @@ var misTET = {
                 misTET.errors.create({name: "404 - Not found", message: "couldn't find "+misTET.extern+res});
             }
                     
-            Event.fire(document, ":page.set", { name: id, args: args });
+            Event.fire(document, ":page.set", { name: misTET.extern + res, args: args });
             return output;
         }
             

@@ -45,28 +45,28 @@
 misTET.res.create("cooler", {
         
     search: new Array( /\[img\](.*?)=\1\[\/img\]/gi,
-                                /\[url=([\w]+?:\/\/[^ \\"\n\r\t<]*?)\](.*?)\[\/url\]/gi,
-                                /\[url\]((www|ftp|)\.[^ \\"\n\r\t<]*?)\[\/url\]/gi,
-                                /\[url=((www|ftp|)\.[^ \\"\n\r\t<]*?)\](.*?)\[\/url\]/gi,
-                                /\[email\](([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+))\[\/email\]/gi,
-                                /\[b\](.*?)\[\/b\]/gi,
-                                /\[i\](.*?)\[\/i\]/gi,
-                                /\[u\](.*?)\[\/u\]/gi,
-                                /\[url\](http:\/\/[^ \\"\n\r\t<]*?)\[\/url\]/gi,
-                                /\[code=(.*)\](.*)\[\/code\]/gi,
-                                /\[code\](.*)\[\/code\]/gi ),
+                        /\[url=([\w]+?:\/\/[^ \\"\n\r\t<]*?)\](.*?)\[\/url\]/gi,
+                        /\[url\]((www|ftp|)\.[^ \\"\n\r\t<]*?)\[\/url\]/gi,
+                        /\[url=((www|ftp|)\.[^ \\"\n\r\t<]*?)\](.*?)\[\/url\]/gi,
+                        /\[email\](([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+))\[\/email\]/gi,
+                        /\[b\](.*?)\[\/b\]/gi,
+                        /\[i\](.*?)\[\/i\]/gi,
+                        /\[u\](.*?)\[\/u\]/gi,
+                        /\[url\](http:\/\/[^ \\"\n\r\t<]*?)\[\/url\]/gi,
+                        /\[code=(.*)\](.*)\[\/code\]/gi,
+                        /\[code\](.*)\[\/code\]/gi ),
     
     replace: new Array("<img src=\"$1\" alt=\"An image\">",
-                                "<a href=\"$1\" target=\"blank\">$2</a>",
-                                "<a href=\"http://$1\" target=\"blank\">$1</a>",
-                                "<a href=\"$1\" target=\"blank\">$1</a>",
-                                "<a href=\"mailto:$1\">$1</a>",
-                                "<b>$1</b>",
-                                "<i>$1</i>",
-                                "<u>$1</u>",
-                                "<a href=\"$1\" target=\"blank\">$1</a>",
-                                "<pre id='lan=$1'>$2</pre>",
-                                "<pre id='code'>$1</pre>" )
+                        "<a href=\"$1\" target=\"blank\">$2</a>",
+                        "<a href=\"http://$1\" target=\"blank\">$1</a>",
+                        "<a href=\"$1\" target=\"blank\">$1</a>",
+                        "<a href=\"mailto:$1\">$1</a>",
+                        "<b>$1</b>",
+                        "<i>$1</i>",
+                        "<u>$1</u>",
+                        "<a href=\"$1\" target=\"blank\">$1</a>",
+                        "<pre id='lan=$1'>$2</pre>",
+                        "<pre id='code'>$1</pre>" )
 });
                                           
 
