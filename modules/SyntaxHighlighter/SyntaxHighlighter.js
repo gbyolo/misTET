@@ -70,7 +70,7 @@ misTET.modules.create("SyntaxHighlighter", {
                             'java' : 'Java',
                             'js' : 'JScript',
                             'jscript' : 'JScript',
-                            'javascript' : 'JSCript',
+                            'javascript' : 'JScript',
                             'php' : 'Php',
                             'python' : 'Python',
                             'py' : 'Python',
