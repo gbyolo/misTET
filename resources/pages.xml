@@ -148,6 +148,8 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			[b][u]bold underlined[/u][/b]
 			[code=javascript]var string = 'tag `code`, javascript language'[/code]
 			[url=http://www.mistet.altervista.org]link (misTET)[/url]
+			[url]http://www.mistet.altervista.org[/url]
+			[code]Code with no syntax highlight.[/code]
 			<br><br>Supported emoticon: <br>
 			:) :( ;) :P :D :O :S :lol: :asd:
 		]]>

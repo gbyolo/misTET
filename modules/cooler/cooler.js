@@ -23,10 +23,12 @@
  * BBCODES:
  * [img]url[/img]
  * [url=url]url_name[/url]
+ * [url]url[/url]
  * [b]text[/b]
  * [i]text[/i]
  * [u]text[/u]
  * [code=language]code[/code]
+ * [code]code[/code]
  * 
  * Emoticons:
  * :)
@@ -40,6 +42,34 @@
  * :asd:
  * */
 
+misTET.res.create("cooler", {
+        
+    search: new Array( /\[img\](.*?)=\1\[\/img\]/gi,
+                                /\[url=([\w]+?:\/\/[^ \\"\n\r\t<]*?)\](.*?)\[\/url\]/gi,
+                                /\[url\]((www|ftp|)\.[^ \\"\n\r\t<]*?)\[\/url\]/gi,
+                                /\[url=((www|ftp|)\.[^ \\"\n\r\t<]*?)\](.*?)\[\/url\]/gi,
+                                /\[email\](([a-z0-9&\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)?[\w]+))\[\/email\]/gi,
+                                /\[b\](.*?)\[\/b\]/gi,
+                                /\[i\](.*?)\[\/i\]/gi,
+                                /\[u\](.*?)\[\/u\]/gi,
+                                /\[url\](http:\/\/[^ \\"\n\r\t<]*?)\[\/url\]/gi,
+                                /\[code=(.*)\](.*)\[\/code\]/gi,
+                                /\[code\](.*)\[\/code\]/gi ),
+    
+    replace: new Array("<img src=\"$1\" alt=\"An image\">",
+                                "<a href=\"$1\" target=\"blank\">$2</a>",
+                                "<a href=\"http://$1\" target=\"blank\">$1</a>",
+                                "<a href=\"$1\" target=\"blank\">$1</a>",
+                                "<a href=\"mailto:$1\">$1</a>",
+                                "<b>$1</b>",
+                                "<i>$1</i>",
+                                "<u>$1</u>",
+                                "<a href=\"$1\" target=\"blank\">$1</a>",
+                                "<pre id='lan=$1'>$2</pre>",
+                                "<pre id='code'>$1</pre>" )
+});
+                                          
+
 misTET.modules.create("cooler", {
         
     version: "0.0.1",
@@ -47,21 +77,37 @@ misTET.modules.create("cooler", {
     initialize: function () {
                 
         Event.observe(document, ":change", function () {
-            $('page').innerHTML = misTET.modules.run("cooler", $('page').innerHTML);
+            $('page').update(misTET.modules.run("cooler", $('page').innerHTML));
         }.bind(this));
                 
     },
         
     execute: function (str) {
-                
+            
+        /** apply bbcode **/
+        str = misTET.modules.cooler.bbcode(str);
+        /** apply emoticons **/
+        str = misTET.modules.cooler.emoticons(str);
+            
+        return str;
+    },
+    
+    bbcode: function (str) {
+            
         /** BBCODE replacing **/
-        str = str.replace(/\[b\](.+?)\[\/b]/gi, "<b>$1</b>");
-        str = str.replace(/\[url=(.*)\](.*)\[\/url\]/gi, "<a href='$1'>$2</a>");
-        str = str.replace(/\[code=(.*)\](.*)\[\/code\]/gi, "<pre id='lan=$1'>$2</pre>");
-        str = str.replace(/\[img\](.+?)\[\/img]/gi, "<img src='$1'></img>");
-        str = str.replace(/\[i\](.+?)\[\/i]/gi, "<i>$1</i>");
-        str = str.replace(/\[u\](.+?)\[\/u]/gi, "<u>$1</u>");
+        var search = misTET.res.cooler.search;
+        var replace = misTET.res.cooler.replace;
+        
+        for (var i = 0; i < search.length; i++) {
+            str = str.replace(search[i], replace[i]);
+        }
+        
+        return str;
                 
+    },
+    
+    emoticons: function (str) {
+        
         /** emoticon replacing **/
         str = str.replace(/:\)/g, "<img src=" + this.root + "/images/normal.gif");
         str = str.replace(/:\(/g, "<img src=" + this.root + "/images/sad.gif");
@@ -72,8 +118,8 @@ misTET.modules.create("cooler", {
         str = str.replace(/:S/gi, "<img src=" + this.root + "/images/wacko.gif");
         str = str.replace(/:lol:/gi, "<img src=" + this.root + "/images/lol.gif");
         str = str.replace(/:asd:/gi, "<img src=" + this.root + "/images/asd.gif");
-                
+        
         return str;
-    }
+        }
         
 });
