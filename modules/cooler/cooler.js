@@ -24,6 +24,7 @@
  * [img]url[/img]
  * [url=url]url_name[/url]
  * [url]url[/url]
+ * [email]address[/email]
  * [b]text[/b]
  * [i]text[/i]
  * [u]text[/u]
