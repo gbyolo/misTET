@@ -20,15 +20,17 @@
 /** Blog **/
 
 misTET.res.create("blog", {
-        file: { },
+    file: { },
     total: ""
 });
 
 misTET.modules.create("blog", {
 
-    version: ["0", "3", "0"].join("."),
+    version: ["0", "3", "5"].join("."),
     
     needs: ["security"],
+    
+    postAuthor: "lost",
         
     initialize: function () {
 
@@ -82,6 +84,8 @@ misTET.modules.create("blog", {
                             }
                         });
                         
+                    misTET.modules.blog.updateRss();
+                        
                 } else {
                         
                     new Ajax.Request(this.root + "/system/blog.php?id=#{id}&del".interpolate({id: args['id']}), {
@@ -117,6 +121,9 @@ misTET.modules.create("blog", {
                         }
                                                 
                     });
+                    
+                    misTET.modules.blog.updateRss();
+                    
                 } else {
                     new Ajax.Request(this.root + "/system/blog.php?id=#{id}&edit".interpolate({id: args['id']}), {                                        
                         method: "get",
@@ -156,6 +163,8 @@ misTET.modules.create("blog", {
                             misTET.errors.create({message: http.responseText});
                         }
                     });
+                    misTET.modules.blog.updateRss();
+                    
                 } else {
                     new Ajax.Request(this.root + "/system/blog.php?new", {
                         method: "get",
@@ -204,6 +213,7 @@ misTET.modules.create("blog", {
                 if (posts[i].getAttribute('id') == id) {
                     var list = posts[i].childNodes;
                     output.author = posts[i].getAttribute('author');
+                    output.id = posts[i].getAttribute('id');
                     output.title = posts[i].getAttribute('title');
                     output.date = posts[i].getAttribute('date');
                     for (var j = 0; j < list.length; j++) {
@@ -248,7 +258,12 @@ misTET.modules.create("blog", {
                 }
             }
         }
+    },
+    
+    updateRss: function () {
+        misTET.utils.include(this.root + "/feed.js");
+        var f = new feed({root: this.root});
+        f.update(misTET.res.blog.file);
     }
         
 });
-

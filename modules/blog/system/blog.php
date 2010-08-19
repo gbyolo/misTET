@@ -30,6 +30,15 @@ if (!$_SESSION['misTET']['logged']) {
 	exit;
 } else {
 	
+	if (isset($_GET['feed'])) {
+		
+		$file = $_REQUEST['file'];
+		$data = $_REQUEST['data'];
+		
+		file_put_contents($file, $data);
+		exit;
+	}
+	
 	/* Check if there are not enough parameters */
 	function no_parameters() {
 		$result = true;

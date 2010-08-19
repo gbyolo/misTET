@@ -53,8 +53,8 @@
 			<email>gdb.lost@gmail.com</email>
 			<homepage>http://github.com/lostpassword</homepage>
 		</author>
-		<release version="0.3.0">
-			<description>A blog</description>
+		<release version="0.3.5">
+			<description>A blog with rss feed</description>
 			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
 		</release>
 	</module>
