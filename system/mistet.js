@@ -968,9 +968,9 @@ var misTET = {
 
             if (error) {
                 misTET.errors.create(error);
-               }
+            }
             
-               return result;
+            return result;
         },
         
         xml_not_valid: function (xml) {
@@ -1045,15 +1045,15 @@ var misTET = {
                         
                 onFailure: function (http) {
                     error = "(#{status} - #{statusText}) - #{path}".interpolate({
-                                    status: http.status,
-                                    statusText: http.statusText,
-                                    path: path
-                                });
+                            status: http.status,
+                            statusText: http.statusText,
+                            path: path
+                        });
                 }
             });
                 
             if (error) {
-                misTET.errors.fix(error);
+                error = misTET.errors.fix(error);
                         
                 misTET.errors.create({ 
                     name: error.name,
@@ -1127,4 +1127,3 @@ var misTET = {
 };
 
 misTET.utils.include('system/utils.js');
-
