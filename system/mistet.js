@@ -1021,6 +1021,53 @@ var misTET = {
        
         },
         
+        execute: function (path) {
+                
+            var result;
+            var error = false;
+                
+            new Ajax.Request(path, {
+                method: "get",
+                asynchronous: false,
+                evalJS: false,
+                        
+                onSuccess: function (http) {
+                    try {
+                        if (window.execScript) {
+                            result = window.execScript(http.responseText);
+                        } else {
+                            result = window.eval(http.responseText);
+                        }
+                    } catch (exception) {
+                        error = exception;
+                    }
+                },
+                        
+                onFailure: function (http) {
+                    error = "(#{status} - #{statusText}) - #{path}".interpolate({
+                                    status: http.status,
+                                    statusText: http.statusText,
+                                    path: path
+                                });
+                }
+            });
+                
+            if (error) {
+                misTET.errors.fix(error);
+                        
+                misTET.errors.create({ 
+                    name: error.name,
+                    message: error.message,
+                    filename: error.filename,
+                    line: error.line
+                });
+                        
+                return false;
+            }
+                
+            return result;
+        },
+        
         /* Insert a CSS Link in the head section */
         insertCSS: function (path) {
             
@@ -1042,39 +1089,39 @@ var misTET = {
         
         getQueries: function (url) {
                 
-                var result = {};
+            var result = {};
                 
-                if (!Object.isset(url) || !Object.isString(url)) {
+            if (!Object.isset(url) || !Object.isString(url)) {
                         
-                    var e = new Error("what url should the function parse?");
-                    e.name = "parsing error";
-                    e.file = "#{root}/#{loc}".interpolate(misTET);
-                    misTET.errors.create(e);
+                var e = new Error("what url should the function parse?");
+                e.name = "parsing error";
+                e.file = "#{root}/#{loc}".interpolate(misTET);
+                misTET.errors.create(e);
       
-                    return false;
-                }
+                 return false;
+            }
                 
-                var matches = url.match(/[?#](.*)$/);
+            var matches = url.match(/[?#](.*)$/);
         
-                if (!matches) {
-                    return result;
-                }
-        
-                var splitted = matches[1].split(/&/);
-                for (var i = 0; i < splitted.length; i++) {
-                    var parts = splitted[i].split(/=/);
-                    var name = parts[0].decodeURI();
-                    
-                    if (parts[1]) {
-                            result[name] = parts[1].decodeURI();
-                    } else {
-                            result[name] = true
-                    }
-                    
-                }
-        
+            if (!matches) {
                 return result;
             }
+        
+            var splitted = matches[1].split(/&/);
+            for (var i = 0; i < splitted.length; i++) {
+                var parts = splitted[i].split(/=/);
+                var name = parts[0].decodeURI();
+                    
+                if (parts[1]) {
+                    result[name] = parts[1].decodeURI();
+                } else {
+                    result[name] = true
+                }
+                    
+            }
+        
+            return result;
+        }
 
     }
 };
