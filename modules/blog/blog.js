@@ -261,7 +261,7 @@ misTET.modules.create("blog", {
     },
     
     updateRss: function () {
-        misTET.utils.include(this.root + "/feed.js");
+        var feed = misTET.utils.execute(this.root + "/feed.js");
         var f = new feed({root: this.root});
         f.update(misTET.res.blog.file);
     }
