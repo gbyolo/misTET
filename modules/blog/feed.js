@@ -44,7 +44,7 @@
                                 
                 return false;
             }
-             z           
+          
             /** path and rss **/
             this.root = data.root;
             this.path = data.path || "feed.xml";
