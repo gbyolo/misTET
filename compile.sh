@@ -5,6 +5,9 @@
 # Then extract compiler.jar in this folder
 # You need also java
 
+# This file is part of misTET
+# read /LICENSE for more information about the license.
+
 compiler="java -jar compiler.jar"
 
 corepath="system"
