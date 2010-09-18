@@ -21,7 +21,7 @@
 /** Blog **/
 
 misTET.res.create("blog", {
-    file: { },
+    file: {},
     total: ""
 });
 
@@ -30,8 +30,6 @@ misTET.modules.create("blog", {
     version: ["0", "3", "5"].join("."),
     
     needs: ["security"],
-    
-    postAuthor: "lost",
         
     initialize: function () {
 
@@ -46,8 +44,9 @@ misTET.modules.create("blog", {
             evalJS: false,
                 
             onSuccess: function (http) {
-                misTET.res['blog'].file = http.responseXML;
-                misTET.res['blog'].total = parseInt(misTET.res.blog.file.documentElement.getAttribute('n'));
+                misTET.res["blog"].file = http.responseXML;
+                misTET.res["blog"].total = parseInt(misTET.res.blog.file.documentElement.getAttribute("n"));
+				misTET.res["blog"].author = misTET.res.blog.file.documentElement.getAttribute("author") || "";
             },
                 
             onFailure: function (http) {
@@ -66,18 +65,18 @@ misTET.modules.create("blog", {
             return false;
         }
                 
-        if (Object.isset(args['id'])) {
-            if (args['del']) {
+        if (Object.isset(args["id"])) {
+            if (args["del"]) {
                     
-                    if (args['action']) {
+                    if (args["action"]) {
                                
-                    var data = { token: args['token'] };
-                        new Ajax.Request(this.root + "/system/blog.php?id=#{id}&del".interpolate({id: args['id']}), {
+                    var data = { token: args["token"] };
+                        new Ajax.Request(this.root + "/system/blog.php?id=#{id}&del".interpolate({id: args["id"]}), {
                             method: "post",
                             parameters: data,
                                         
                             onSuccess: function (http) {
-                                $('page').update(http.responseText);
+                                $("page").update(http.responseText);
                             },
                                         
                             onFailure: function (http) {
@@ -85,15 +84,15 @@ misTET.modules.create("blog", {
                             }
                         });
                         
-                    misTET.modules.blog.updateRss();
+                    misTET.modules.get("blog").updateRss();
                         
                 } else {
                         
-                    new Ajax.Request(this.root + "/system/blog.php?id=#{id}&del".interpolate({id: args['id']}), {
+                    new Ajax.Request(this.root + "/system/blog.php?id=#{id}&del".interpolate({id: args["id"]}), {
                         method: "get",
                                 
                         onSuccess: function (http) {
-                            $('page').update(http.responseText);
+                            $("page").update(http.responseText);
                         },
                                 
                         onFailure: function (http) {
@@ -104,17 +103,17 @@ misTET.modules.create("blog", {
                         
                 }
                                 
-            } else if (args['edit']) {
+            } else if (args["edit"]) {
                         
-                if (args['action']) {
-                    var data = { title: args['title'], author: args['author'], text: args['text'], token: args['token'] };
-                    new Ajax.Request(this.root + "/system/blog.php?id=#{id}&edit&".interpolate({id: args['id']}), {
+                if (args["action"]) {
+                    var data = { title: args["title"], author: args["author"], text: args["text"], token: args["token"] };
+                    new Ajax.Request(this.root + "/system/blog.php?id=#{id}&edit&".interpolate({id: args["id"]}), {
                                                 
                         method: "post",                        
                         parameters: data,
                                                 
                         onSuccess: function (http) {
-                            $('page').update(http.responseText);
+                            $("page").update(http.responseText);
                         },
                                                 
                         onFailure: function (http) {
@@ -123,14 +122,14 @@ misTET.modules.create("blog", {
                                                 
                     });
                     
-                    misTET.modules.blog.updateRss();
+                    misTET.modules.get("blog").updateRss();
                     
                 } else {
-                    new Ajax.Request(this.root + "/system/blog.php?id=#{id}&edit".interpolate({id: args['id']}), {                                        
+                    new Ajax.Request(this.root + "/system/blog.php?id=#{id}&edit".interpolate({id: args["id"]}), {                                        
                         method: "get",
                                                 
                         onSuccess: function (http) {
-                            $('page').update(http.responseText);
+                            $("page").update(http.responseText);
                         },
                                                 
                         onFailure: function (http) {
@@ -140,38 +139,43 @@ misTET.modules.create("blog", {
                 }
                                  
             } else {
-                this.display(args['id']);
+                this.display(args["id"]);
             }
         }
-        else if (Object.isset(args['post'])) {
+        else if (Object.isset(args["post"])) {
             var result = misTET.modules.run("security", {conneceted: 1});
             if (!result) {
                 misTET.errors.create({ message: "you're doing it wrong baby" });
                 return false;
             }
             else {
-                if (args['action']) {
-                    var data = { title: args['title'], author: args['author'], text: args['text'], token: args['token'] };
+                if (args["action"]) {
+				
+					if (!args["author"]) {
+						Object.extend(args["author"], misTET.res["blog"].author);
+					}
+					
+                    var data = { title: args["title"], author: args["author"], text: args["text"], token: args["token"] };
                     new Ajax.Request(this.root + "/system/blog.php?new&", {
                         method: "post",
                         parameters: data,
                                                 
                         onSuccess: function (http) {
-                            $('page').update(http.responseText);
+                            $("page").update(http.responseText);
                         },
                                                 
                         onFailure: function (http) {
                             misTET.errors.create({message: http.responseText});
                         }
                     });
-                    misTET.modules.blog.updateRss();
+                    misTET.modules.get("blog").updateRss();
                     
                 } else {
                     new Ajax.Request(this.root + "/system/blog.php?new", {
                         method: "get",
                                         
                         onSuccess: function (http) {
-                            $('page').update(http.responseText);
+                            $("page").update(http.responseText);
                         },
                                                 
                         onFailure: function (http) {
@@ -181,13 +185,13 @@ misTET.modules.create("blog", {
                 }
             }
         } 
-        else if (args['show']) {
+        else if (args["show"]) {
                 
             new Ajax.Request(this.root + "/system/blog.php?show", {
                 method: "get",
                                 
                 onSuccess: function (http) {
-                    $('page').update(http.responseText);
+                    $("page").update(http.responseText);
                 },
                                 
                 onFailure: function (http) {
@@ -203,20 +207,20 @@ misTET.modules.create("blog", {
                 
     getPost: function (id) {
                 
-        var XML = misTET.res['blog'].file.documentElement;
-        var posts = XML.getElementsByTagName('post');
+        var XML = misTET.res["blog"].file.documentElement;
+        var posts = XML.getElementsByTagName("post");
         var output = { };
                 
         if (posts.length == 0) {
             output = null;
         } else {
             for (var i = 0; i < posts.length; i++) {
-                if (posts[i].getAttribute('id') == id) {
+                if (posts[i].getAttribute("id") == id) {
                     var list = posts[i].childNodes;
-                    output.author = posts[i].getAttribute('author');
-                    output.id = posts[i].getAttribute('id');
-                    output.title = posts[i].getAttribute('title');
-                    output.date = posts[i].getAttribute('date');
+                    output.author = posts[i].getAttribute("author");
+                    output.id = posts[i].getAttribute("id");
+                    output.title = posts[i].getAttribute("title");
+                    output.date = posts[i].getAttribute("date");
                     for (var j = 0; j < list.length; j++) {
                         if (list[j].nodeName == "#cdata-section") {
                             output.text = list[j].nodeValue;
@@ -230,7 +234,7 @@ misTET.modules.create("blog", {
                         
     checkPost: function (map) {
         var result = true;
-        ['title', 'text', 'author', 'date'].each(function(obj) {
+        ["title", "text", "author", "date"].each(function(obj) {
             if (typeof(map[obj]) == "undefined") {
                 result = false;
             }
@@ -244,18 +248,18 @@ misTET.modules.create("blog", {
             if (this.checkPost(post)) {
                 var output =    "<div class = 'post'><div class = 'title'>"+ post.title + "</div>" + post.text + "<div class = 'foot'>"+
                                      "Posted by <span class = 'author'>" + post.author + "</span> on <span class = 'date'>" + post.date + "</span></div>";
-                $('page').innerHTML = output;
+                $("page").innerHTML = output;
             } else {
-                $('page').innerHTML = "<p id = 'error'>The selected post doesn\'t exist</p>";
+                $("page").innerHTML = "<p id = 'error'>The selected post doesn\'t exist</p>";
             }
         } else {
-            $('page').innerHTML = "";
-            for (var j = misTET.res['blog'].total; j > 0; j--) {
+            $("page").innerHTML = "";
+            for (var j = misTET.res["blog"].total; j > 0; j--) {
                 var currentPost = this.getPost(""+j+"");
                 if (this.checkPost(currentPost)) {
                     var output = "<div class = 'post'><div class = 'title'>"+ currentPost.title + "</div>" + currentPost.text + "<div class = 'foot'>"+
                                         "Posted by <span class = 'author'>" + currentPost.author + "</span> on <span class = 'date'>" + currentPost.date + "</span></div>";
-                    $('page').innerHTML += output;
+                    $("page").innerHTML += output;
                 }
             }
         }

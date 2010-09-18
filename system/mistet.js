@@ -45,34 +45,34 @@ var misTET = {
         misTET.location = location.hash;
         misTET.initialized = false;
     
-        eval('misTET.init.load()');
+        eval("misTET.init.load()");
         
-        if (!Object.isset(misTET.config['home'])) {
-            misTET.config['home'] = 'home';
+        if (!Object.isset(misTET.config["home"])) {
+            misTET.config["home"] = "home";
         }
         
-        if (!Object.isset(misTET.config['title'])) {
-            misTET.config['title'] = "misTET #{version}".interpolate(misTET);
+        if (!Object.isset(misTET.config["title"])) {
+            misTET.config["title"] = "misTET #{version}".interpolate(misTET);
         }
         
-        if (!Object.isset(misTET.config['loading'])) {
-            misTET.config['loading'] = "Loading...";
+        if (!Object.isset(misTET.config["loading"])) {
+            misTET.config["loading"] = "Loading...";
         }
         
-        if (misTET.config['home'].charAt(0) == '#') {
-            misTET.config['home'].slice(1, misTET.config['home'].length);
+        if (misTET.config["home"].charAt(0) == "#") {
+            misTET.config["home"].slice(1, misTET.config["home"].length);
         }
         
         if (!document.title) {
             document.title = "#{config.title}".interpolate(misTET);
         }
                 
-        $('title').innerHTML = "<a href='#{root}'>#{config.title}</a>".interpolate(misTET);
+        $("title").innerHTML = "<a href='#{root}'>#{config.title}</a>".interpolate(misTET);
         
-        var ops = $('page');
+        var ops = $("page");
         var args = misTET.utils.getQueries(location.hash);
         var menuOk = true, pagesOk = true;
-        ops.innerHTML = misTET.config['loading'];
+        ops.innerHTML = misTET.config["loading"];
         
         try {
             misTET.menu.load();
@@ -92,11 +92,11 @@ var misTET = {
         
         if (menuOk && pagesOk) {
             
-            var divMenu = $('menu');
+            var divMenu = $("menu");
             divMenu.innerHTML = misTET.menu.parse();
                         
             misTET.modules.load();
-            $('page').update("Checking dipendencies");
+            $("page").update("Checking dipendencies");
             try {
                 misTET.modules.checkDependencies();
             } catch (e) {
@@ -114,7 +114,7 @@ var misTET = {
             if ($hash) {
                 misTET.go("#" + $hash);
             } else {
-                misTET.pages.set(misTET.config['home']);
+                misTET.pages.set(misTET.config["home"]);
             }
          });
                 
@@ -160,14 +160,14 @@ var misTET = {
             
         var queries = misTET.utils.getQueries(query);
         if (query.isEmpty()) {
-            misTET.pages.set(misTET['config']['home']);
+            misTET.pages.set(misTET["config"]["home"]);
                 
         } else {
             if (queries.page) {    
                 var page = queries.page;
                 var inner = misTET.pages.loadGET(page, queries);
                 if (!inner.isEmpty()) {
-                    $('page').innerHTML = inner;  
+                    $("page").innerHTML = inner;  
                 }
                      
             } else if (queries.module) { 
@@ -179,17 +179,17 @@ var misTET = {
                     
             } else {
                 var ref = query.match(/#\w+/);
-                misTET.pages.set(ref[0].replace('#','')); 
+                misTET.pages.set(ref[0].replace("#","")); 
             }
             
         }
-        Event.fire(document, ":change", query);
+        Event.fire(document, ":change", { name: query });
     },
      
     init: {
         /* init args */
         load: function () {
-            var path = '/resources/init.xml';
+            var path = "/resources/init.xml";
             var test = false;
             var error = false;
             
@@ -207,7 +207,7 @@ var misTET = {
                             })
                         });
                     }
-                    misTET['config']['init'] = http.responseXML;
+                    misTET["config"]["init"] = http.responseXML;
                 },
                 
                 onFailure: function (http) {
@@ -223,9 +223,9 @@ var misTET = {
             }
                 
             var init = misTET.config.init.documentElement;
-            misTET['config']['home'] = init.getElementsByTagName('homePage')[0].firstChild.nodeValue;
-            misTET['config']['loading'] = init.getElementsByTagName('loadMessage')[0].firstChild.nodeValue;
-            misTET['config']['title'] = init.getElementsByTagName('title')[0].firstChild.nodeValue;
+            misTET["config"]["home"] = init.getElementsByTagName("homePage")[0].firstChild.nodeValue;
+            misTET["config"]["loading"] = init.getElementsByTagName("loadMessage")[0].firstChild.nodeValue;
+            misTET["config"]["title"] = init.getElementsByTagName("title")[0].firstChild.nodeValue;
                 
         }
     },
@@ -234,7 +234,7 @@ var misTET = {
             
         load: function () {
             
-            var path = '/resources/menu.xml';
+            var path = "/resources/menu.xml";
             var test = false;
             var error = false;
                 
@@ -252,7 +252,7 @@ var misTET = {
                             })
                         });
                     }
-                    misTET['config']['menu'] = http.responseXML;
+                    misTET["config"]["menu"] = http.responseXML;
                 },
                 
                 onFailure: function (http) {
@@ -270,16 +270,16 @@ var misTET = {
         /* parse misTET.config.menu, and creates a menu string */
         parse: function (id) {
     
-            var Menu = misTET['config']['menu'].documentElement;
-            var len = Menu.getElementsByTagName('menu');
+            var Menu = misTET["config"]["menu"].documentElement;
+            var len = Menu.getElementsByTagName("menu");
             var output = "";
                 
             for (var i = 0; i < len.length; i++) {
                 /* The first text node is the main menu */
-                var menuValue = len[i].getElementsByTagName('text');
+                var menuValue = len[i].getElementsByTagName("text");
                 /* Only a text node */
                 if (menuValue.length == 1) {
-                    var id = menuValue[0].getAttribute('id');
+                    var id = menuValue[0].getAttribute("id");
                     var inner = menuValue[0].firstChild.nodeValue;
                     output +=  "\n\t\t<div class = \"menu\">\n\t\t\t" +
                                     "<a href = \'#"+id+"\'>"+inner+
@@ -287,7 +287,7 @@ var misTET = {
 
                 } else {
                     var sub = ""
-                    var idPrincipale = menuValue[0].getAttribute('id');
+                    var idPrincipale = menuValue[0].getAttribute("id");
                     var ciao = menuValue[0].firstChild.nodeValue;
                     output +=        "\n\t\t<div class = \"menu\">\n\t\t\t" + 
                                           "<a href = \'#"+idPrincipale+"\'>"+ciao+"</a>" +
@@ -295,7 +295,7 @@ var misTET = {
 
                     /* Scan all the sub menus */
                     for (var j = 1; j < menuValue.length; j++) {
-                        var idSub = menuValue[j].getAttribute('id');
+                        var idSub = menuValue[j].getAttribute("id");
                         var inner2 = menuValue[j].firstChild.nodeValue;
                         output +=  "<a class = \'menu_element\' href" +
                                         " = \'#"+idSub+"\'><div class = \"\">" +
@@ -316,7 +316,7 @@ var misTET = {
             
         load: function () {
             
-            var path = '/resources/pages.xml';
+            var path = "/resources/pages.xml";
             var test = false;
             var error = false;
                 
@@ -334,7 +334,7 @@ var misTET = {
                             })
                         });
                     }
-                    misTET['config']['pages'] = http.responseXML;
+                    misTET["config"]["pages"] = http.responseXML;
                 },
                 
                 onFailure: function (http) {
@@ -352,13 +352,13 @@ var misTET = {
         /* Find the page node with the specified id */
         parse: function (id) {
 
-            var pagesXML = misTET['config']['pages'].documentElement;
+            var pagesXML = misTET["config"]["pages"].documentElement;
             var output = "";
-            var pages = pagesXML.getElementsByTagName('page');
+            var pages = pagesXML.getElementsByTagName("page");
             var code = "";
                 
             for (var i = 0; i < pages.length; i++) {
-                if (pages[i].getAttribute('id') == id) {
+                if (pages[i].getAttribute("id") == id) {
                     var list = pages[i].childNodes;
                     /* Easy parsing */
                     if (list.length == 1) {
@@ -371,19 +371,19 @@ var misTET = {
                                 code = list[j].nodeValue;
                                 output += code;
                             } else if (list[j].nodeName == "go") {
-                                var href = list[j].getAttribute('href');
-                                var args = list[j].getAttribute('args') || "";
+                                var href = list[j].getAttribute("href");
+                                var args = list[j].getAttribute("args") || "";
                                 if (!args.isEmpty()) {
                                     args = "&" + args;
                                 }
-                                var after = list[j].getAttribute('after');
+                                var after = list[j].getAttribute("after");
                                     
                                 output += "<a href = \'#page="+href+args+"\' " +
-                                               ">" + list[j].getAttribute('text')+"</a>"+after+"<br>";
+                                               ">" + list[j].getAttribute("text")+"</a>"+after+"<br>";
 
                             } else if (list[j].nodeName == "text") { 
-                                var href = list[j].getAttribute('href');
-                                var args = list[j].getAttribute('args') || "";
+                                var href = list[j].getAttribute("href");
+                                var args = list[j].getAttribute("args") || "";
                                 if (misTET.utils.isFile(misTET.extern+href)) {
                                     var inner = misTET.utils.encorp(misTET.extern+href);
                                     output += "<pre id = \'"+args+"\'>" + inner + "</pre";
@@ -411,7 +411,7 @@ var misTET = {
                             
             }
                     
-            var divpage = $('page');
+            var divpage = $("page");
             var inner = misTET.pages.parse(id);
                 
             if (inner == "") {
@@ -427,7 +427,7 @@ var misTET = {
                 }
                     
             }
-            Event.fire(document, ":change", id);
+            Event.fire(document, ":change", { name: id });
             Event.fire(document, ":page.set", { name: id });
         },
             
@@ -468,7 +468,7 @@ var misTET = {
             
         /* load modules.xml */
         load: function() {
-            var path = '/resources/modules.xml';
+            var path = "/resources/modules.xml";
             var test = false;
             var error = false;
                 
@@ -486,7 +486,7 @@ var misTET = {
                             })
                         });
                     }
-                    misTET['config']['modules'] = http.responseXML;
+                    misTET["config"]["modules"] = http.responseXML;
                 },
                 
                 onFailure: function (http) {
@@ -501,22 +501,22 @@ var misTET = {
             }
             
             /* Parsing and loading */
-            var file = misTET['config']['modules'].documentElement;
-            var modules = file.getElementsByTagName('module');
+            var file = misTET["config"]["modules"].documentElement;
+            var modules = file.getElementsByTagName("module");
             
             for (var i = 0; i < modules.length; i++) {
                         
-                var moduleName = modules[i].getAttribute('name');
+                var moduleName = modules[i].getAttribute("name");
                     
                 if (!moduleName) {
                     misTET.errors.create({
                         name: "misTET.modules.load",
-                        message: 'Error while parsing modules.xml'
+                        message: "Error while parsing modules.xml"
                     });
                     return;
                 }
                     
-                $('page').innerHTML = "Loading [`#{module}`] [#{n}/#{tot}]".interpolate({
+                $("page").innerHTML = "Loading [`#{module}`] [#{n}/#{tot}]".interpolate({
                     module: moduleName,
                     n: i +1,
                     tot: modules.length
@@ -568,6 +568,32 @@ var misTET = {
             return true;
                     
         },
+		
+		get: function (name) {
+		
+			if (!Object.isset(name)) {
+				misTET.errors.create({
+					name: "misTET.modules.get",
+					message: "0 of 1 arguments"
+				});
+				return false;
+			}
+			
+			if (!Object.isString(name)) {
+				misTET.errors.create({
+					name: "misTET.modules.get",
+					message: "wrong type of argument"
+				});
+				return false;
+			}
+			
+			if (misTET.modules.exists(name)) {
+				return misTET.modules[name];
+			} else {
+				return false;
+			}
+			
+		},
             
         exists: function (name) {
             if (!name) {
@@ -642,7 +668,7 @@ var misTET = {
                 object.initialize = new Function()
             }
             misTET.modules[name] = object;
-            Event.fire(document, ":modules.create", object);
+            Event.fire(document, ":modules.create", {obj: object});
         },
         
         /* misTET.modules[name].execute(args) */
@@ -736,7 +762,7 @@ var misTET = {
                         
             misTET.res[name] = obj;
                         
-            Event.fire(document, ":res.create", obj);
+            Event.fire(document, ":res.create", {obj: obj});
                     
         },
                 
@@ -781,7 +807,7 @@ var misTET = {
                             })
                         });
                     }
-                    misTET.res[name]['config'] = http.responseXML;
+                    misTET.res[name]["config"] = http.responseXML;
                 },
                                 
                 onFailure: function (http) {
@@ -793,9 +819,9 @@ var misTET = {
                 }
             });
                         
-            misTET.res[name]['confs'] = new Array();
+            misTET.res[name]["confs"] = new Array();
                         
-            var configuration = misTET.res[name]['config'].documentElement;
+            var configuration = misTET.res[name]["config"].documentElement;
             var list = configuration.childNodes;
                         
             for (var j = 1; j < list.length; j = j+2) {
@@ -805,7 +831,7 @@ var misTET = {
                 var node = list[j].nodeName;
                 var value = list[j].childNodes[0].nodeValue;
                                 
-                misTET.res[name]['confs'][node] = value;
+                misTET.res[name]["confs"][node] = value;
             }        
                 
         },
@@ -856,7 +882,7 @@ var misTET = {
     errors: {
             
         create: function (e) {
-            var div = $('page');
+            var div = $("page");
                         
             /* You can pass an array */
             /* [name, message, file, line] */
@@ -885,7 +911,7 @@ var misTET = {
             });
             misTET._error = true;
                         
-            Event.fire(document, ":error", error);
+            Event.fire(document, ":error", {obj: error});
                         
             div.update(string);    
         },
@@ -1126,4 +1152,4 @@ var misTET = {
     }
 };
 
-misTET.utils.include('system/utils.js');
+misTET.utils.include("system/utils.js");

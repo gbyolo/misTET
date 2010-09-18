@@ -93,7 +93,7 @@
                                             link: "#{root}/#module=blog".interpolate(misTET),
                                             language: this.language,
                                             v: misTET.modules.blog.version,
-                                            webmaster: misTET.modules.blog.postAuthor
+                                            webmaster: misTET.res.blog.author
                                         });
                         
                 posts.each(function (pos) {

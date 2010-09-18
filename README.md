@@ -1,13 +1,8 @@
-<h2>Info:</h2>
-misTET is a simple Ajax cms with XML support as regards menu and pages contents. Each XML file contain some instructions whose aim is to help you write something.<br>
-/resources folder:<br>
-	- menu.xml
-	- pages.xml
-	- modules.xml
-	- init.xml
-<br>
-The stat folder contains all the files such as extern documents, sources, archives, and the styles folder contains misTET's styles.<br>
-<h2>Browsers</h2>
+*misTET* is a modular CMS written in Javascript. The coiche of this language has been required by the need of a fast and complete CMS.<br>
+
+<h2>Documentation</h2>
+You can know everything about *misTET* and its power by reading the github wiki.
+
 Supported Browsers:<br>
 	- Google Chrome >= 3 (testing previous versions)
 	- Firefox >= 3.5.6 (testing previous versions)
@@ -19,9 +14,6 @@ Supported Browsers:<br>
 <h2>Compiling</h2>
 `chmod +x compile.sh`<br>
 `./compile.sh`
-
-<h2>Modules</h2>
-misTET is also a modular cms, so you can write your own module without edit the main source. View /modules/README.md for more instructions.
 
 <h2>Site</h2>
 misTET developing site is here:

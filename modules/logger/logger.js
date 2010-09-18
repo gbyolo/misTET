@@ -49,7 +49,7 @@ misTET.modules.create("logger", {
 
     execute: function () {
     
-        var argv = '';
+        var argv = "";
                 
         for (var i = 0; i < $A(arguments).length; i++) {
             argv += i + "=" + (Object.toJSON($A(arguments)[i])).encodeURI() + "&";

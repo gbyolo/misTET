@@ -51,21 +51,21 @@ misTET.modules.create("security", {
             return false;
         }
                 
-        if (Object.isset(args['login'])) {
+        if (Object.isset(args["login"])) {
                         
-            if (Object.isset(args['action'])) {
+            if (Object.isset(args["action"])) {
                                 
-                if (!Object.isset(args['password'])) {
+                if (!Object.isset(args["password"])) {
                     misTET.errors.create({   message: "The password is missing",
                                             name: "security error" });
                     return false;
                 }
                         
-                new Ajax.Request(this.root + "/security.php?login&password=#{password}".interpolate({password: encodeURIComponent(args['password'])}), {
+                new Ajax.Request(this.root + "/security.php?login&password=#{password}".interpolate({password: encodeURIComponent(args["password"])}), {
                     method: "get",
                                 
                     onSuccess: function (http) {
-                        $('page').innerHTML = http.responseText;
+                        $("page").innerHTML = http.responseText;
                     },
                                 
                     onFailure: function (http) {
@@ -79,7 +79,7 @@ misTET.modules.create("security", {
                     method: "get",
                                 
                     onSuccess: function (http) {
-                        $('page').innerHTML = http.responseText;
+                        $("page").innerHTML = http.responseText;
                     },
                                 
                     onFailure: function (http) {
@@ -90,13 +90,13 @@ misTET.modules.create("security", {
                         
             }
                 
-        } else if (Object.isset(args['logout'])) {
+        } else if (Object.isset(args["logout"])) {
                 
             new Ajax.Request(this.root + "/security.php?logout", {
                 method: "get",
                                 
                 onSuccess: function (http) {
-                    $('page').innerHTML = http.responseText;
+                    $("page").innerHTML = http.responseText;
                 },
                                 
                 onFailure: function () {
@@ -105,23 +105,23 @@ misTET.modules.create("security", {
                 }
             });
                 
-        } else if (Object.isset(args['changePassword'])) {
+        } else if (Object.isset(args["changePassword"])) {
                         
-            if (Object.isset(args['action'])) {
+            if (Object.isset(args["action"])) {
                                 
-                if (!Object.isset(args['password'])) {
+                if (!Object.isset(args["password"])) {
                     misTET.errors.create({    name: "security error",
                                             message: "missing password" });
                     return false;
                 }
                 
-                var data = { password: args['password'].encodeURI(), token: args['token'] };
+                var data = { password: args["password"].encodeURI(), token: args["token"] };
                 new Ajax.Request(this.root + "/security.php?change&", {
                     method: "post",
                     parameters: data,
                                 
                     onSuccess: function (http) {
-                        $('page').innerHTML = http.responseText;
+                        $("page").innerHTML = http.responseText;
                     },
                                         
                     onFailure: function () {
@@ -136,7 +136,7 @@ misTET.modules.create("security", {
                         method: "get",
                                 
                         onSuccess: function (http) {
-                            $('page').innerHTML = http.responseText;
+                            $("page").innerHTML = http.responseText;
                         },
                                         
                         onFailure: function () {
@@ -155,12 +155,12 @@ misTET.modules.create("security", {
                     method: "get",
                                 
                     onSuccess: function (http) {
-                        misTET.res['security'].connected = Boolean(http.responseText == "true");
+                        misTET.res["security"].connected = Boolean(http.responseText == "true");
                     }
 
                 });
                         
-                return misTET.res['security'].connected;
+                return misTET.res["security"].connected;
                 
             } else {
                 misTET.errors.create("not valid args for security");

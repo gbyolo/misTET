@@ -79,7 +79,7 @@ misTET.modules.create("cooler", {
     initialize: function () {
                 
         Event.observe(document, ":change", function () {
-            $('page').update(misTET.modules.run("cooler", $('page').innerHTML));
+            $("page").update(misTET.modules.run("cooler", $("page").innerHTML));
         }.bind(this));
                 
     },
@@ -87,9 +87,9 @@ misTET.modules.create("cooler", {
     execute: function (str) {
             
         /** apply bbcode **/
-        str = misTET.modules.cooler.bbcode(str);
+        str = misTET.modules.get("cooler").bbcode(str);
         /** apply emoticons **/
-        str = misTET.modules.cooler.emoticons(str);
+        str = misTET.modules.get("cooler").emoticons(str);
             
         return str;
     },
