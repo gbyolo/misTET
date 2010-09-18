@@ -1,9 +1,9 @@
-*misTET* is a modular CMS written in Javascript. The coiche of this language has been required by the need of a fast and complete CMS.<br>
+*misTET* is a modular CMS written in Javascript. The choice of this language has been required by the need of a fast and complete CMS.<br>
 
 <h2>Documentation</h2>
 You can know everything about *misTET* and its power by reading the github wiki.
 
-<h2>Supported Browsers:</h2><br>
+<h2>Supported Browsers:</h2>
 	- Google Chrome >= 3 (testing previous versions)
 	- Firefox >= 3.5.6 (testing previous versions)
 	- Epiphany >= 2.22.3
