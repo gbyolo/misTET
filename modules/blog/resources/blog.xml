@@ -3,7 +3,8 @@
 <!DOCTYPE blog [
 
 	<!ATTLIST blog
-		n	CDATA	#REQUIRED
+		n		CDATA	#REQUIRED
+		author 	CDATA	#IMPLIED
 	>
 
 	<!ELEMENT blog (post*)>
@@ -20,7 +21,7 @@
 <!-- 	n deve essere incrementato ogni volta che viene inserito un
 		post senza usare direttamente il modulo blog.
 -->
-<blog n="1">
+<blog n="1" author="lost">
 	<post id = "1" date = "6/04/2010 21:57" author = "lost" title = "First post">
 		<![CDATA[
 			This is my first post
