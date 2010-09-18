@@ -3,7 +3,7 @@
 <h2>Documentation</h2>
 You can know everything about *misTET* and its power by reading the github wiki.
 
-Supported Browsers:<br>
+<h2>Supported Browsers:</h2><br>
 	- Google Chrome >= 3 (testing previous versions)
 	- Firefox >= 3.5.6 (testing previous versions)
 	- Epiphany >= 2.22.3
