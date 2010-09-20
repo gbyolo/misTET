@@ -36,7 +36,7 @@ misTET.modules.create("SyntaxHighlighter", {
     },
         
     loadBrush: function (name) {
-    	if (misTET.res.SyntaxHighlighter.brush[name]) {
+    	if (misTET.res.get("SyntaxHighlighter").brush[name]) {
     		return true;
     	}
         if (misTET.utils.include(this.root+"/scripts/shBrush"+name+".js")) {
@@ -54,7 +54,7 @@ misTET.modules.create("SyntaxHighlighter", {
                         SyntaxHighlighter.vars.discoveredBrushes[alias] = brush;
                     });
             }
-            misTET.res.SyntaxHighlighter.brush[name] = true;
+            misTET.res.get("SyntaxHighlighter").brush[name] = true;
         }
 
     },

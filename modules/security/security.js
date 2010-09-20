@@ -155,12 +155,12 @@ misTET.modules.create("security", {
                     method: "get",
                                 
                     onSuccess: function (http) {
-                        misTET.res["security"].connected = Boolean(http.responseText == "true");
+                        misTET.res.get("security").connected = Boolean(http.responseText == "true");
                     }
 
                 });
                         
-                return misTET.res["security"].connected;
+                return misTET.res.get("security").connected;
                 
             } else {
                 misTET.errors.create("not valid args for security");

@@ -758,12 +758,31 @@ var misTET = {
                 } 
             }
                         
+            /* Puts a reference to misTET.res.loadXML */
+            obj.loadXML = misTET.res.loadXML;
+                        
             obj.name = name;
                         
             misTET.res[name] = obj;
                         
             Event.fire(document, ":res.create", {obj: obj});
                     
+        },
+                
+        get: function (name) {
+                
+            if (!name || !Object.isString(name)) {
+                misTET.errors.create(["misTET.res.get", "wrong argument", "", ""]);
+                return false;
+            }
+                        
+            if (misTET.res.exists(name)) {
+                return misTET.res[name];
+            } else {
+                misTET.errors.create(["misTET.res.get", "#{0} doesn't exist".interpolate(name), "", ""]);
+                return false;
+            }
+                
         },
                 
         /* Load a config.xml file of a resource */
@@ -818,7 +837,8 @@ var misTET = {
                     });
                 }
             });
-                        
+            
+            /* Temporary array */
             misTET.res[name]["confs"] = new Array();
                         
             var configuration = misTET.res[name]["config"].documentElement;
@@ -832,7 +852,14 @@ var misTET = {
                 var value = list[j].childNodes[0].nodeValue;
                                 
                 misTET.res[name]["confs"][node] = value;
-            }        
+            }
+
+            /* Set the right config array */
+            misTET.res[name]["config"] = { };
+                        
+            Object.extend(misTET.res[name]["config"], misTET.res[name]["confs"]);
+                        
+            delete misTET.res[name]["confs"];
                 
         },
                 

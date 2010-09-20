@@ -44,9 +44,9 @@ misTET.modules.create("blog", {
             evalJS: false,
                 
             onSuccess: function (http) {
-                misTET.res["blog"].file = http.responseXML;
-                misTET.res["blog"].total = parseInt(misTET.res.blog.file.documentElement.getAttribute("n"));
-				misTET.res["blog"].author = misTET.res.blog.file.documentElement.getAttribute("author") || "";
+                misTET.res.get("blog").file = http.responseXML;
+                misTET.res.get("blog").total = parseInt(misTET.res.get("blog").file.documentElement.getAttribute("n"));
+				misTET.res.get("blog").author = misTET.res.get("blog").file.documentElement.getAttribute("author") || "";
             },
                 
             onFailure: function (http) {
@@ -152,7 +152,7 @@ misTET.modules.create("blog", {
                 if (args["action"]) {
 				
 					if (!args["author"]) {
-						Object.extend(args["author"], misTET.res["blog"].author);
+						Object.extend(args["author"], misTET.res.get("blog").author);
 					}
 					
                     var data = { title: args["title"], author: args["author"], text: args["text"], token: args["token"] };
@@ -207,7 +207,7 @@ misTET.modules.create("blog", {
                 
     getPost: function (id) {
                 
-        var XML = misTET.res["blog"].file.documentElement;
+        var XML = misTET.res.get("blog").file.documentElement;
         var posts = XML.getElementsByTagName("post");
         var output = { };
                 
@@ -254,7 +254,7 @@ misTET.modules.create("blog", {
             }
         } else {
             $("page").innerHTML = "";
-            for (var j = misTET.res["blog"].total; j > 0; j--) {
+            for (var j = misTET.res.get("blog").total; j > 0; j--) {
                 var currentPost = this.getPost(""+j+"");
                 if (this.checkPost(currentPost)) {
                     var output = "<div class = 'post'><div class = 'title'>"+ currentPost.title + "</div>" + currentPost.text + "<div class = 'foot'>"+
@@ -268,7 +268,7 @@ misTET.modules.create("blog", {
     updateRss: function () {
         var feed = misTET.utils.execute(this.root + "/feed.js");
         var f = new feed({root: this.root});
-        f.update(misTET.res.blog.file);
+        f.update(misTET.res.get("blog").file);
     }
         
 });
