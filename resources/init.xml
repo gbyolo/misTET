@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<!DOCTYPE init [
+	<!ELEMENT init (homePage+)>
+	<!ELEMENT init (title+)>
+	
+	<!ELEMENT homePage ANY>
+	<!ELEMENT title ANY>
+]>
+
+<init>
+	<homePage>home</homePage>
+	<title>misTET - Power on earth</title>
+</init>
