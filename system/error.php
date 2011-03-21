@@ -22,6 +22,7 @@
 class Error 
 {
     private $ERROR = array(
+		"ERROR_CLASS" => false,
         "ERROR_INIT" => false,
         "ERROR_RESOURCES" => false,
         "ERROR_MODULES" => false /* , */
@@ -31,19 +32,21 @@ class Error
     private $what;
     
     public function __construct ($type, $msg) {
+		
         if (!isset($this->ERROR[$type])) {
             return false;
         }
-
+		
         $this->error = $type;
         $this->what = $msg;
     }
 
     /* (string) Error */
-    public static function __toString () {
-        $string = '[ERROR]#'.$this->error.': '.$this->what;
+    public function __toString () {
+        $string = '[@]#'.$this->error.': '.$this->what;
         return $string;
     }
+    
 }
 
- ?>
+?>

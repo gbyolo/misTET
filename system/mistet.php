@@ -22,12 +22,14 @@
 class misTET
 {
     public $version = '0.1';
-    private $config = array("initialized" => false,
-		            "home" => "",
-			    "title" => "",
-			    "loading" => "",
-			    );
-
+    
+    private $config = array(
+				"initialized" => false,
+				"home" => false,
+				"title" => false /* , */
+				/* other properties */
+			);
+    
     public function __toString() {
         return 'misTET v'.$this->version;
     }
@@ -36,8 +38,16 @@ class misTET
 
         if ($this->config['initialized']) {
             $error = new Error ("ERROR_INIT", "misTET has been already initialized");
-            return $error;
+            die($error);
         }
+        
+        $this->config['initialized'] = false;
+		
+		$construct = new XMLparser ();
+		$init = $construct->init(_ROOT_.'/resources/init.xml');
+		
+		$this->config['home'] = $init['home'];
+		$this->config['title'] = $init['title'];
 
     }
 }
