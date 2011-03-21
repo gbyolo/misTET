@@ -30,10 +30,28 @@ define('_ROOT_', dirname(__FILE__));
 define('CORE', _ROOT_.'/system');
 
 require(CORE.'/mistet.php');
+require(CORE.'/error.php');
 
 /* initialize misTET */
 $misTET = new misTET ();
 
-echo $misTET;
+/* print standard HTML page */
+echo <<<HTML
+<html>
+    <head>
+        <link rel = "stylesheet" href = "{$_ROOT_}/styles/light.css" type = "text/css">
+    </head>
+    <body>
+        <div id="title">
+        </div>
+
+        <div id="menu">
+        </div>
+
+        <div id="page">
+        </div>
+    </body>
+</html>
+HTML;
 
 ?>
