@@ -1,4 +1,6 @@
-Static PHP variant for mistet
+*Static PHP variant of mistet*
+
+**[WARNING]** Do not use this shit until a stable version is released.
 
 <h2>License</h2>
 License file is at /LICENSE.

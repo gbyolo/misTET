@@ -19,19 +19,27 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
  
- class misTET
- {
-	 public $version = '0.1';
-	 
-	 private $config = array("initialized" => false,
-							"home" => "",
-							"title" => "",
-							"loading" => "",
-							);
-	
+class misTET
+{
+	public $version = '0.1';
+	private $config = array("initialized" => false,
+				"home" => "",
+				"title" => "",
+				"loading" => "",
+				);
+
+    public function __toString() {
+        return 'misTET v'.$this->version;
+    }
+
 	public function __construct () {
-		/* initialize */
+
+		if ($this->config['initialized']) {
+            $error = new misTET.error ();
+            return $error;
+        }
+
 	}
- }
- 
- ?>
+}
+
+?>

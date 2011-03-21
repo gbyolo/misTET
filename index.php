@@ -19,18 +19,21 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
+ob_start();
+session_start();
+
 /* version */
 define('__VERSION__', '0.1');
 /* root path */
-define('__ROOT__', basename(dirname(__FILE__)));
-/* extern files folder */
-define('EXTERN', __ROOT__.'/stat');
-/* modules folder */
-define('MODULES', __ROOT__.'/modules');
+define('_ROOT_', dirname(__FILE__));
+/* core */
+define('CORE', _ROOT_.'/system');
 
-/* require core */
-require(__ROOT__.'/system/misTET.php')
+require(CORE.'/mistet.php');
 
-/* Have to write all */
+/* initialize misTET */
+$misTET = new misTET ();
+
+echo $misTET;
 
 ?>
