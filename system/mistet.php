@@ -24,11 +24,11 @@ class misTET
     public $version = '0.1';
     
     private $config = array(
-				"initialized" => false,
-				"home" => false,
-				"title" => false /* , */
-				/* other properties */
-			);
+		"initialized" => false,
+		"home" => false,
+		"title" => false /* , */
+		/* other properties */
+	    );
     
     public function __toString() {
         return 'misTET v'.$this->version;
@@ -43,11 +43,11 @@ class misTET
         
         $this->config['initialized'] = false;
 		
-		$construct = new XMLparser ();
-		$init = $construct->init(_ROOT_.'/resources/init.xml');
+	$construct = new XMLparser ();
+	$init = $construct->init(_ROOT_.'/resources/init.xml');
 		
-		$this->config['home'] = $init['home'];
-		$this->config['title'] = $init['title'];
+	$this->config['home'] = $init['home'];
+	$this->config['title'] = $init['title'];
 
     }
 }

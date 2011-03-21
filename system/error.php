@@ -23,11 +23,11 @@ class Error
 {
     private $ERROR = array(
 		"ERROR_CLASS" => false,
-        "ERROR_INIT" => false,
-        "ERROR_RESOURCES" => false,
-        "ERROR_MODULES" => false /* , */
-        /* other errors */
-        );
+        	"ERROR_INIT" => false,
+        	"ERROR_RESOURCES" => false,
+        	"ERROR_MODULES" => false /* , */
+        	/* other errors */
+            );
     private $error;
     private $what;
     

@@ -19,20 +19,20 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
  
- class XMLparser
- {
+class XMLparser
+{
 	
-	public function init ($file) {
+    public function init ($file) {
 		
-		$xml = simplexml_load_file($file);
+        $xml = simplexml_load_file($file);
 		
-		return array(
-			"home" => (string) $xml->homePage,
-			"title" => (string) $xml->title
-		);
+	    return array(
+		"home" => (string) $xml->homePage,
+		"title" => (string) $xml->title
+	    );
 		
-	} 
+    } 
 	 
- }
+}
  
- ?>
+?>
