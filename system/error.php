@@ -18,28 +18,32 @@
  * You should have received a copy of the GNU Affero General Public License *
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
- 
-class misTET
+
+class Error 
 {
-    public $version = '0.1';
-    private $config = array("initialized" => false,
-		            "home" => "",
-			    "title" => "",
-			    "loading" => "",
-			    );
-
-    public function __toString() {
-        return 'misTET v'.$this->version;
-    }
-
-    public function __construct () {
-
-        if ($this->config['initialized']) {
-            $error = new Error ("ERROR_INIT", "misTET has been already initialized");
-            return $error;
+    private $ERROR = array(
+        "ERROR_INIT" => false,
+        "ERROR_RESOURCES" => false,
+        "ERROR_MODULES" => false /* , */
+        /* other errors */
+        );
+    private $error;
+    private $what;
+    
+    public function __construct ($type, $msg) {
+        if (!isset($this->ERROR[$type])) {
+            return false;
         }
 
+        $this->error = $type;
+        $this->what = $msg;
+    }
+
+    /* (string) Error */
+    public static function __toString () {
+        $string = '[ERROR]#'.$this->error.': '.$this->what;
+        return $string;
     }
 }
 
-?>
+ ?>
