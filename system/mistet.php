@@ -23,7 +23,7 @@ class misTET
 {
     public $version = '0.1';
     
-    private $config = array(
+    public $config = array(
 		"initialized" => false,
 		"home" => false,
 		"title" => false /* , */
