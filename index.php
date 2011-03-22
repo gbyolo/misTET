@@ -32,6 +32,7 @@ define('CORE', _ROOT_.'/system');
 require(CORE.'/mistet.php');
 require(CORE.'/error.php');
 require(CORE.'/xml.php');
+require(CORE.'/dom.php');
 
 /* initialize misTET */
 $misTET = new misTET ();

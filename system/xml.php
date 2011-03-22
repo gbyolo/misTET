@@ -23,13 +23,25 @@ class XMLparser
 {
 	
     public function init ($file) {
+
+        if (!file_exists($file)) {
+            die (new Error("ERROR_XML", "{$file} doesn't exist"));
+        }
+
+        if (!is_writable($file)) {
+            die (new Error("ERROR_XML", "{$file} has no +r perms"));
+        }
 		
         $xml = simplexml_load_file($file);
 		
-	    return array(
-		"home" => (string) $xml->homePage,
-		"title" => (string) $xml->title
-	    );
+        if (!$xml->homePage || !$xml->title) {
+            die (new Error("ERROR_XML_INIT", "homePage or title is missing"));
+        }
+
+	return array(
+	    "home" => (string) $xml->homePage,
+	    "title" => (string) $xml->title
+	);
 		
     } 
 	 

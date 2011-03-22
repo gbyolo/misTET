@@ -19,40 +19,34 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
-class Error 
+class DOMparser
 {
-    private $ERROR = array(
-		"ERROR_CLASS" => false,
-            	"ERROR_XML" => false,
-            	"ERROR_XML_INIT" => false,
-            	"ERROR_XML_MENU" => false,
-            	"ERROR_XML_PAGES" => false,
-		"ERROR_DOM" => false,
-		"ERROR_DOM_MENU" => false,
-        	"ERROR_INIT" => false,
-        	"ERROR_RESOURCES" => false,
-        	"ERROR_MODULES" => false /* , */
-        	/* other errors */
-            );
-    private $error;
-    private $what;
-    
-    public function __construct ($type, $msg) {
-		
-        if (!isset($this->ERROR[$type])) {
-            return false;
+	
+	private $ops = new DOMDocument;
+
+    public function __construct ($file) {
+        
+        if(!file_exists($file)) {
+            die (new Error("ERROR_DOM", "Cannot open {$file}: doesn't exist"));
         }
-		
-        $this->error = $type;
-        $this->what = $msg;
+
+        $document = $this->ops->loadHTMLfile ($file);
+        $this->ops = $document;
+
     }
 
-    /* (string) Error */
-    public function __toString () {
-        $string = '[@]#'.$this->error.': '.$this->what;
-        return $string;
+    public function getMenu () {
+
+        $menu = $this->ops->getElementById('menu');
+
+        if (!$menu) {
+            die (new Error("ERROR_DOM_MENU", "Unable to get <div id='menu'>"));
+        }
+
+        return $menu;
+
+
     }
-    
+
+
 }
-
-?>
