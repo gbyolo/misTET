@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Affero General Public License *
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
- 
+
 class XMLparser
 {
 	
@@ -28,22 +28,45 @@ class XMLparser
             die (new Error("ERROR_XML", "{$file} doesn't exist"));
         }
 
-        if (!is_writable($file)) {
+        if (!is_readable($file)) {
             die (new Error("ERROR_XML", "{$file} has no +r perms"));
         }
 		
-        $xml = simplexml_load_file($file);
+        $xml = DOMDocument::load($file)->documentElement;
+        
+        /* ugly shittly way */
+        $home = $xml->getElementsByTagName("homePage")->item(0)->nodeValue;
+        $title = $xml->getElementsByTagName("title")->item(0)->nodeValue;
 		
-        if (!$xml->homePage || !$xml->title) {
+        if (!$home || !$title) {
             die (new Error("ERROR_XML_INIT", "homePage or title is missing"));
         }
 
 	return array(
-	    "home" => (string) $xml->homePage,
-	    "title" => (string) $xml->title
+	    "home" => (string) $home,
+	    "title" => (string) $title
 	);
 		
-    } 
+    }
+
+    public function menu ($file) {
+
+        $arr = array ();
+
+        if (!file_exists($file) || !is_readable($file)) {
+            die (new Error("ERROR_XML_MENU", "{$file} is missing or has wrong perms"));
+        }
+
+        $xml = DOMDocument::load($file)->documentElement;
+
+        foreach ($xml->childNodes as $node) {
+            if ($node->nodeName == 'menu') {
+                $arr[$node->getAttribute('id')] = $node->nodeValue;
+            }
+        }
+        
+        return $arr;
+    }
 	 
 }
  

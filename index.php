@@ -46,7 +46,7 @@ echo <<<HTML
         <div id="title">{$misTET->config['title']}
         </div>
 
-        <div id="menu">
+        <div id="menu"> {$misTET->_parseMenu ()}
         </div>
 
         <div id="page">

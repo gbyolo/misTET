@@ -26,7 +26,8 @@ class misTET
     public $config = array(
 		"initialized" => false,
 		"home" => false,
-		"title" => false /* , */
+		"title" => false,
+		"menu" => false /* , */
 		/* other properties */
 	    );
     
@@ -48,7 +49,26 @@ class misTET
 		
 	$this->config['home'] = $init['home'];
 	$this->config['title'] = $init['title'];
+	
+	$menu = $construct->menu(_ROOT_.'/resources/menu.xml');
+	$this->config['menu'] = $menu;
 
+    }
+    
+    public function _parseMenu () {
+		
+        if (!$this->config['menu']) {
+	    die (new Error("ERROR_MENU", "mistet#config#menu is null"));
+	}
+		
+	$output = null;
+		
+	foreach ($this->config['menu'] as $key => $child) {
+	    $output .= "<div class='menu'><a href='?{$key}'>{$child}™</a></div>";
+	}
+		
+	return $output;
+		
     }
 }
 

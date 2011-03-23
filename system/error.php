@@ -30,6 +30,7 @@ class Error
 		"ERROR_DOM" => false,
 		"ERROR_DOM_MENU" => false,
         	"ERROR_INIT" => false,
+        	"ERROR_MENU" => false,
         	"ERROR_RESOURCES" => false,
         	"ERROR_MODULES" => false /* , */
         	/* other errors */

@@ -1,0 +1,22 @@
+<?xml version="1.0"?> 
+<!DOCTYPE menue [
+    <!ELEMENT menue (menu+)>
+    
+    <!ELEMENT menu ANY>
+    <!ATTLIST menu
+        id    ID    #REQUIRED
+	>
+]>
+<!--
+To create a new menu voice, just use `menu` node. Each `text` node represents
+a new voice: if you use only one node, it is a simple menu, if you use
+several ones, the first one represents the main voice, the other ones 
+represent the sub menu. The `id` attribute is REQUIRED, since it must be 
+the same you'll use for the specified page in pages.xml.
+Don't use XML special characters.
+
+-->
+<menue>
+    <menu id = 'home'>Home</menu>
+    <menu id = 'hurr'>HURR</menu>
+</menue>
