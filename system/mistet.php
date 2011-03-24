@@ -61,12 +61,12 @@ class misTET
 	    die (new Error("ERROR_MENU", "mistet#config#menu is null"));
 	}
 		
-	$output = null;
+	$output = '';
 		
 	foreach ($this->config['menu'] as $key => $child) {
-	    $output .= "<div class='menu'><a href='?{$key}'>{$child}™</a></div>";
+	    $output .= "<div class=\"menu\"><a href=\"{$key}\">{$child}</a></div>";
 	}
-		
+
 	return $output;
 		
     }

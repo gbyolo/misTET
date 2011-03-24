@@ -61,7 +61,14 @@ class XMLparser
 
         foreach ($xml->childNodes as $node) {
             if ($node->nodeName == 'menu') {
-                $arr[$node->getAttribute('id')] = $node->nodeValue;
+		$href = preg_replace('/#/', '?', $node->getAttribute('href'));
+
+		preg_match('/?/', $href, $matches);
+		if ($matches) {
+                    $arr[$href] = $node->nodeValue;
+		} else {
+		    $arr["?".$href] = $node->nodeValue;
+		}
             }
         }
         

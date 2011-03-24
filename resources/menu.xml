@@ -4,11 +4,11 @@
     
     <!ELEMENT menu ANY>
     <!ATTLIST menu
-        id    ID    #REQUIRED
-	>
+        href    ID    #REQUIRED
+    >
 ]>
 
 <menue>
-    <menu id = 'home'>Home</menu>
-    <menu id = 'hurr'>HURR</menu>
+    <menu href = 'home'>Home</menu>
+    <menu href = 'hurr'>HURR</menu>
 </menue>

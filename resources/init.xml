@@ -1,13 +1,18 @@
 <?xml version="1.0"?> 
 <!DOCTYPE init [
-	<!ELEMENT init (homePage+)>
-	<!ELEMENT init (title+)>
+    <!ELEMENT init (homePage+)>
+    <!ELEMENT init (title+)>
+    <!ELEMENT init (keywords+)>
 	
-	<!ELEMENT homePage ANY>
-	<!ELEMENT title ANY>
+    <!ELEMENT homePage ANY>
+    <!ELEMENT title ANY>
+    <!ELEMENT keywords ANY>
 ]>
 
 <init>
-	<homePage>home</homePage>
-	<title>misTET - Power on earth</title>
+    <homePage>home</homePage>
+    <title>misTET - Power on earth</title>
+    
+    <keywords>cms, misTET, javascript, Ajax, js, ajax cms, javascript cms</keywords>
+    <description>misTET</description>
 </init>

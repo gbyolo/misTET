@@ -40,7 +40,8 @@ $misTET = new misTET ();
 echo <<<HTML
 <html>
     <head>
-        <link rel = "stylesheet" href = "{$_ROOT_}/styles/light.css" type = "text/css">
+        <link rel="stylesheet" href="{$_ROOT_}/styles/light.css" type="text/css">
+        <link rel="stylesheet" href="{$_ROOT_}/styles/menu.css" type="text/css">
     </head>
     <body>
         <div id="title">{$misTET->config['title']}
