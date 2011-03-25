@@ -71,6 +71,49 @@ class misTET
 	return $output;
 		
     }
+    
+    public function go ($query) {
+		
+	if ($query) {
+	    preg_match('/^([^=]+)(&|$)/', $query, $match);
+			
+	    if ($match) {
+		$page = $match[1];
+				
+	    } else
+	    {
+		preg_match('/^page=(.+?)(&|$)/', $query, $match);
+				
+		if ($match) {
+		    $page = $match[1];
+		    /* external page */
+		    $res = true;
+		}
+	    }
+	}
+	
+	/* no page -> load homepage */	
+	if (!$page) {
+	    $page = $this->config['home'];
+	}
+		
+	/* load an external page */
+	if ($res) {
+			
+	    $content = @file_get_contents($page);
+			
+	    if (!$content) {
+		$content = "404 - Not found";
+	    }
+	    /* get page from pages.xml */
+	    } else {
+		/* TO DO */
+		$content = "you suck guy";
+	    }
+		
+	return $content;
+		
+    }
 }
 
 ?>

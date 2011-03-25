@@ -79,8 +79,6 @@ class XMLparser
             return array();
         }
 
-        $xml = (is_null($xml)) ? $xml->documentElement : $xml;
-
         if (!$xml->hasChildNodes()) {
             $result = $xml->nodeValue;
 
@@ -119,7 +117,7 @@ class XMLparser
         if ($xml->hasAttributes()) {
 
             foreach ($xml->attributes as $key=>$name) {
-                $attributes["@{$name->nodeName}"] = $name->nodeValue;
+                $attributes["{$name->nodeName}"] = $name->nodeValue;
             }
         }
 
@@ -130,10 +128,10 @@ class XMLparser
             $result = array_merge($result, $attributes);
         }
 
-        $arResult = array($xml->nodeName=>$result);
-        return $arResult;
+        $Result = array($xml->nodeName=>$result);
+        return $Result;
     }
-	 
+ 
 }
  
 ?>

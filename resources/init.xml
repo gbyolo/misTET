@@ -3,10 +3,12 @@
     <!ELEMENT init (homePage+)>
     <!ELEMENT init (title+)>
     <!ELEMENT init (keywords+)>
+    <!ELEMENT init (description+)>
 	
     <!ELEMENT homePage ANY>
     <!ELEMENT title ANY>
     <!ELEMENT keywords ANY>
+    <!ELEMENT description ANY>
 ]>
 
 <init>

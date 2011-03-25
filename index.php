@@ -40,7 +40,7 @@ $misTET = new misTET ();
 echo <<<HTML
 <html>
     <head>
-	<title>{$misTET->config['title']}</title>
+	<title>{$misTET->config['description']}</title>
 		
         <link rel="stylesheet" href="{$_ROOT_}/styles/light.css" type="text/css">
         <link rel="stylesheet" href="{$_ROOT_}/styles/menu.css" type="text/css">
@@ -49,13 +49,14 @@ echo <<<HTML
         <meta name="keywords" content="{$misTET->config['keywords']}"/>
     </head>
     <body>
-        <div id="title">{$misTET->config['title']}
+        <div id="title"><a href="{$_ROOT_}">{$misTET->config['title']}</a>
         </div>
 
         <div id="menu"> {$misTET->_parseMenu ()}
         </div>
 
         <div id="page">
+	    {$misTET->go($_SERVER['QUERY_STRING'])}
         </div>
     </body>
 </html>
