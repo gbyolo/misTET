@@ -21,13 +21,13 @@
 
 class XMLparser
 {
-    
-    /* XMLParser->init
-    * 
-    * @Params
-    * @file: the xml configuration file for misTET
-    * 
-    * [@] Return: array */
+	
+	/* XMLParser->init
+	 * 
+	 * @Params
+	 * @file: the xml configuration file for misTET
+	 * 
+	 * [@] Return: array */
 	 
     public function init ($file) {
 
@@ -54,12 +54,12 @@ class XMLparser
 		
     }
 	
-    /* XMLParser->menu
-    * 
-    * @Params
-    * @file: the xml configuration file for misTET menu 
-    * 
-    * [@] Return: array of all the menu nodes */
+	/* XMLParser->menu
+	 * 
+	 * @Params
+	 * @file: the xml configuration file for misTET menu 
+	 * 
+	 * [@] Return: array of all the menu nodes */
 	 
     public function menu ($file) {
 
@@ -97,25 +97,25 @@ class XMLparser
      
     public function pages ($file, $id) {
 		
-	if (!file_exists($file) || !is_readable($file)) {
-	    die (new Error("ERROR_XML_PAGES", "{$file} is missing or has wrong perms"));
+		if (!file_exists($file) || !is_readable($file)) {
+			die (new Error("ERROR_XML_PAGES", "{$file} is missing or has wrong perms"));
+		}
+		
+		$pages = DOMDocument::load($file)->documentElement;
+		
+		foreach ($pages->getElementsByTagName('page') as $page) {
+			if ($page->getAttribute('id') == $id) {
+				$node = $page;
+			}
+		}
+		
+		if (!$node) {
+			return false;
+		} else {
+			return $node;
+		}
+		
 	}
-		
-	$pages = DOMDocument::load($file)->documentElement;
-		
-	foreach ($pages->getElementsByTagName('page') as $page) {
-	    if ($page->getAttribute('id') == $id) {
-		$node = $page;
-	    }
-	}
-		
-	if (!$node) {
-	    return false;
-	} else {
-	    return $node;
-	}
-		
-    }
     
     /* XMLParser->toArray
      * 

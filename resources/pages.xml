@@ -10,9 +10,13 @@
 
 <pages>
     <page id="home">
-	Static home. Sucks
+	<![CDATA[
+	    Static home. Sucks
+	]]>
     </page>
     <page id="hurr">
-	HURR. PHP sucks.
+	<![CDATA[
+	    HURR. PHP sucks.
+	]]>
     </page>
 </pages>

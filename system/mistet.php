@@ -79,9 +79,24 @@ class misTET
 	$result = '';
 		
 	foreach ($xmlNode->childNodes as $node) {
-	    $text = $node->nodeValue;
+		
+	    if ($node->nodeType == XML_CDATA_SECTION_NODE) {
+		$text .= $node->nodeValue;
+	    }
+	    else if ($node->nodeType == XML_TEXT_NODE) {
+		$text .= $node->nodeValue;
+	    }
+		else {
+		$text = $node->nodeValue;
+	    }
+		
 	}
-	return $text;
+
+	if ($text = preg_replace('/^\s{1,}$/m', '', $text)) {
+            $result .= preg_replace('/href=(["\'])#/', 'href=$1?', $text);
+        }
+
+	return $result;
 		
     }
     
