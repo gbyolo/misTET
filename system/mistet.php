@@ -27,6 +27,8 @@ class misTET
 		"initialized" => false,
 		"home" => false,
 		"title" => false,
+		"keywords" => false,
+		"description" => false,
 		"menu" => false /* , */
 		/* other properties */
 	    );
@@ -47,8 +49,7 @@ class misTET
 	$construct = new XMLparser ();
 	$init = $construct->init(_ROOT_.'/resources/init.xml');
 		
-	$this->config['home'] = $init['home'];
-	$this->config['title'] = $init['title'];
+	$this->config = array_merge($this->config, $init);
 	
 	$menu = $construct->menu(_ROOT_.'/resources/menu.xml');
 	$this->config['menu'] = $menu;

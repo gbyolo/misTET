@@ -34,18 +34,16 @@ class XMLparser
 		
         $xml = DOMDocument::load($file)->documentElement;
         
-        /* ugly shittly way */
-        $home = $xml->getElementsByTagName("homePage")->item(0)->nodeValue;
-        $title = $xml->getElementsByTagName("title")->item(0)->nodeValue;
+	$arr = $this->toArray($xml);
 		
-        if (!$home || !$title) {
-            die (new Error("ERROR_XML_INIT", "homePage or title is missing"));
-        }
-
-	return array(
-	    "home" => (string) $home,
-	    "title" => (string) $title
+	$res = array(
+	    "home" => (string) $arr["init"]["homePage"],
+	    "title" => (string) $arr["init"]["title"],
+	    "keywords" => (string) $arr["init"]["keywords"],
+	    "description" => (string) $arr["init"]["description"]
 	);
+		
+	return $res;
 		
     }
 
@@ -73,6 +71,67 @@ class XMLparser
         }
         
         return $arr;
+    }
+    
+    public function toArray($xml = null) {
+        
+        if (is_null($xml)) {
+            return array();
+        }
+
+        $xml = (is_null($xml)) ? $xml->documentElement : $xml;
+
+        if (!$xml->hasChildNodes()) {
+            $result = $xml->nodeValue;
+
+        } else {
+            $result = array();
+
+            foreach ($xml->childNodes as $node) {
+                
+                $nodeList = $xml->getElementsByTagName($node->nodeName); 
+                $count = 0;
+                
+                foreach ($nodeList as $node2) {
+                    if ($node2->parentNode->isSameNode($node->parentNode)) {
+                        $count++;
+                    }
+                }
+
+                $value = $this->toArray($node);
+                $key   = ($node->nodeName{0} == '#') ? 0 : $node->nodeName;
+                $value = is_array($value) ? $value[$node->nodeName] : $value;
+                
+                if ($count > 1) { 
+                    $result[$key][] = $value;
+                } else {
+                    $result[$key] = $value;
+                }
+            }
+            
+            if (count($result) == 1 && isset($result[0]) && !is_array($result[0])) {
+                $result = $result[0];
+            }
+        }
+        
+        $attributes = array();
+
+        if ($xml->hasAttributes()) {
+
+            foreach ($xml->attributes as $key=>$name) {
+                $attributes["@{$name->nodeName}"] = $name->nodeValue;
+            }
+        }
+
+        if (count($attributes)) {
+            if (!is_array($result)) {
+                $result = (trim($result)) ? array($result) : array();
+            }
+            $result = array_merge($result, $attributes);
+        }
+
+        $arResult = array($xml->nodeName=>$result);
+        return $arResult;
     }
 	 
 }
