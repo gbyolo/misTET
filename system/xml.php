@@ -21,7 +21,14 @@
 
 class XMLparser
 {
-	
+    
+    /* XMLParser->init
+    * 
+    * @Params
+    * @file: the xml configuration file for misTET
+    * 
+    * [@] Return: array */
+	 
     public function init ($file) {
 
         if (!file_exists($file)) {
@@ -46,7 +53,14 @@ class XMLparser
 	return $res;
 		
     }
-
+	
+    /* XMLParser->menu
+    * 
+    * @Params
+    * @file: the xml configuration file for misTET menu 
+    * 
+    * [@] Return: array of all the menu nodes */
+	 
     public function menu ($file) {
 
         $arr = array ();
@@ -72,6 +86,43 @@ class XMLparser
         
         return $arr;
     }
+    
+    /* XMLParser->pages
+     * 
+     * @Params
+     * @file : the xml configuration file for pages
+     * @id: the id of the page
+     * 
+     * [@]Return: XML node if the page exists, false otherwise */
+     
+    public function pages ($file, $id) {
+		
+	if (!file_exists($file) || !is_readable($file)) {
+	    die (new Error("ERROR_XML_PAGES", "{$file} is missing or has wrong perms"));
+	}
+		
+	$pages = DOMDocument::load($file)->documentElement;
+		
+	foreach ($pages->getElementsByTagName('page') as $page) {
+	    if ($page->getAttribute('id') == $id) {
+		$node = $page;
+	    }
+	}
+		
+	if (!$node) {
+	    return false;
+	} else {
+	    return $node;
+	}
+		
+    }
+    
+    /* XMLParser->toArray
+     * 
+     * @Params
+     * @xml: the xml file 
+     * 
+     * [@]Return: array */
     
     public function toArray($xml = null) {
         

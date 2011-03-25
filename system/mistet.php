@@ -53,6 +53,8 @@ class misTET
 	
 	$menu = $construct->menu(_ROOT_.'/resources/menu.xml');
 	$this->config['menu'] = $menu;
+	
+	$this->config['initialized'] = true;
 
     }
     
@@ -69,6 +71,17 @@ class misTET
 	}
 
 	return $output;
+		
+    }
+    
+    public function _parsePage ($xmlNode) {
+		
+	$result = '';
+		
+	foreach ($xmlNode->childNodes as $node) {
+	    $text = $node->nodeValue;
+	}
+	return $text;
 		
     }
     
@@ -91,7 +104,6 @@ class misTET
 		}
 	    }
 	}
-	
 	/* no page -> load homepage */	
 	if (!$page) {
 	    $page = $this->config['home'];
@@ -99,16 +111,16 @@ class misTET
 		
 	/* load an external page */
 	if ($res) {
-			
 	    $content = @file_get_contents($page);
-			
+	    
 	    if (!$content) {
 		$content = "404 - Not found";
 	    }
 	    /* get page from pages.xml */
 	    } else {
 		/* TO DO */
-		$content = "you suck guy";
+		$node = XMLParser::pages(_ROOT_.'/resources/pages.xml', $page);
+		$content = $this->_parsePage($node);
 	    }
 		
 	return $content;

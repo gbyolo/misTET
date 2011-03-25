@@ -1,0 +1,18 @@
+<?xml version="1.0"?> 
+<!DOCTYPE pages [
+    <!ELEMENT pages (page+)>
+	
+    <!ELEMENT page ANY>
+    <!ATTLIST page
+	id	ID	#REQUIRED
+    >
+]>
+
+<pages>
+    <page id="home">
+	Static home. Sucks
+    </page>
+    <page id="hurr">
+	HURR. PHP sucks.
+    </page>
+</pages>
