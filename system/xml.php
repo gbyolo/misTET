@@ -22,12 +22,12 @@
 class XMLparser
 {
 	
-	/* XMLParser->init
-	 * 
-	 * @Params
-	 * @file: the xml configuration file for misTET
-	 * 
-	 * [@] Return: array */
+    /* XMLParser->init
+    * 
+    * @Params
+    * @file: the xml configuration file for misTET
+    * 
+    * [@] Return: array */
 	 
     public function init ($file) {
 
@@ -54,12 +54,12 @@ class XMLparser
 		
     }
 	
-	/* XMLParser->menu
-	 * 
-	 * @Params
-	 * @file: the xml configuration file for misTET menu 
-	 * 
-	 * [@] Return: array of all the menu nodes */
+    /* XMLParser->menu
+    * 
+    * @Params
+    * @file: the xml configuration file for misTET menu 
+    * 
+    * [@] Return: array of all the menu nodes */
 	 
     public function menu ($file) {
 
@@ -75,7 +75,7 @@ class XMLparser
             if ($node->nodeName == 'menu') {
 		$href = preg_replace('/#/', '?', $node->getAttribute('href'));
 
-		preg_match('/?/', $href, $matches);
+		preg_match('/^?/', $href, $matches);
 		if ($matches) {
                     $arr[$href] = $node->nodeValue;
 		} else {

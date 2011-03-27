@@ -79,14 +79,12 @@ class misTET
 	$result = '';
 		
 	foreach ($xmlNode->childNodes as $node) {
-		
-	    if ($node->nodeType == XML_CDATA_SECTION_NODE) {
-		$text .= $node->nodeValue;
+
+	    if ( $node->nodeType == XML_CDATA_SECTION_NODE ||
+		 $node->nodeType == XML_TEXT_NODE ) {
+	        $text .= $node->nodeValue;
 	    }
-	    else if ($node->nodeType == XML_TEXT_NODE) {
-		$text .= $node->nodeValue;
-	    }
-		else {
+	    else {
 		$text = $node->nodeValue;
 	    }
 		
