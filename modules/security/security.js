@@ -24,7 +24,7 @@ misTET.res.create("security", { connected: false });
 
 misTET.modules.create("security", {
 
-    version: "0.2.5",
+    version: "0.2.6",
         
     initialize: function () {
                 

@@ -27,7 +27,7 @@ misTET.res.create("blog", {
 
 misTET.modules.create("blog", {
 
-    version: ["0", "3", "5"].join("."),
+    version: ["0", "3", "6"].join("."),
     
     needs: ["security"],
         
