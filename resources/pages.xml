@@ -23,10 +23,6 @@
 	>
 ]>
 <!--
-To create a new page, just use <page> node with the page content. The 
-attribute `id` has to be the same you specified in menu.xml.
-`go` creates a new link such as: <a href="href+args">text</a>after.
-`text` includes a file in the current page.
 
 If a page should show a module's executing output, you should declare the page as:
 <page id = 'module=moduleName'></page>

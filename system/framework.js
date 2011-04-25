@@ -35,9 +35,9 @@ Object.extend(Object, {
         /* Usage: 
         Object.getID = Object.getID.bind(element);
         examples:
-        Object.getID = Object.getID.bind(document); -> now the function searchs in the document
-        Object.getID = Object.getID.bind(misTET.config.menu); -> now the function searchs through the xml file
-        Object.getID = Object.getID.bind(object) -> now the function searchs through a general object
+        Object.getID = Object.getID.bind(document); -> search in the document
+        Object.getID = Object.getID.bind(misTET.config.menu); -> search through the xml file
+        Object.getID = Object.getID.bind(object) -> search through a general object
                 
         Or you can use the following syntax:
         Object.getID.call(document, id); -> search in the document

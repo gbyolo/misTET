@@ -267,7 +267,7 @@ var misTET = {
             }
         },
             
-        /* parse misTET.config.menu, and creates a menu string */
+        /* parse misTET.config.menu, and create a menu string */
         parse: function (id) {
     
             var Menu = misTET["config"]["menu"].documentElement;
