@@ -1,4 +1,4 @@
-<?xml version="1.0"?> 
+8<?xml version="1.0"?> 
 <!DOCTYPE pages [
 	<!ELEMENT pages (page+)>
 	<!ELEMENT page (go*)>
@@ -36,7 +36,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 <pages>
 	<page id = 'home'>
 		<![CDATA[
-			This site is for everybody who follows my project. It will be updated everytime
+			This site is for those who follow my project. It will be updated everytime
 			another version of misTET is released. You can visit the blog page to view all the
 			news.
 		]]>
