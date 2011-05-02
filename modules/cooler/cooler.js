@@ -111,15 +111,15 @@ misTET.modules.create("cooler", {
     emoticons: function (str) {
         
         /** emoticon replacing **/
-        str = str.replace(/:\)/g, "<img src=" + this.root + "/images/normal.gif");
-        str = str.replace(/:\(/g, "<img src=" + this.root + "/images/sad.gif");
-        str = str.replace(/;\(/g, "<img src=" + this.root + "/images/wink.gif");
-        str = str.replace(/:D/gi, "<img src=" + this.root + "/images/biggrin.gif");
-        str = str.replace(/:P/gi, "<img src=" + this.root + "/images/tongue.gif");
-        str = str.replace(/:O/gi, "<img src=" + this.root + "/images/ohmy.gif");
-        str = str.replace(/:S/gi, "<img src=" + this.root + "/images/wacko.gif");
-        str = str.replace(/:lol:/gi, "<img src=" + this.root + "/images/lol.gif");
-        str = str.replace(/:asd:/gi, "<img src=" + this.root + "/images/asd.gif");
+        str = str.replace(/:\)/g, "<img src='" + this.root + "/images/normal.gif'></img>");
+        str = str.replace(/:\(/g, "<img src='" + this.root + "/images/sad.gif'></img>");
+        str = str.replace(/;\)/g, "<img src='" + this.root + "/images/wink.gif'></img>");
+        str = str.replace(/:D/gi, "<img src='" + this.root + "/images/biggrin.gif'></img>");
+        str = str.replace(/:P/gi, "<img src='" + this.root + "/images/tongue.gif'></img>");
+        str = str.replace(/:O/gi, "<img src='" + this.root + "/images/ohmy.gif'></img>");
+        str = str.replace(/:S/gi, "<img src='" + this.root + "/images/wacko.gif'></img>");
+        str = str.replace(/:lol:/gi, "<img src='" + this.root + "/images/lol.gif'></img>");
+        str = str.replace(/:asd:/gi, "<img src='" + this.root + "/images/asd.gif'></img>");
         
         return str;
         }

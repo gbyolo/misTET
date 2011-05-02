@@ -8,7 +8,7 @@ You can know everything about *misTET* and its power by reading the github wiki.
 	- Firefox >= 3.5.6 (testing previous versions)
 	- Epiphany >= 2.22.3
 	- Opera
-	- IE => 6
+	- IE => 6 (CSS3 doesn't work)
 	- Konqueror => 4.3
 	
 <h2>Compiling</h2>
