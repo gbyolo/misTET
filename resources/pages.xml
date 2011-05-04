@@ -41,8 +41,6 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			news.
 		]]>
 	</page>
-	<page id = 'module=admin'>
-	</page>
 	<page id = 'module=blog'>
 	</page>
 	<page id = 'features'>
@@ -70,7 +68,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 	</page>
 	<page id = 'go'>
 		<![CDATA[
-			Using `go` attribute. As you can see, you can also include a file using:<br>
+			How to use `go` attribute. As you can see, you can also include a file using:<br>
 			<pre id = 'code'>#id&page=pageRef</pre><br>where pageRef is a link of a file in /stat :P<br><br>
 		]]>
 		<go href = "/notes.txt" args = "lan=python" text = "View" after = " ~ This is an external link, a source"></go>
