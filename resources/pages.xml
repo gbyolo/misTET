@@ -113,7 +113,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			<i>#module=blog&show</i>: show all posts with the options of editing and deleting<br>
 			<i>#module=blog&post</i>: post a news<br><br>
 
-			The blog module requires the security module, since all the functions above works only
+			The blog module requires the security module, since all the functions above work only
 			with it.
 		]]>
 	</page>
