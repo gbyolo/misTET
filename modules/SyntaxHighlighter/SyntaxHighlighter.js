@@ -82,7 +82,7 @@ misTET.modules.create("SyntaxHighlighter", {
                             'xml' : 'Xml'
             };
                 
-            if (!Object.isset(args)) {
+	    if (!Object.isset(args)) {
                 
                 var re = new RegExp(/lan=(\w+)/)
                 
@@ -92,18 +92,18 @@ misTET.modules.create("SyntaxHighlighter", {
                     var matches = current.match(re);
                     if (matches) {
                         var lan = matches[1];
-						pre[i].className = "brush: "+lan;
+			pre[i].className = "brush: "+lan;
                         pre[i].innerHTML = this.textFilter(pre[i]);
                         this.loadBrush(langs[lan]);
                         SyntaxHighlighter.highlight();
                     }
                 }
-                } else {
-                    if (Object.isset(args['lan'])) {
-                        SyntaxHighlighter.defaults["brush"] = args["lang"];
-                        this.loadBrush(args['lan']);
-                    }
-                }
+	    } else {
+		if (Object.isset(args['lan'])) {
+		    SyntaxHighlighter.defaults["brush"] = args["lang"];
+		    this.loadBrush(args['lan']);
+	  	}
+	    }
                 
     },
         

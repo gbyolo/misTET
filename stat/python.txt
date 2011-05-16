@@ -1,3 +1,17 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+#Project Euler, 6
 
-print "Hello world\n";
+def fib (n):
+	a, b = 0, 1
+	for i in range(n):
+		a, b = b, a+b
+	return a
+
+x = 1
+l = []
+while fib(x) < 4000000:
+	if fib(x) % 2 == 0:
+		l.append(fib(x))
+	x += 1
+
+print(sum(l))
