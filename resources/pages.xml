@@ -53,7 +53,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 		<![CDATA[
 			This is an example of how including an extern file, with Syntax Highlighting :P
 		]]>
-		<text href = "/notes.txt" args = "lan=python"></text>
+		<text href = "/python.txt" args = "lan=python"></text>
 	</page>
 	<page id = 'PHP'>
 		<![CDATA[
@@ -71,7 +71,8 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			How to use `go` attribute. As you can see, you can also include a file using:<br>
 			<pre id = 'code'>#id&page=pageRef</pre><br>where pageRef is a link of a file in /stat :P<br><br>
 		]]>
-		<go href = "/notes.txt" args = "lan=python" text = "View" after = " ~ This is an external link, a source"></go>
+		<go href = "/python.txt" args = "lan=python" text = "View" after = " ~ This is an external link, a python source"></go>
+		<go href = "/js.txt" args = "lan=javascript" text = "View" after = " ~ This is an external link, a JS source"></go>
 		<go href = "/well" text = "View" after = " ~ This is an external link, a simple file"></go>
 	</page>
 	<page id = 'nigger'>
