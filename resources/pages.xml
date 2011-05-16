@@ -143,7 +143,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			[code=javascript]var string = 'tag `code`, javascript language'[/code]
 			[url=http://www.mistet.altervista.org]link (misTET)[/url]
 			[url]http://www.mistet.altervista.org[/url]
-			[code]Code with no syntax highlight.[/code]
+			[code]Code with no syntax highlighting.[/code]
 			<br><br>Supported emoticons: <br>
 			:) :( ;) :P :D :O :S :lol: :asd:
 		]]>
