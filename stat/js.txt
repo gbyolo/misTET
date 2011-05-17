@@ -6,15 +6,15 @@ Object.extend(Object, {
         var result = new Array();
                         
 	    for (var i = 0; i < array.length; i++) {
-		if (array[i].getAttribute('id') == id) {
-		    result.push(array[i]);
-		}
+			if (array[i].getAttribute('id') == id) {
+				result.push(array[i]);
+			}
 	    }
                         
 	    if (result.length != 0) {
-		return result;
+			return result;
 	    } else {
-		return false;
+			return false;
 	    }
                 
     }
