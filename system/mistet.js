@@ -96,7 +96,7 @@ var misTET = {
             divMenu.innerHTML = misTET.menu.parse();
                         
             misTET.modules.load();
-            $("page").update("Checking dipendencies");
+            $("page").update("Checking dependencies");
             try {
                 misTET.modules.checkDependencies();
             } catch (e) {
