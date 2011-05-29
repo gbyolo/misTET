@@ -46,7 +46,7 @@ misTET.modules.create("blog", {
             onSuccess: function (http) {
                 misTET.res.get("blog").file = http.responseXML;
                 misTET.res.get("blog").total = parseInt(misTET.res.get("blog").file.documentElement.getAttribute("n"));
-				misTET.res.get("blog").author = misTET.res.get("blog").file.documentElement.getAttribute("author") || "";
+		misTET.res.get("blog").author = misTET.res.get("blog").file.documentElement.getAttribute("author") || "";
             },
                 
             onFailure: function (http) {
@@ -56,6 +56,7 @@ misTET.modules.create("blog", {
                 });
             }
         });
+        misTET.modules.get("blog").updateRss();
                 
     },
         
@@ -68,7 +69,7 @@ misTET.modules.create("blog", {
         if (Object.isset(args["id"])) {
             if (args["del"]) {
                     
-                    if (args["action"]) {
+                if (args["action"]) {
                                
                     var data = { token: args["token"] };
                         new Ajax.Request(this.root + "/system/blog.php?id=#{id}&del".interpolate({id: args["id"]}), {
@@ -151,9 +152,9 @@ misTET.modules.create("blog", {
             else {
                 if (args["action"]) {
 				
-					if (!args["author"]) {
-						Object.extend(args["author"], misTET.res.get("blog").author);
-					}
+		    if (!args["author"]) {
+			Object.extend(args["author"], misTET.res.get("blog").author);
+		    }
 					
                     var data = { title: args["title"], author: args["author"], text: args["text"], token: args["token"] };
                     new Ajax.Request(this.root + "/system/blog.php?new&", {
@@ -213,14 +214,17 @@ misTET.modules.create("blog", {
                 
         if (posts.length == 0) {
             output = null;
+
         } else {
             for (var i = 0; i < posts.length; i++) {
                 if (posts[i].getAttribute("id") == id) {
+
                     var list = posts[i].childNodes;
                     output.author = posts[i].getAttribute("author");
                     output.id = posts[i].getAttribute("id");
                     output.title = posts[i].getAttribute("title");
                     output.date = posts[i].getAttribute("date");
+
                     for (var j = 0; j < list.length; j++) {
                         if (list[j].nodeName == "#cdata-section") {
                             output.text = list[j].nodeValue;
@@ -234,6 +238,7 @@ misTET.modules.create("blog", {
                         
     checkPost: function (map) {
         var result = true;
+
         ["title", "text", "author", "date"].each(function(obj) {
             if (typeof(map[obj]) == "undefined") {
                 result = false;
@@ -243,22 +248,44 @@ misTET.modules.create("blog", {
     },
         
     display: function (id) {
+
         if (id) {
             var post = this.getPost(id);
+
             if (this.checkPost(post)) {
-                var output =    "<div class = 'post'><div class = 'title'>"+ post.title + "</div>" + post.text + "<div class = 'foot'>"+
-                                     "Posted by <span class = 'author'>" + post.author + "</span> on <span class = 'date'>" + post.date + "</span></div>";
+                var output = ("<div class = 'post'><div class = 'title'><a href='#module=#{blog}&id=#{id}'>#{title}</a></div>" +
+                             "#{text}<div class = 'foot'>Posted by <span class = 'author'>#{author}</span> on <span class = 'date'>" +
+                             "#{date}</span></div>").interpolate({
+                                 blog: this.name,
+                                 id: post.id,
+                                 title: post.title,
+                                 text: post.text,
+                                 author: post.author,
+                                 date: post.date });
+                                 
                 $("page").innerHTML = output;
+
             } else {
                 $("page").innerHTML = "<p id = 'error'>The selected post doesn\'t exist</p>";
             }
         } else {
+
             $("page").innerHTML = "";
             for (var j = misTET.res.get("blog").total; j > 0; j--) {
-                var currentPost = this.getPost(""+j+"");
+
+                var currentPost = this.getPost(String(j));
                 if (this.checkPost(currentPost)) {
-                    var output = "<div class = 'post'><div class = 'title'>"+ currentPost.title + "</div>" + currentPost.text + "<div class = 'foot'>"+
-                                        "Posted by <span class = 'author'>" + currentPost.author + "</span> on <span class = 'date'>" + currentPost.date + "</span></div>";
+
+                    var output = ("<div class = 'post'><div class = 'title'><a href='#module=#{blog}&id=#{id}'>#{title}</a></div>" +
+                                  "#{text}<div class = 'foot'>Posted by <span class = 'author'>#{author}</span> on <span class = 'date'>" +
+                                  "#{date}</span></div>").interpolate({
+                                      blog: this.name,
+                                      id: currentPost.id,
+                                      title: currentPost.title,
+                                      text: currentPost.text,
+                                      author: currentPost.author,
+                                      date: currentPost.date });
+
                     $("page").innerHTML += output;
                 }
             }

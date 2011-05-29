@@ -59,9 +59,9 @@
         },
                 
         /** re-generate rss feed **/
-        update: function (data) {
+        update: function (dat) {
                         
-            var data = { file: this.path, data: this.rss(data) };                
+            var data = { file: this.path, data: this.rss(dat) };                
             new Ajax.Request(this.root + "/system/blog.php?feed&", {
                 method: "post",
                 parameters: data,
@@ -95,24 +95,23 @@
                                             v: misTET.modules.blog.version,
                                             webmaster: misTET.res.blog.author
                                         });
-                        
-                posts.each(function (pos) {
-                    var post = misTET.modules.blog.getPost(pos.getAttribute('id'));
+
+                for (var j = misTET.res.get("blog").total; j > 0; j--) {
+                    var post = misTET.modules.blog.getPost(String(j));
                     result += ( "<item>\n" +
-                                        "<title><![CDATA[#{title}]]></title>\n" +
-                                        "<description><![CDATA[#{description}]]></description>\n" +
-                                        "<link><![CDATA[#{link}]]></link>\n" +
-                                        "<pubDate>#{date}</pubDate>" +
-                                    "</item>").interpolate({
-                                        
-                                        title: post.title,
-                                        description: post.text,
-                                        link: "#{root}/#module=blog&id=#{id}".interpolate({ root: misTET.root, id: post.id }),
-                                        date: post.date
-                                    });
-                });
+                                "<title><![CDATA[#{title}]]></title>\n" +
+                                "<description><![CDATA[#{description}]]></description>\n" +
+                                "<link><![CDATA[#{link}]]></link>\n" +
+                                "<pubDate>#{date}</pubDate>" +
+                                "</item>").interpolate({
+                                    title: post.title,
+                                    description: post.text,
+                                    link: "#{root}/#module=blog&id=#{id}".interpolate({ root: misTET.root, id: post.id }),
+                                    date: post.date
+                               });
+                }
                         
-                result += "</channel>\n</rss>"
+                result += "</channel>\n</rss>";
                 return result;
                         
             }
