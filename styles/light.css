@@ -1,33 +1,29 @@
-/* Read COPYING, in this directory */
+/* License: read COPYING */
 
 body {
-    background-color: rgba(122, 122, 122, 0.5);
     width: 50%;
-    color: #000;
-    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+    color: #444;
+    font-family : "Bitstream Vera Sans Mono","Consolas", "Lucida Console","Lucida Sans Typewriter","Courier New", "Courier", monospace;
     font-size:12px;
-    margin:30px auto;
+    margin: 2% auto;
 }
 
 div#title {
-    width: 100%;
-    margin: 0px;
-    font-size : 25px;
-    text-align: center;
-    padding:10px;
-    background-color: rgba(122, 122, 122, .2);
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -khtml-border-radius: 10px;
+    text-shadow : 1px 1px 1px #ccc;
+    font-weight : bold;
+    font-size : 20px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
 }
 
 div#page {
     background-color:#ffffff;
     color: #666;
-    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
-    height: 350px;
+    font-family : "Bitstream Vera Sans Mono","Consolas", "Lucida Console","Lucida Sans Typewriter","Courier New", "Courier", monospace;
     overflow: auto;
     width: 100%;
+    height: 350px;
     padding: 10px;
     margin: 0px auto 0 auto;
     font-size: 12px;
@@ -44,12 +40,16 @@ div#page {
     text-align: left;
 }
 
+div#page a:link {
+    text-decoration: none;
+    border-bottom : 1px dotted #aaa;
+}
+
 div.footer {
     background-color:#ffffff;
     color:#666;
-    font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+    font-family : "Bitstream Vera Sans Mono","Consolas", "Lucida Console","Lucida Sans Typewriter","Courier New", "Courier", monospace;
     width : 100%;
-    height: 20px;
     font-size : 12px;
     margin : 20px auto;
     padding:10px;
@@ -72,8 +72,7 @@ div.footer#padding {
 }
 
 #menu {
-    background-color:#ffffff;
-    color:#000000;
+    color:#666;
     font-family: Courier New,Courier;
     width : 100%;
     height: 20px;
@@ -93,24 +92,19 @@ div.footer#padding {
     border: solid 1px #6d6d6d;
 }
 
-a:link {
-    color: #000; 
+a {
+    color: #444; 
     text-decoration: none;
 }   
              
 a:visited {
-    color: #000; 
+    color: #444; 
     text-decoration: none;
 }
 
 a:hover
 {
-    color: #000; 
-    text-decoration: underline;
-}
-
-a {
-    color: #F64521;
+    text-shadow : 1px 1px 1px #888;
 }
 
 #error {

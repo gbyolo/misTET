@@ -1,4 +1,4 @@
-/* Read COPYING, in this directory */
+/* License: read COPYING */
 
 #menu .menu {
 
@@ -11,7 +11,7 @@
 
 #menu .menu > div.menu {
 
-    background-color: rgba(122, 122, 122, .9);
+    background-color: #FFF;
     color: #fff;
     padding: 5px;
     position: absolute;
@@ -33,7 +33,7 @@
 
 #menu .menu a.menu_element {
     padding: 0;
-    color: #000;
+    color: #444;
 }
 
 #menu .menu a.menu_element div {
@@ -41,25 +41,10 @@
 }
 
 #menu .menu a.menu_element:hover {
-    color: #BFBFBF;
+    text-shadow : 1px 1px 1px #888;
 }
 
 #menu .menu div.separator {
     width: 100%;
     border-top: solid 1px #BFBFBF;
-}
-
-#menu a:link {
-    color:#000000; ; 
-    text-decoration: none;
-}        
-
-#menu a:visited {
-    color:#000000;
-    text-decoration: none;
-}
-
-#menu a:hover {
-    color: #666; 
-    text-decoration: underline;
 }
