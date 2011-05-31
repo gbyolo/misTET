@@ -92,7 +92,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			on `#module=security&changePassword` and choose your new password. The password is located in
 			config.php.<br><br>
 
-			Possibly actions:<br>
+			Options:<br>
 			<i>#module=security&login</i> -> logging in<br>
 			<i>#module=security&connected</i> -> chech if you're logged<br>
 			<i>#module=security&logout</i> -> logout<br>
@@ -129,7 +129,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 		<![CDATA[
 			This is the logging module.<br><br>
 			<i>/modules/logger/logger.php?read</i>: read the log as a xml file<br>
-			<pre id='code'>Event.observe(res, "event", function() { misTET.modules.logger.execute(args) })</pre><br>
+			[code=javascript]Event.observe(res, "event", function() { misTET.modules.logger.execute(args) })[/code]<br>
 			use this to observe an event and log it. args must be an array
 		]]>
 	</page>
