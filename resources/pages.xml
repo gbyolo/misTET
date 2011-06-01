@@ -129,7 +129,7 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 	<page id = 'syntax'>
 		<![CDATA[
 			<div class = 'markdown'>
-				You can highlight your sources by using a "pre" tag with your code inside. The module will do all the rest.<br>
+				You can highlight your sources using a "pre" tag with your code inside. The module will do all the rest.<br>
 				**WARNING**: note that the syntax highlighter works with the markdown module, the core is all in /modules/markdown!<br><br>
 				Take a look at the [#markdown](#markdown) page for further information.
 			</div>
