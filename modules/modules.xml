@@ -43,7 +43,7 @@
 		</author>
 		<release version="0.2.6">
 			<description>A module to get more security on your site</description>
-			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
+			<license href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public License v3</license>
 		</release>
 	</module>
 	
@@ -55,7 +55,7 @@
 		</author>
 		<release version="0.3.6">
 			<description>A blog with rss feed</description>
-			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
+			<license href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public License v3</license>
 		</release>
 	</module>
 	
@@ -67,7 +67,7 @@
 		</author>
 		<release version="0.2">
 			<description>A logger</description>
-			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
+			<license href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public License v3</license>
 		</release>
 	</module>
 
@@ -79,7 +79,7 @@
 		</author>
 		<release version="0.1">
 			<description>MarkDown module using Showdown.js library</description>
-			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
+			<license href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public License v3</license>
 		</release>
 	</module>
 
@@ -91,7 +91,7 @@
 		</author>
 		<release version="0.1">
 			<description>SyntaxHighlighter for misTET</description>
-			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
+			<license href="http://www.gnu.org/licenses/agpl.html">GNU Affero General Public License v3</license>
 		</release>
 	</module>
 </modules>
