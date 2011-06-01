@@ -386,7 +386,7 @@ var misTET = {
                                 var args = list[j].getAttribute("args") || "";
                                 if (misTET.utils.isFile(misTET.extern+href)) {
                                     var inner = misTET.utils.encorp(misTET.extern+href);
-                                    output += "<pre id = \'"+args+"\'>" + inner + "</pre";
+                                    output += "<pre id = \'"+args+"\'>" + inner + "</pre>";
                                 } else {
                                     misTET.errors.create({name: "404 - Not found", message: "couldn't find "+misTET.extern+href});
                                 }

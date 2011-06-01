@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE configuration [
+	<!ELEMENT configuration (style*)>
+	<!ELEMENT configuration (tag*)>
+]>
+
+<configuration>
+	<style>github</style>
+	<tag>pre</tag>
+</configuration>

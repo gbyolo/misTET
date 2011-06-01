@@ -78,7 +78,19 @@
 			<homepage>http://github.com/lostpassword</homepage>
 		</author>
 		<release version="0.1">
-			<description>MarkDown module using Showdown.js library with Syntax Highlighting</description>
+			<description>MarkDown module using Showdown.js library</description>
+			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
+		</release>
+	</module>
+
+    <module name="SyntaxHighlighter">
+		<author>
+			<name>lostpassword</name>
+			<email>gdb.lost@gmail.com</email>
+			<homepage>http://github.com/lostpassword</homepage>
+		</author>
+		<release version="0.1">
+			<description>SyntaxHighlighter for misTET</description>
 			<license href="http://www.gnu.org/licenses/gpl.html">GNU General License v3</license>
 		</release>
 	</module>

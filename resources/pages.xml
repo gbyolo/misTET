@@ -128,11 +128,16 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 	</page>
 	<page id = 'syntax'>
 		<![CDATA[
-			<div class = 'markdown'>
-				You can highlight your sources using a "pre" tag with your code inside. The module will do all the rest.<br>
-				**WARNING**: note that the syntax highlighter works with the markdown module, the core is all in /modules/markdown!<br><br>
-				Take a look at the [#markdown](#markdown) page for further information.
-			</div>
+		<div class='markdown'>
+			You can highlight your sources using a html tag with the code inside. The module will do all the rest.<br>
+			You can change the html tag in */modules/SyntaxHighlighter/resources/config.xml*
+
+	#!/usr/bin/python
+	def hello (name):
+    	return "Hello %s" % (name)
+						
+	print hello("George")
+		</div>
 		]]>
 	</page>
 	<page id = 'markdown'>
@@ -159,9 +164,11 @@ Another [one][1].
 ## Header3 ###
 ### Header4 ####
 ##### Header5 #####
-###### Header6 8######
+###### Header6 ######
 - - - - - - - - - -
 # Syntax highlighting
+With the markdown module you don't have to create a html tag with the code to highlight inside it(as required for the [SyntaxHighlighter](#syntax)), 
+you just have to write it and the module will do all the rest.
 
 HTML:
 
