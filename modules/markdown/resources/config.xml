@@ -7,5 +7,4 @@
 
 <configuration>
     <class>markdown</class>
-	<highlighter>github</highlighter>
 </configuration>

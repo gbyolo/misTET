@@ -27,16 +27,11 @@ misTET.modules.create("markdown", {
 		misTET.utils.include(this.root + "/system/showdown.js");
 		misTET.res.loadXML("markdown", this.root + "/resources/config.xml");
 
-		misTET.utils.insertCSS(this.root + "/system/styles/#{style}.css".interpolate({
-			style : misTET.res["markdown"].config["highlighter"]
-		}));
-
 		if (!Object.isset(misTET.res["markdown"].config["class"])) {
 			misTET.res["markdown"].config["class"] = "markdown"
 		}
 
 		misTET.res["markdown"].converter = new Showdown.converter;
-		misTET.utils.include(this.root + "/system/highlight.pack.js");
 
 		Event.observe(document, ":change", function () {
 			misTET.modules.run("markdown", []);
@@ -52,12 +47,6 @@ misTET.modules.create("markdown", {
 			var text = misTET.res.markdown.converter.makeHtml(what);
 			tag.update(text);
 		});
-		
-		hljs.tabReplace = '    ';
-  		var pres = document.getElementsByTagName("pre");
-		for (var i = 0; i < pres.length; i++) {
-			hljs.highlightBlock(pres[i], hljs.tabReplace);
-		}
 	}
 
 });
