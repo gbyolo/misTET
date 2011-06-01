@@ -1,4 +1,4 @@
-<?xml version="1.0"?> 
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE menue [
 	<!ELEMENT menue (menu+)>
 	<!ELEMENT menu (text+)>
@@ -35,8 +35,8 @@ Don't use XML special characters.
 		<text id = 'modules'>Modules</text>
 		<text id = 'security'>Security</text>
 		<text id = 'blog'>Blog</text>
-		<text id = 'syntax'>SyntaxHighlighter</text>
 		<text id = 'logger'>Logger</text>
-		<text id = 'cooler'>Cooler</text>
+		<text id = 'markdown'>Markdown</text>
+		<text id = 'syntax'>SyntaxHighlighting</text>
 	</menu>
 </menue>

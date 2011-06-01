@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE modules [
     <!ELEMENT modules (module*)>
@@ -19,7 +19,6 @@
 <modules>
 	<module name="security"></module>
 	<module name="blog"></module>
-	<module name="SyntaxHighlighter"></module>
 	<module name="logger"></module>
-	<module name="cooler"></module>
+	<module name="markdown"></module>
 </modules>

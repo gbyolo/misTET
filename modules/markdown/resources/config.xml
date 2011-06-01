@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE configuration [
+	<!ELEMENT configuration (class*)>
+	<!ELEMENT configuration (highlighter*)>
+]>
+
+<configuration>
+    <class>markdown</class>
+	<highlighter>github</highlighter>
+</configuration>

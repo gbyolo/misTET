@@ -1,4 +1,4 @@
-<?xml version="1.0"?> 
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE pages [
 	<!ELEMENT pages (page+)>
 	<!ELEMENT page (go*)>
@@ -51,16 +51,17 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 	</page>
 	<page id = 'extern'>
 		<![CDATA[
-			This is an example of how including an extern file, with Syntax Highlighting :P
+			This is an example of how including an extern file, with Syntax Highlighting :P<br>
+			(Take a look at /resources/pages.xml for further information)
 		]]>
-		<text href = "/python.txt" args = "lan=python"></text>
+		<text href = "/python.txt"></text>
 	</page>
 	<page id = 'PHP'>
 		<![CDATA[
 			You can use the following syntax:<br>
-			<pre id = 'code'>#id&page=name.php</pre>
+			<pre>#id&page=name.php</pre>
 			or:
-			<pre id = 'code'>#page=name.php</pre>
+			<pre>#page=name.php</pre>
 			name.php: name of the page in /stat<br>
 			The output is not the source, but what the server says getting the PHP page. Here's an example:<br>
 		]]>
@@ -69,10 +70,11 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 	<page id = 'go'>
 		<![CDATA[
 			How to use `go` attribute. As you can see, you can also include a file using:<br>
-			<pre id = 'code'>#id&page=pageRef</pre><br>where pageRef is a link of a file in /stat :P<br><br>
+			(Take a look at /resources/pages.xml for further information)<br><br>
+			<pre>#id&page=pageRef</pre><br>where pageRef is a link of a file in /stat :P<br><br>
 		]]>
-		<go href = "/python.txt" args = "lan=python" text = "View" after = " ~ This is an external link, a python source"></go>
-		<go href = "/js.txt" args = "lan=javascript" text = "View" after = " ~ This is an external link, a JS source"></go>
+		<go href = "/python.txt" text = "View" after = " ~ This is an external link, a python source"></go>
+		<go href = "/js.txt" text = "View" after = " ~ This is an external link, a JS source"></go>
 		<go href = "/well" text = "View" after = " ~ This is an external link, a simple file"></go>
 	</page>
 	<page id = 'nigger'>
@@ -116,37 +118,63 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 			with it.
 		]]>
 	</page>
-	<page id = 'syntax'>
-		<![CDATA[
-			With this module you can get a syntax highlighter on your misTET based site.<br>
-			What you have to do is create a `pre` tag, with the id `lan=language`, where
-			language is the language to highlight. Then the module will do all the rest.
-			<br>P.S: use the `args` attribute in pages.xml, with `lan=language` as content to
-			link a source.
-		]]>
-	</page>
 	<page id = 'logger'>
 		<![CDATA[
 			This is the logging module.<br><br>
 			<i>/modules/logger/logger.php?read</i>: read the log as a xml file<br>
-			[code=javascript]Event.observe(res, "event", function() { misTET.modules.logger.execute(args) })[/code]<br>
+			<pre>Event.observe(res, "event", function() { misTET.modules.logger.execute(args) })</pre><br>
 			use this to observe an event and log it. args must be an array
 		]]>
 	</page>
-	<page id = 'cooler'>
+	<page id = 'syntax'>
 		<![CDATA[
-			Cooler. This module provides bbcode and emoticon support.<br>
-			Here some examples.<br><br>
-			[b]bold text[/b]<br>
-			[i]italic[/i]<br>
-			[u]underlined[/u]<br>
-			[b][u]bold underlined[/u][/b]
-			[code=javascript]var string = 'tag `code`, javascript language'[/code]
-			[url=http://www.mistet.altervista.org]link (misTET)[/url]
-			[url]http://www.mistet.altervista.org[/url]
-			[code]Code with no syntax highlighting.[/code]
-			<br><br>Supported emoticons: <br>
-			:) :( ;) :P :D :O :S :lol: :asd:
+			<div class = 'markdown'>
+				You can highlight your sources by using a "pre" tag with your code inside. The module will do all the rest.<br>
+				**WARNING**: note that the syntax highlighter works with the markdown module, the core is all in /modules/markdown!<br><br>
+				Take a look at the [#markdown](#markdown) page for further information.
+			</div>
 		]]>
+	</page>
+	<page id = 'markdown'>
+		<![CDATA[
+			<div class = 'markdown'>
+## MarkDown Module
+- - - - - - - - -
++ first element
+	+ lol1
+	+ lol2
+		+ lol3
++ second element
+*****************
+## Links
+- - - - - - - - -
+This is a [link](http://mistet.altervista.org) to this site.
+Another [one][1].
+
+[1]: http://mistet.altervista.org
+- - - - - - - - - -
+
+# Header1 #
+## Header2 ##
+## Header3 ###
+### Header4 ####
+##### Header5 #####
+###### Header6 8######
+- - - - - - - - - -
+# Syntax highlighting
+
+HTML:
+
+    <h1>HTML code</h1>
+    <p class="some">This is an example</p>
+
+Python:
+
+    def func():
+      for i in [1, 2, 3]:
+        print "%s" % i
+
+			</div>
+		]]>	
 	</page>
 </pages>
