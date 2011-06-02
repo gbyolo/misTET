@@ -1,14 +1,20 @@
 <h2>Changelog</h2>
+*Note*: date format is dd/mm/aaaa
 ---
-  -  [25-04-2011]  -  0.7	
+  -  [02-06-2011]  -  0.7.2
++ New theme
++ New markdown module
++ Removed old Syntax Highlighter and cooler modules
++ Improvements for misTET.res
+  -  [27-04-2011]  -  0.7	
 + Improved some stuff and fixed some bugs in modules
-  -  [08-00-2010]  -  0.7	
+  -  [14-08-2010]  -  0.7	
 + CSS3 (Only Mozilla, Safari and Webkit, with IE you will see the site as it was before)
 +  Checked Konqueror => 4.3 support
 +  added Object.getsID
 +  Other events fired
 +  Improved misTET.modules.run
-  -  [08-01-2010]  -  0.6	
+  -  [01-08-2010]  -  0.6	
 + Added IE support
   -  [07-19-2010]  -  0.5.1	
  + Fixed a bug
