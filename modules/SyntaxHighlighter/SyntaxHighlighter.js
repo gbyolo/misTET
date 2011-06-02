@@ -23,7 +23,7 @@ misTET.res.create("hl", { });
 misTET.modules.create("SyntaxHighlighter", {
 
 	initialize: function () {
-		misTET.res.loadXML("hl", this.root + "/resources/config.xml");
+		misTET.res.get("hl").loadXML(this.root + "/resources/config.xml");
 
 		misTET.utils.insertCSS(this.root + "/styles/#{style}.css".interpolate({
 			style : misTET.res.get("hl").config["style"]

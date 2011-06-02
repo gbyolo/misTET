@@ -18,9 +18,7 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
-misTET.res.create("logger", {
-        config: { }
-});
+misTET.res.create("logger", {});
 
 misTET.modules.create("logger", {
 
@@ -29,12 +27,8 @@ misTET.modules.create("logger", {
     needs: ["security"],
 
     initialize: function () {
-                
-        try {
-            misTET.res.loadXML("logger", this.root + "/resources/config.xml");
-        } catch (e) {
-            misTET.errors.create(e);
-        }
+
+        misTET.res.get("logger").loadXML(this.root + "/resources/config.xml");
                 
         Event.observe(document, ":change", function (event) {
             misTET.modules.run("logger", ["page", "view", event.memo]);

@@ -20,7 +20,7 @@
 
 var misTET = {
     
-    version: ["0", "7", "0"].join("."),
+    version: ["0", "7", "2"].join("."),
     
     modFolder: "/modules",
     modules: { },
@@ -736,37 +736,16 @@ var misTET = {
     
     res: {
             
-        create: function (name, obj) {
-                    
-            if (!obj) {
-                var e = new Error("couldn't create misTET.res[#{name}] if you don't give an object".interpolate({name: name}));
-                e.name = "misTET.res.create";
+        create: function (name, obj) {   
+            try {
+                misTET.res[name] = new misTET.Resource(name, obj);
+            } catch (e) {
                 misTET.errors.create(e);
-                return false;
             }
-                    
+
             if (misTET.res.exists(name)) {
-                var e = new Error("misTET.res[\'#{name}\'] already exists".interpolate({name: name}));
-                e.name = "misTET.res.create";
-                misTET.errors.create(e);
-                return false;
+                Event.fire(document, ":res.create", {obj: obj});
             }
-                    
-            for (var sel in obj) {
-                if (Object.isFunction(obj[sel])) {
-                    obj[name] = obj[name].bind(obj);
-                } 
-            }
-                        
-            /* Puts a reference to misTET.res.loadXML */
-            obj.loadXML = misTET.res.loadXML;
-                        
-            obj.name = name;
-                        
-            misTET.res[name] = obj;
-                        
-            Event.fire(document, ":res.create", {obj: obj});
-                    
         },
                 
         get: function (name) {
@@ -782,84 +761,6 @@ var misTET = {
                 misTET.errors.create(["misTET.res.get", "#{0} doesn't exist".interpolate(name), "", ""]);
                 return false;
             }
-                
-        },
-                
-        /* Load a config.xml file of a resource */
-        /* Syntax must be as follows:
-            <configuration>
-                <nodeName>nodeValue</nodeName>
-                etc...
-            </configuration>
-        */
-        loadXML: function (name, file) {
-                
-            if (!name) {
-                misTET.errors.create({
-                    name: "misTET.res.loadXML",
-                    message: "the first parameter must be a real resource name"
-                });
-                return false;
-            }
-                        
-            if (!misTET.res.exists(name)) {
-                misTET.errors.create({
-                    name: "misTET.res.loadXML",
-                    message: "`#{0}` doesn't exist".interpolate(name)
-                });
-                return false;
-            }
-                        
-            var xml = file;
-                        
-            new Ajax.Request(xml, {
-                method: "get",
-                asynchronous: false,
-                evalJS: false,
-                                
-                onSuccess: function (http) {
-                    if (misTET.utils.xml_not_valid(http.responseXML)) {
-                        misTET.errors.create({
-                            name: "misTET.res.loadXML",
-                            message: "error while parsing #{file}".interpolate({
-                                file: path
-                            })
-                        });
-                    }
-                    misTET.res[name]["config"] = http.responseXML;
-                },
-                                
-                onFailure: function (http) {
-                    misTET.errors.create({
-                        name: "misTET.res.loadXML", 
-                        message: "failed to retrieve (#{status} - #{statusText})".interpolate(http),
-                        file: xml
-                    });
-                }
-            });
-            
-            /* Temporary array */
-            misTET.res[name]["confs"] = new Array();
-                        
-            var configuration = misTET.res[name]["config"].documentElement;
-            var list = configuration.childNodes;
-                        
-            for (var j = 1; j < list.length; j = j+2) {
-                if (j == (list.length -1)) {
-                    break;
-                }
-                var node = list[j].nodeName;
-                var value = list[j].childNodes[0].nodeValue;
-                                
-                misTET.res[name]["confs"][node] = value;
-            }
-
-            /* Set the right config array */
-            misTET.res[name]["config"] = { };
-                        
-            Object.extend(misTET.res[name]["config"], misTET.res[name]["confs"]);
-                        
-            delete misTET.res[name]["confs"];
                 
         },
                 
@@ -1180,3 +1081,4 @@ var misTET = {
 };
 
 misTET.utils.include("system/framework.js");
+misTET.utils.include("system/Resources.js");
