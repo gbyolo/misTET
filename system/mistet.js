@@ -1081,4 +1081,4 @@ var misTET = {
 };
 
 misTET.utils.include("system/framework.js");
-misTET.utils.include("system/Resources.js");
+misTET.utils.include("system/Resource.js");
