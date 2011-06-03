@@ -20,7 +20,7 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
-define("VERSION", "0.3.0");
+define("VERSION", "0.4.0");
 define("__NAME__", "blog");
 
 session_start();
