@@ -70,22 +70,24 @@ misTET.Resource = Class.create({
                                 
             onSuccess: function (http) {
                 if (misTET.utils.xml_not_valid(http.responseXML)) {
-                    misTET.errors.create({
+                    error = {
                         name: "misTET.res.loadXML",
                         message: "error while parsing #{file}".interpolate({
                             file: path
                         })
-                    });
+                    };
+                    throw (error);
                 }
                 this.config = http.responseXML;
             },
                                 
             onFailure: function (http) {
-                misTET.errors.create({
+                error = {
                     name: "misTET.res.loadXML", 
                     message: "failed to retrieve (#{status} - #{statusText})".interpolate(http),
                     file: file
-                });
+                };
+                throw (error);
             }
         });
                         
