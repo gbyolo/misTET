@@ -27,7 +27,7 @@ misTET.res.create("blog", {
 
 misTET.modules.create("blog", {
 
-    version: ["0", "3", "6"].join("."),
+    version: ["0", "4", "0"].join("."),
     
     needs: ["security"],
         
@@ -144,7 +144,7 @@ misTET.modules.create("blog", {
             }
         }
         else if (Object.isset(args["post"])) {
-            var result = misTET.modules.run("security", {conneceted: 1});
+            var result = misTET.modules.run("security", {connected: 1});
             if (!result) {
                 misTET.errors.create({ message: "you're doing it wrong baby" });
                 return false;

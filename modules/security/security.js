@@ -41,8 +41,6 @@ misTET.modules.create("security", {
                         
             }
         });
-                
-        this.execute({connected: true});
     },
         
     execute: function (args) {
