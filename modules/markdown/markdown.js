@@ -28,7 +28,7 @@ misTET.modules.create("markdown", {
 		misTET.res.get("markdown").loadXML(this.root + "/resources/config.xml");
 
 		if (!Object.isset(misTET.res["markdown"].config["class"])) {
-			misTET.res["markdown"].config["class"] = "markdown"
+			misTET.res.get("markdown").config["class"] = "markdown"
 		}
 
 		misTET.res["markdown"].converter = new Showdown.converter;
@@ -41,7 +41,7 @@ misTET.modules.create("markdown", {
 
 	execute: function () {
 
-		tags = $$(".#{what}".interpolate({what: misTET.res["markdown"]["config"]["class"]}));
+		tags = $$(".#{what}".interpolate({what: misTET.res.get("markdown")["config"]["class"]}));
 		tags.each(function (tag) {
 			var what = tag.innerHTML.strip();
 			var text = misTET.res.markdown.converter.makeHtml(what);

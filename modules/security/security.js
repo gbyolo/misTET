@@ -157,7 +157,7 @@ misTET.modules.create("security", {
                     }
 
                 });
-                        
+                return result;
                 $("page").update(misTET.res.get("security").connected);
                 
             } else {
