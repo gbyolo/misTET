@@ -23,7 +23,7 @@ var misTET = {
     version: ["0", "7", "2"].join("."),
     
     modFolder: "/modules",
-    modules: { },
+    module: { },
     extern: "/stat",
     root: location.href.match(/^(.*?)\/[^\/]*?(#|$)/)[1],
     loc: "system/mistet.js",
@@ -172,7 +172,7 @@ var misTET = {
                      
             } else if (queries.module) { 
                 try {
-                    misTET.modules.run(queries.module, queries);
+                    misTET.module.run(queries.module, queries);
                 } catch (e) {
                     misTET.errors.create(e);
                 }         
@@ -548,16 +548,16 @@ var misTET = {
             
         checkDependencies: function () {
                                 
-            for (var module in misTET.modules) {
-                var needs = misTET.modules[module].needs;
+            for (var module in misTET.module) {
+                var needs = misTET.module[module].needs;
                                         
                 if (needs) {
                     for (var i = 0; i < needs.length; i++) {
-                        if (!misTET.modules.exists(needs[i])) {
+                        if (!misTET.module.exists(needs[i])) {
                             var e = new Error();
                             e.message = "`#{module}` requires `#{needs}`".interpolate({module: module, needs: needs[i]});
                             e.name = "misTET.modules.checkDependencies";
-                            e.file = misTET.modules[module].root;
+                            e.file = misTET.module[module].root;
                                                         
                             throw e;
                         }
@@ -587,23 +587,26 @@ var misTET = {
                 return false;
             }
                         
-            if (misTET.modules.exists(name)) {
-                return misTET.modules[name];
+            if (misTET.module.exists(name)) {
+                return misTET.module[name];
             } else {
                 return false;
             }
                         
-        },
-            
+        }       
+    },
+
+    module: {
+
         exists: function (name) {
             if (!name) {
                 misTET.errors.create({
-                    name: "misTET.modules.exists",
-                    message: "0 of 1 parameters sent to misTET.modules.exists"
+                    name: "misTET.module.exists",
+                    message: "0 of 1 parameters sent to misTET.module.exists"
                 });
                  return false;
             }
-            return Boolean(misTET.modules[name]);
+            return Boolean(misTET.module[name]);
         },
                         
         create: function (name, object) {
@@ -611,7 +614,7 @@ var misTET = {
             if (!object) {
                 var error = new Error;
                 
-                e.name = "misTET.modules.create";
+                e.name = "misTET.module.create";
                 error.message = "what should `#{name}` do?".interpolate({name: name});
                 error.file = "#{root}/#{name}/#{name2}.js".interpolate({
                     root: misTET.modFolder,
@@ -626,7 +629,7 @@ var misTET = {
             if (!name || !Object.isString(name)) {
                         
                 var e = new Error("the first parameter must be a string");
-                e.name = "misTET.modules.create";
+                e.name = "misTET.module8.create";
                 e.file = "#{root}/#{name}/#{file}.js".interpolate({
                         root: misTET.modFolder,
                         name: name,
@@ -655,7 +658,7 @@ var misTET = {
                 try {
                     object.initialize();
                 } catch (e) {
-                    e.name = "misTET.modules.create";
+                    e.name = "misTET.module.create";
                     e.filename = "#{root}/#{name}.js".interpolate({
                         root: object.root,
                         name: name
@@ -667,26 +670,26 @@ var misTET = {
             else {
                 object.initialize = new Function()
             }
-            misTET.modules[name] = object;
-            Event.fire(document, ":modules.create", {obj: object});
+            misTET.module[name] = object;
+            Event.fire(document, ":module.create", {obj: object});
         },
         
-        /* misTET.modules[name].execute(args) */
+        /* misTET.module[name].execute(args) */
         run: function (name, args) {
                 
             var result;
                 
             if (!Object.isset(name) || !Object.isset(args)) {
                 misTET.errors.create({
-                    name: "misTET.modules.run",
+                    name: "misTET.module.run",
                     message: "Running `#{0}`: wrong number of arguments".interpolate(name)
                     });
                 return false;
             }
                 
-            if (!misTET.modules.exists(name)) {
+            if (!misTET.module.exists(name)) {
                 misTET.errors.create({
-                    name: "misTET.modules.run",
+                    name: "misTET.module.run",
                     message: "[`#{0}`] doesn't exist".interpolate(name)
                 });
                 return false;
@@ -702,17 +705,17 @@ var misTET = {
                 * apply is very similar to call, except for the 
                 * type of arguments it supports. You can use an 
                 * arguments array instead of a named set of parameters.
-                * So, if we call apply with [{post: 1, ciao: 1], 
+                * So, if we call apply with [{post: 1, ciao: 1}], 
                 * {post: 1, ciao: 1} will be the parameter sent to 
                 * the module.
                 * */
                 /* Does the module return some shit? */
-                result = misTET.modules[name].execute.apply(misTET.modules[name], args);    
+                result = misTET.module[name].execute.apply(misTET.module[name], args);    
                                 
             } catch (exception) {
                         
                 misTET.errors.create({
-                    name: "misTET.modules.run", 
+                    name: "misTET.module.run", 
                         message: exception.message.toString(),
                         line: exception.lineNumber,
                         file: "#{modFolder}/#{name}/#{module}.js".interpolate({
@@ -731,7 +734,7 @@ var misTET = {
                         
             return result;
         }
-                
+
     },
     
     res: {

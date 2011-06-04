@@ -87,13 +87,13 @@ if (!$_SESSION['misTET']['logged']) {
 	
 			/* Are you going to put a fucking text? */
 			$text = $file->createCDataSection(str_replace(']]>', ']&#93;>', urldecode($_POST['text'])));
-    			$newPost->appendChild($text);
-    			$file->documentElement->appendChild($newPost);
+            $newPost->appendChild($text);
+            $file->documentElement->appendChild($newPost);
 
 			$file->documentElement->setAttribute('n', $id);
-    			$file->save('../resources/blog.xml');
-    			echo "<p id = 'success'>{$_POST['title']} has 
-been created!</p>";
+            $file->save('../resources/blog.xml');
+            echo "<p id = 'success'>{$_POST['title']} has been created!</p>";
+            exit;
 		}
 	} else if (isset($_GET['show'])) {
 		$posts = $file->documentElement->getElementsByTagName('post');
@@ -143,6 +143,7 @@ been created!</p>";
 
 					$file->save('../resources/blog.xml');
 					echo "<p id = 'success'>{$_POST['title']} has been edited!</p>";
+                    exit;
 				}
 	
 			} else if (isset($_REQUEST['del'])) {
@@ -163,7 +164,8 @@ been created!</p>";
 					
 					$file->documentElement->removeChild($post);
 					$file->save('../resources/blog.xml');
-					echo "<p id = 'success'>{$_REQUEST['id']} has been deleted!</p>";
+					echo "<p id = 'success'>Post n{$_REQUEST['id']} has been deleted!</p>";
+                    exit;
 				}
 			}
 		}	

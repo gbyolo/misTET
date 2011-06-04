@@ -20,7 +20,7 @@
 
 misTET.res.create("logger", {});
 
-misTET.modules.create("logger", {
+misTET.module.create("logger", {
 
     version: "0.2",
 
@@ -31,11 +31,11 @@ misTET.modules.create("logger", {
         misTET.res.get("logger").loadXML(this.root + "/resources/config.xml");
                 
         Event.observe(document, ":change", function (event) {
-            misTET.modules.run("logger", ["page", "view", event.memo]);
+            misTET.module.run("logger", ["page", "view", event.memo]);
         });
                 
         Event.observe(document, ":error", function (error) {
-            misTET.modules.run("logger", ["error", error.memo]);
+            misTET.module.run("logger", ["error", error.memo]);
         });
                         
 

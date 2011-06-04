@@ -20,7 +20,7 @@
 
 misTET.res.create("markdown", {});
 
-misTET.modules.create("markdown", {
+misTET.module.create("markdown", {
 
 	initialize: function () {
 
@@ -34,7 +34,7 @@ misTET.modules.create("markdown", {
 		misTET.res["markdown"].converter = new Showdown.converter;
 
 		Event.observe(document, ":change", function () {
-			misTET.modules.run("markdown", []);
+			misTET.module.run("markdown", []);
 		});
 
 	},
@@ -44,7 +44,7 @@ misTET.modules.create("markdown", {
 		tags = $$(".#{what}".interpolate({what: misTET.res.get("markdown")["config"]["class"]}));
 		tags.each(function (tag) {
 			var what = tag.innerHTML.strip();
-			var text = misTET.res.markdown.converter.makeHtml(what);
+			var text = misTET.res.get("markdown").converter.makeHtml(what);
 			tag.update(text);
 		});
 	}

@@ -22,7 +22,7 @@
 
 misTET.res.create("security", { connected: false });
 
-misTET.modules.create("security", {
+misTET.module.create("security", {
 
     version: "0.2.6",
         
@@ -54,8 +54,8 @@ misTET.modules.create("security", {
             if (Object.isset(args["action"])) {
                                 
                 if (!Object.isset(args["password"])) {
-                    misTET.errors.create({   message: "The password is missing",
-                                            name: "security error" });
+                    misTET.errors.create({ message: "The password is missing",
+                                           name: "security error" });
                     return false;
                 }
                         
@@ -67,8 +67,8 @@ misTET.modules.create("security", {
                     },
                                 
                     onFailure: function (http) {
-                        misTET.errors.create({    message: "Something went wrong while login",
-                                                name: "security error" });
+                        misTET.errors.create({ message: "Something went wrong while login",
+                                               name: "security error" });
                     }
                 });
             } else {
@@ -81,8 +81,8 @@ misTET.modules.create("security", {
                     },
                                 
                     onFailure: function (http) {
-                        misTET.errors.create({    message: "Something went wrong while login",
-                                                name: "security error" });
+                        misTET.errors.create({ message: "Something went wrong while login",
+                                               name: "security error" });
                     }
                 });
                         
@@ -98,8 +98,8 @@ misTET.modules.create("security", {
                 },
                                 
                 onFailure: function () {
-                    misTET.errors.create({    message: "Something went wrong while logout",
-                                            name: "security error" });
+                    misTET.errors.create({ message: "Something went wrong while logout",
+                                           name: "security error" });
                 }
             });
                 
@@ -108,8 +108,8 @@ misTET.modules.create("security", {
             if (Object.isset(args["action"])) {
                                 
                 if (!Object.isset(args["password"])) {
-                    misTET.errors.create({    name: "security error",
-                                            message: "missing password" });
+                    misTET.errors.create({ name: "security error",
+                                           message: "missing password" });
                     return false;
                 }
                 
@@ -123,8 +123,8 @@ misTET.modules.create("security", {
                     },
                                         
                     onFailure: function () {
-                        misTET.errors.create({    message: "something went wrongly while changing the password",
-                                                name: "security error" });
+                        misTET.errors.create({ message: "something went wrongly while changing the password",
+                                               name: "security error" });
                         
                         }
                     });
@@ -138,8 +138,8 @@ misTET.modules.create("security", {
                         },
                                         
                         onFailure: function () {
-                            misTET.errors.create({    message: "something went wrongly while changing the password",
-                                                    name: "security error" });
+                            misTET.errors.create({ message: "something went wrongly while changing the password",
+                                                   name: "security error" });
                         
                         }
                         
@@ -160,7 +160,7 @@ misTET.modules.create("security", {
                 return misTET.res.get("security").connected;
 
             } else {
-                misTET.errors.create("not valid args for security");
+                misTET.errors.create("args not valid");
             }
     }
 });

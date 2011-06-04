@@ -55,8 +55,7 @@ if (isset($_REQUEST['initialize'])) {
 	} else {
 		echo "false";
 	}
-	exit;
-	
+
 } else if (isset($_REQUEST['login'])) {
 	
 	if (!isset($_REQUEST['password'])) {
@@ -78,18 +77,16 @@ if (isset($_REQUEST['initialize'])) {
 	
 		if ($password == $_SESSION['misTET']['admin']->password) {
 			$_SESSION['misTET']['logged'] = true;
-			echo "Logged in";
+			echo "<p id = 'success'>Logged in</p>";
 		} else {
-			echo "wrong password";
+			echo "<p id = 'error'>wrong password</p>";
 		}
 	}
-	
-	exit;
 	
 } else if (isset($_REQUEST['logout'])) {
 
 	unset($_SESSION['misTET']['logged']);
-	echo "Logged out successful";
+	echo "<p id = 'success'>Logged out successful</p>";
 	exit;
 	
 } else if (isset($_REQUEST['change'])) {
@@ -125,9 +122,9 @@ if (isset($_REQUEST['initialize'])) {
 		$config->password = stripslashes($_REQUEST['password']);
 	
 		saveData("\n".$config->asXML(), ROOT.'/system/config.php');
-		echo "password changed";
+		echo "<p id = 'success'>password changed</p>";
 	}
-	exit;
 }
+exit;
  
  ?>

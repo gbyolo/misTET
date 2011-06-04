@@ -20,7 +20,7 @@
 
 misTET.res.create("hl", { });
 
-misTET.modules.create("SyntaxHighlighter", {
+misTET.module.create("SyntaxHighlighter", {
 
 	initialize: function () {
 		misTET.res.get("hl").loadXML(this.root + "/resources/config.xml");
@@ -31,7 +31,7 @@ misTET.modules.create("SyntaxHighlighter", {
 		misTET.utils.include(this.root + "/system/highlight.pack.js");
 
 		Event.observe(document, ":change", function () {
-			misTET.modules.run("SyntaxHighlighter", []);
+			misTET.module.run("SyntaxHighlighter", []);
 		});
 
 	},
