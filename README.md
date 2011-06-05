@@ -4,12 +4,12 @@
 You can know everything about *misTET* and its power by reading the github wiki.
 
 <h2>Supported Browsers:</h2>
-	- Google Chrome >= 3 (testing previous versions)
-	- Firefox >= 3.5.6 (testing previous versions)
-	- Epiphany >= 2.22.3
-	- Opera
-	- IE => 6 (CSS3 doesn't work)
-	- Konqueror => 4.3
+	- Google Chrome >= 3 (may not work)
+	- Firefox >= 3.5.6 (WORKS)
+	- Epiphany >= (may not work)
+	- Opera (may not work)
+	- IE => 6 (may not work)
+	- Konqueror => 4.3 (may not work)
 	
 <h2>Compiling</h2>
 `chmod +x compile.sh`<br>

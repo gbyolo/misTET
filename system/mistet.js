@@ -20,7 +20,7 @@
 
 var misTET = {
     
-    version: ["0", "7", "2"].join("."),
+    version: ["0", "7", "5"].join("."),
     
     modFolder: "/modules",
     module: { },
@@ -31,82 +31,77 @@ var misTET = {
     /* start misTET */
     initialize: function () {
         
-        if (misTET.initialized) {
+        if (misTET.initialized) {           
+            var error = new misTET.exception({
+                description: "misTET.init: misTET has been already initialized.",
+                file: "#{root}/#{loc}".interpolate(misTET)
+            });
                 
-            var error = new Error;
-            error.name = "misTET.init";
-            error.message = "misTET has been already initialized.";
-            error.filename = "#{root}/#{loc}".interpolate(misTET);
-                
-            misTET.errors.create(error);
+            misTET.error.handle(error);
             return false;
         }
-        
+
+        /* Event.observe(window, "error", misTET.error.handle) sucks pretty much */
+        window.onerror = misTET.error.handle;
+
         misTET.location = location.hash;
         misTET.initialized = false;
-    
-        eval("misTET.init.load()");
+
+        [/* init.xml stuff */
+        function () {
+            eval("misTET.init.load()");
         
-        if (!Object.isset(misTET.config["home"])) {
-            misTET.config["home"] = "home";
-        }
-        
-        if (!Object.isset(misTET.config["title"])) {
-            misTET.config["title"] = "misTET #{version}".interpolate(misTET);
-        }
-        
-        if (!Object.isset(misTET.config["loading"])) {
-            misTET.config["loading"] = "Loading...";
-        }
-        
-        if (misTET.config["home"].charAt(0) == "#") {
-            misTET.config["home"].slice(1, misTET.config["home"].length);
-        }
-        
-        if (!document.title) {
-            document.title = "#{config.title}".interpolate(misTET);
-        }
-                
-        $("title").innerHTML = "<a href='#{root}'>#{config.title}</a>".interpolate(misTET);
-        
-        var ops = $("page");
-        var args = misTET.utils.getQueries(location.hash);
-        var menuOk = true, pagesOk = true;
-        ops.innerHTML = misTET.config["loading"];
-        
-        try {
-            misTET.menu.load();
-        } catch (e) {
-            misTET.errors.create(e);
-            menuOk = false;
-        }
-        
-        if (menuOk) {
-            try {
-                misTET.pages.load();
-            } catch (e) {
-                misTET.errors.create(e);
-                pagesOk = false;
+            if (!Object.isset(misTET.config["home"])) {
+                misTET.config["home"] = "home";
             }
-        } 
         
-        if (menuOk && pagesOk) {
-            
-            var divMenu = $("menu");
-            divMenu.innerHTML = misTET.menu.parse();
-                        
+            if (!Object.isset(misTET.config["title"])) {
+                misTET.config["title"] = "misTET #{version}".interpolate(misTET);
+            }
+        
+            if (!Object.isset(misTET.config["loading"])) {
+                misTET.config["loading"] = "Loading...";
+            }
+        
+            if (misTET.config["home"].charAt(0) == "#") {
+                misTET.config["home"].slice(1, misTET.config["home"].length);
+            }
+        
+            if (!document.title) {
+                document.title = "#{config.title}".interpolate(misTET);
+            }
+                
+            $("title").innerHTML = "<a href='#{root}'>#{config.title}</a>".interpolate(misTET);
+            $("page").innerHTML = misTET.config["loading"];
+        },
+
+        /* menu */
+        function () {
+            misTET.menu.load();
+            $("menu").innerHTML = misTET.menu.parse();
+        },
+
+        /* pages */
+        function () {
+            misTET.pages.load();
+        },
+
+        /* modules */
+        function () {
             misTET.modules.load();
             $("page").update("Checking dependencies");
-            try {
-                misTET.modules.checkDependencies();
+            misTET.modules.checkDependencies();
+        }].each(
+        function (initialization) {
+            try { 
+                initialization();
             } catch (e) {
-                misTET.errors.create(e);
-                return false;
+                throw (e);
             }
+        });
             
-            misTET.go(misTET.location);
+        misTET.go(misTET.location);
             
-        }
         
         /* This is just cooler than the code I've written before */
         /* Unfortunately IE sucks very much, I'm using this cause it */
@@ -174,7 +169,7 @@ var misTET = {
                 try {
                     misTET.module.run(queries.module, queries);
                 } catch (e) {
-                    misTET.errors.create(e);
+                    misTET.error.handle(new misTET.exception(e));
                 }         
                     
             } else {
@@ -200,26 +195,29 @@ var misTET = {
                 
                 onSuccess: function (http) {
                     if (misTET.utils.xml_not_valid(http.responseXML)) {
-                        misTET.errors.create({
-                            name: "misTET.init.load",
-                            message: "error while parsing #{file}".interpolate({
+                        error = new misTET.exception({
+                            description: "misTET.init.load: error while parsing #{file}".interpolate({
                                 file: path
                             })
                         });
+                        error.description = "misTET.init.load: error while parsing #{file}".interpolate({
+                                file: path
+                            })
                     }
                     misTET["config"]["init"] = http.responseXML;
                 },
                 
                 onFailure: function (http) {
-                    error             = new Error("Error while loading init.xml");
-                    error.name         = "initEttor";
-                    error.fileName        = path;
+                    error = new misTET.exception({
+                        description: "initError: Error while loading init.xml",
+                        file: path
+                    });
                 }
             });
                 
             /* Error... */
             if (error) {
-                misTET.errors.create(error);
+                misTET.error.handle(error);
             }
                 
             var init = misTET.config.init.documentElement;
@@ -245,9 +243,8 @@ var misTET = {
                 
                 onSuccess: function (http) {
                     if (misTET.utils.xml_not_valid(http.responseXML)) {
-                        misTET.errors.create({
-                            name: "misTET.menu.load",
-                            message: "error while parsing #{file}".interpolate({
+                        error = new misTET.exception({
+                            description: "misTET.menu.load: error while parsing #{file}".interpolate({
                                 file: path
                             })
                         });
@@ -256,14 +253,15 @@ var misTET = {
                 },
                 
                 onFailure: function (http) {
-                    error             = new Error("Error while loading menu.xml");
-                    error.name         = "menuError";
-                    error.fileName        = path;
+                    error = new misTET.exception({
+                        description: "menuError: Error while loading menu.xml",
+                        file: path
+                    });
                 }
             });
             /* Error... */
             if (error) {
-                misTET.errors.create(error);
+                misTET.error.handle(error);
             }
         },
             
@@ -327,9 +325,8 @@ var misTET = {
                     
                 onSuccess: function (http) {
                     if (misTET.utils.xml_not_valid(http.responseXML)) {
-                        misTET.errors.create({
-                            name: "misTET.pages.load",
-                            message: "error while parsing #{file}".interpolate({
+                        error = new misTET.exception({
+                            description: "misTET.pages.load: error while parsing #{file}".interpolate({
                                 file: path
                             })
                         });
@@ -338,14 +335,15 @@ var misTET = {
                 },
                 
                 onFailure: function (http) {
-                    error             = new Error("Error while loading pages.xml");
-                    error.name         = "pagesEttor";
-                    error.fileName        = path;
+                    error = new misTET.exception({
+                        description: "pagesError: (#{status} - #{statusText}".interpolate(http),
+                        file: path
+                    });
                 }
             });
             /* Error... */
             if (error) {
-                misTET.errors.create(error);
+                misTET.error.handle(error);
             }
         },
             
@@ -384,11 +382,14 @@ var misTET = {
                             } else if (list[j].nodeName == "text") { 
                                 var href = list[j].getAttribute("href");
                                 var args = list[j].getAttribute("args") || "";
+
                                 if (misTET.utils.isFile(misTET.extern+href)) {
                                     var inner = misTET.utils.encorp(misTET.extern+href);
                                     output += "<pre id = \'"+args+"\'>" + inner + "</pre>";
                                 } else {
-                                    misTET.errors.create({name: "404 - Not found", message: "couldn't find "+misTET.extern+href});
+                                    misTET.error.handle(new misTET.exception({
+                                        description: "404 - couldn't find " + misTET.extern + href
+                                    }));
                                 }
                             } else {
                                 output += list[j].nodeValue;    
@@ -404,9 +405,10 @@ var misTET = {
                     
             if (!Object.isset(id) || !Object.isString(id)) {
                             
-                var e = new Error("couldn't set a page if you don't give a real id");
-                e.name = "misTET.pages.set";
-                misTET.errors.create(e);
+                var e = new misTET.exception({
+                    description: "misTET.pages.set: couldn't set a page if you don't give a real id"
+                });
+                misTET.error.handle(e);
                 return false;
                             
             }
@@ -415,8 +417,9 @@ var misTET = {
             var inner = misTET.pages.parse(id);
                 
             if (inner == "") {
-                misTET.errors.create({name: "404 - Not found", message: "couldn't find #"+id});
-                    
+                misTET.error.handle(new misTET.exception({
+                    description: "404 - couldn't find " + id
+                }));
             } else {
                         
                 try {
@@ -455,7 +458,9 @@ var misTET = {
                 var inner = misTET.utils.encorp(misTET.extern + res);
                 output += "<pre id=\'" + result + "\'>#{code}</pre>".interpolate({code: inner});
             } else {
-                misTET.errors.create({name: "404 - Not found", message: "couldn't find "+misTET.extern+res});
+                misTET.error.handle(new misTET.exception({
+                    description: "404 - couldn't find " + misTET.extern + res
+                }));
             }
                     
             Event.fire(document, ":page.set", { name: misTET.extern + res, args: args });
@@ -479,9 +484,8 @@ var misTET = {
                 
                 onSuccess: function (http) {
                     if (misTET.utils.xml_not_valid(http.responseXML)) {
-                        misTET.errors.create({
-                            name: "misTET.modules.load",
-                            message: "error while parsing #{file}".interpolate({
+                        error = new misTET.exception({
+                            description: "misTET.modules.load: error while parsing #{file}".interpolate({
                                 file: path
                             })
                         });
@@ -490,14 +494,14 @@ var misTET = {
                 },
                 
                 onFailure: function (http) {
-                    error             = new Error("Error while loading modules.xml");
-                    error.name         = "modulesError";
-                    error.fileName        = path;
+                    error = new misTET.exception({
+                        description: "modulesError: Error while loading modules.xml"
+                    });
                 }
             });
             /* Error... */
             if (error) {
-                misTET.errors.create(error);
+                misTET.error.handle(error);
             }
             
             /* Parsing and loading */
@@ -509,10 +513,9 @@ var misTET = {
                 var moduleName = modules[i].getAttribute("name");
                     
                 if (!moduleName) {
-                    misTET.errors.create({
-                        name: "misTET.modules.load",
-                        message: "Error while parsing modules.xml"
-                    });
+                    misTET.error.handle(new misTET.exception({
+                        description: "misTET.modules.load: Error while parsing modules.xml"
+                    }));
                     return;
                 }
                     
@@ -534,13 +537,12 @@ var misTET = {
                                                 
                 } catch (e) {
                                                 
-                    var error = new Error;
-                    error.message = "Error while loading `#{name}`".interpolate({name: moduleName});
-                    error.name = "misTET.modules.load";
-                    error.line = e.lineNumber;
-                    error.filename = e.fileName;
-                                                
-                    misTET.errors.create(error);
+                    misTET.error.handle(new misTET.exception({
+                        description: "misTET.modules.load: Error while loading `#{name}`".interpolate({
+                            name: moduleName }),
+                        file: e.fileName,
+                        line: (e.lineNumber || e.line)
+                    }));
                                                 
                 }
             }
@@ -572,18 +574,16 @@ var misTET = {
         get: function (name) {
                 
             if (!Object.isset(name)) {
-                misTET.errors.create({
-                    name: "misTET.modules.get",
-                    message: "0 of 1 arguments"
-                });
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.modules.get: 0 of 1 arguments"
+                }));
                 return false;
             }
                         
             if (!Object.isString(name)) {
-                misTET.errors.create({
-                    name: "misTET.modules.get",
-                    message: "wrong type of argument"
-                });
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.modules.get: wrong type of argument"
+                }));
                 return false;
             }
                         
@@ -600,10 +600,9 @@ var misTET = {
 
         exists: function (name) {
             if (!name) {
-                misTET.errors.create({
-                    name: "misTET.module.exists",
-                    message: "0 of 1 parameters sent to misTET.module.exists"
-                });
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.module.exists: 0 of 1 parameters sent to misTET.module.exists"
+                }));
                  return false;
             }
             return Boolean(misTET.module[name]);
@@ -612,30 +611,26 @@ var misTET = {
         create: function (name, object) {
                                 
             if (!object) {
-                var error = new Error;
-                
-                e.name = "misTET.module.create";
-                error.message = "what should `#{name}` do?".interpolate({name: name});
-                error.file = "#{root}/#{name}/#{name2}.js".interpolate({
-                    root: misTET.modFolder,
-                    name: name,
-                    name2: name
-                });
-                                        
-                misTET.errors.create(error);
+                  
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.module.create: what should `#{name}` do?".interpolate({name: name}),
+                    file: "#{root}/#{name}/#{name2}.js".interpolate({
+                        root: misTET.modFolder,
+                        name: name,
+                        name2: name })
+                }));
                 return false;
             }
                 
             if (!name || !Object.isString(name)) {
                         
-                var e = new Error("the first parameter must be a string");
-                e.name = "misTET.module8.create";
-                e.file = "#{root}/#{name}/#{file}.js".interpolate({
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.module.create: the first parameter must be a string",
+                    file: "#{root}/#{name}/#{file}.js".interpolate({
                         root: misTET.modFolder,
                         name: name,
-                        file: name
-                });
-                misTET.errors.create(e);
+                        file: name })
+                }));
                 return false;
                         
             }
@@ -658,13 +653,13 @@ var misTET = {
                 try {
                     object.initialize();
                 } catch (e) {
-                    e.name = "misTET.module.create";
-                    e.filename = "#{root}/#{name}.js".interpolate({
-                        root: object.root,
-                        name: name
-                    });
-                    e.message = "Error while executing #{name}.initialize()".interpolate({name: object.name});
-                    misTET.errors.create(e);
+
+                    misTET.error.handle(new misTET.exception({
+                        description: "misTET.module.create: Error while executing #{name}.initialize()".interpolate({name: object.name}),
+                        file: "#{root}/#{name}.js".interpolate({
+                            root: object.root,
+                            name: name })
+                    }));
                 }
             }
             else {
@@ -680,18 +675,16 @@ var misTET = {
             var result;
                 
             if (!Object.isset(name) || !Object.isset(args)) {
-                misTET.errors.create({
-                    name: "misTET.module.run",
-                    message: "Running `#{0}`: wrong number of arguments".interpolate(name)
-                    });
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.module.run: wrong number of arguments".interpolate(name),
+                }));
                 return false;
             }
                 
             if (!misTET.module.exists(name)) {
-                misTET.errors.create({
-                    name: "misTET.module.run",
-                    message: "[`#{0}`] doesn't exist".interpolate(name)
-                });
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.module.run: [`#{0}`] doesn't exist".interpolate(name)
+                }));
                 return false;
             }
                         
@@ -713,18 +706,18 @@ var misTET = {
                 result = misTET.module[name].execute.apply(misTET.module[name], args);    
                                 
             } catch (exception) {
-                        
-                misTET.errors.create({
-                    name: "misTET.module.run", 
-                        message: exception.message.toString(),
-                        line: exception.lineNumber,
-                        file: "#{modFolder}/#{name}/#{module}.js".interpolate({
-                            modFolder: misTET.modFolder,
-                            name: name,
-                            module: name
+
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.module.run: " + exception.message.toString(), 
+                    line: (exception.lineNumber || exception.lineNumber),
+                    file: "#{modFolder}/#{name}/#{module}.js".interpolate({
+                        modFolder: misTET.modFolder,
+                        name: name,
+                        module: name
                         })
-                });
-                                return false;
+                }));
+
+                return false;
                    
             }
             
@@ -743,7 +736,11 @@ var misTET = {
             try {
                 misTET.res[name] = new misTET.Resource(name, obj);
             } catch (e) {
-                misTET.errors.create(e);
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.res.create: " + e.message.toString(),
+                    file: e.fileName,
+                    line: (e.lineNumber || e.line) 
+                }));
             }
 
             if (misTET.res.exists(name)) {
@@ -754,14 +751,18 @@ var misTET = {
         get: function (name) {
                 
             if (!name || !Object.isString(name)) {
-                misTET.errors.create(["misTET.res.get", "wrong argument", "", ""]);
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.res.get: wrong argument"
+                }));
                 return false;
             }
                         
             if (misTET.res.exists(name)) {
                 return misTET.res[name];
             } else {
-                misTET.errors.create(["misTET.res.get", "#{0} doesn't exist".interpolate(name), "", ""]);
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.res.get: #{0} doesn't exist".interpolate(name)
+                }));
                 return false;
             }
                 
@@ -770,9 +771,9 @@ var misTET = {
         del: function (name) {
                         
             if (!name || !Object.isString(name)) {
-                var e = new Error("couldn't delete a resource if you don't give a real name");
-                e.name = "misTET.res.del";
-                misTET.errors.create(e);
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.res.del: wrong argument"
+                }));
                 return false;
             }
                         
@@ -783,10 +784,9 @@ var misTET = {
                                 
                 delete misTET.res[name];
             } else {
-                                
-                var e = new Error("misTET.res[\'#{name}\'] is not defined".interpolate({name: name}));
-                e.name = "misTET.res.del";
-                misTET.errors.create(e);
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.res.del: misTET.res[\'#{name}\'] is not defined".interpolate({name: name}),
+                }));
                 return false;
                                 
             }
@@ -798,9 +798,9 @@ var misTET = {
         exists: function (name) {
                         
             if (!name) {
-                var e = new Error("what resource?");
-                e.name = "misTET.res.exists";
-                misTET.errors.create(e);
+                misTET.error.handle(new misTET.exception({
+                    description: "misTET.res.exists: what res?"
+                }));
                 return false;
             }
                         
@@ -810,52 +810,42 @@ var misTET = {
             
     },
     
-    errors: {
+    error: {
             
-        create: function (e) {
-            var div = $("page");
-                        
-            /* You can pass an array */
-            /* [name, message, file, line] */
-            /* If something like `line` or `file` is undefined, use an empty string in the array */
-            if (Object.isArray(e)) {
-                        
-                var tmp = $A(e);
-                if (tmp.length == 4) {
-                    
-                    e = { };
-                    e.name = tmp[0].toString().escapeHTML();
-                    e.message = tmp[1].toString().escapeHTML();
-                    e.file = tmp[2].toString().escapeHTML();
-                    e.line = tmp[3].toString().escapeHTML();
+        handle: function ()  {
+            var result = ""
+
+            if (arguments.length == 1) {
+                if (_isException(arguments[0])) {
+                    result = "ERROR occurred!\n" + 
+                             "\nDescription: \n\t\t" + arguments[0].description +
+                             "\nPage:        \t" + arguments[0].page +
+                             "\nLine:      \t\t" + arguments[0].line;
+                    misTET.$error = true;
+                    window.alert(result);
+                    return true;  
+                } else {
+                    if (Object.isString(arguments[0])) {
+                        window.alert(arguments[0].escapeHTML());
+                        misTET.$error = true;
+                        return misTET.$error;
+                    } else {
+                        misTET.error.handle(new misTET.exception({
+                            description: "misTET.error.handle: arguments[0] is not exception"
+                        }));
+                        misTET.$error = true;
+                        return misTET.$error;
+                    }
                 }
-                        
             }
-                        
-            var error = misTET.errors.fix(e);
-                        
-            var string = "<br>#{name}:<br>#{message}<br>File: #{filename} @#{line}<br>".interpolate({
-                name: error.name || error,
-                message: error.message,
-                filename: error.filename,
-                line: error.line
-            });
-            misTET._error = true;
-                        
-            Event.fire(document, ":error", {obj: error});
-                        
-            div.update(string);    
-        },
-        
-        fix: function (error)  {
-            if (Object.isString(error)) {
-                return error.name = error.escapeHTML();
-            }
-            error.name = (error.name || "Error").toString().escapeHTML();
-            error.message = (error.message || "undefined message").toString().escapeHTML();
-            error.filename = (error.filename || error.fileName || error.file || "undefined file").toString().escapeHTML();
-            error.line = (error.line || error.lineNumber || "undefined line").toString().escapeHTML();
-            return error;
+
+            window.alert( 'ERROR occurred! \n'
+                   +'\nError description: \t'+desc
+                   +'\nPage address:      \t'+page
+                   +'\nLine number:       \t'+line
+            )
+            misTET.$error = true;
+            return true;
         }
   
     },
@@ -899,7 +889,7 @@ var misTET = {
         /* Require a file */
         encorp: function (path) {
         
-            var result;
+            var result = false;
             var error = false;
             
             new Ajax.Request(path, {
@@ -912,19 +902,23 @@ var misTET = {
                         result = http.responseText.toString().escapeHTML();
                     }
                     catch (e) {
-                         error             = e;
-                         error.fileName    = path;
+                         error = new misTET.exception({
+                             description: e.toString(),
+                             file: path
+                         });
                       }
                 },
                 
                 onFailure: function (http) {
-                    error            = new Error("Error while loading file (#{status} - #{statusText}).".interpolate(http));
-                    error.fileName   = path;
+                    error = new misTET.exception({
+                        description: "Error while loading file (#{status} - #{statusText}).".interpolate(http),
+                        file: path
+                    });
                 }
             });
 
             if (error) {
-                misTET.errors.create(error);
+                misTET.error.handle(error);
             }
             
             return result;
@@ -968,7 +962,11 @@ var misTET = {
                         }
                         result = true;
                     } catch (error) { 
-                        misTET.errors.create(error);
+                        misTET.error.handle(new misTET.exception({
+                            description: e.message.toString(),
+                            file: e.fileName,
+                            line: (e.lineNumber || e.line)
+                        }));
                         return false;
                     }
                 }
@@ -996,29 +994,24 @@ var misTET = {
                             result = window.eval(http.responseText);
                         }
                     } catch (exception) {
-                        error = exception;
+                        error = new misTET.exception({
+                            description: exception.message.toString(),
+                            file: exception.fileName,
+                            line: (exception.lineNumber || exception.line)
+                        });
                     }
                 },
                         
                 onFailure: function (http) {
-                    error = "(#{status} - #{statusText}) - #{path}".interpolate({
-                            status: http.status,
-                            statusText: http.statusText,
-                            path: path
-                        });
+                    error = new misTET.exception({
+                        description: "(#{status} - #{statusText})".interpolate(http),
+                        file: path
+                    });
                 }
             });
                 
             if (error) {
-                error = misTET.errors.fix(error);
-                        
-                misTET.errors.create({ 
-                    name: error.name,
-                    message: error.message,
-                    filename: error.filename,
-                    line: error.line
-                });
-                        
+                misTET.error.handle(error);
                 return false;
             }
                 
@@ -1050,10 +1043,10 @@ var misTET = {
                 
             if (!Object.isset(url) || !Object.isString(url)) {
                         
-                var e = new Error("what url should the function parse?");
-                e.name = "parsing error";
-                e.file = "#{root}/#{loc}".interpolate(misTET);
-                misTET.errors.create(e);
+                misTET.error.handle(new misTET.exception({
+                    description: "parsing error: what url should getQueries parse?",
+                    file: "#{root}/#{loc}".interpolate(misTET)
+                }));
       
                  return false;
             }
@@ -1083,5 +1076,6 @@ var misTET = {
     }
 };
 
-misTET.utils.include("system/framework.js");
+misTET.utils.include("system/utils.js");
 misTET.utils.include("system/Resource.js");
+misTET.utils.include("system/Exception.js");

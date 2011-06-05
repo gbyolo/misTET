@@ -28,20 +28,18 @@
         initialize: function (data) {
                         
             if (!Object.isset(data)) {
-                misTET.errors.create({
-                    name: "feed initialize",
-                    message: "wrong number of arguments(0 of 1)"
-                });
+                misTET.error.handle(new misTET.exception({
+                    description: "feed initialize: wrong number of arguments(0 of 1)"
+                }));
                                 
                 return false;
             }
                         
             if (Object.isset(data) && !Object.isset(data.root)) {
                                 
-                misTET.errors.create({
-                    name: "feed initialize",
-                    message: "root path is missing",
-                });
+                misTET.error.handle(new misTET.exception({
+                    description: "feed initialize: root path is missing"
+                }));
                                 
                 return false;
             }
@@ -67,7 +65,7 @@
                 parameters: data,
                                 
                 onFailure: function (http) {
-                    misTET.errors.create("feed: #{status} - #{statusText}.".interpolate(http));
+                    misTET.error.handle("feed: #{status} - #{statusText}.".interpolate(http));
                 }
             });
         },
@@ -92,12 +90,12 @@
                                             description: this.description,
                                             link: "#{root}/#module=blog".interpolate(misTET),
                                             language: this.language,
-                                            v: misTET.modules.blog.version,
+                                            v: misTET.modules.get("blog").version,
                                             webmaster: misTET.res.blog.author
                                         });
 
                 for (var j = misTET.res.get("blog").total; j > 0; j--) {
-                    var post = misTET.modules.blog.getPost(String(j));
+                    var post = misTET.modules.get("blog").getPost(String(j));
                     result += ( "<item>\n" +
                                 "<title><![CDATA[#{title}]]></title>\n" +
                                 "<description><![CDATA[#{description}]]></description>\n" +

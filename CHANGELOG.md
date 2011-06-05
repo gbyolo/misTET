@@ -1,6 +1,9 @@
 <h2>Changelog</h2>
 *Note*: date format is dd/mm/aaaa
 ---
+  -  [05-06-2011]  -  0.7.5
++ cool own exception handling
+- minor fixes
   -  [02-06-2011]  -  0.7.2
 + New theme
 + New markdown module

@@ -33,11 +33,10 @@ misTET.module.create("security", {
             asynchronous: false,
                         
             onFailure: function (http) {
-                                
-                var e = new Error("Unable to initialize the security module");
-                e.file = this.root + "/security.js";
-                e.name = "security error";
-                misTET.errors.create(e);
+                misTET.error.handle(new misTET.exception({
+                    description: "Unable to initialize the security module (#{status} - #{statusText})".interpolate(http),
+                    file: this.root + "/security.js"
+                }));
                         
             }
         });
@@ -54,8 +53,7 @@ misTET.module.create("security", {
             if (Object.isset(args["action"])) {
                                 
                 if (!Object.isset(args["password"])) {
-                    misTET.errors.create({ message: "The password is missing",
-                                           name: "security error" });
+                    misTET.error.handle("Security error: The password is missing");
                     return false;
                 }
                         
@@ -67,8 +65,7 @@ misTET.module.create("security", {
                     },
                                 
                     onFailure: function (http) {
-                        misTET.errors.create({ message: "Something went wrong while login",
-                                               name: "security error" });
+                        misTET.error.handle("Security error: something went wrong while login");
                     }
                 });
             } else {
@@ -81,8 +78,7 @@ misTET.module.create("security", {
                     },
                                 
                     onFailure: function (http) {
-                        misTET.errors.create({ message: "Something went wrong while login",
-                                               name: "security error" });
+                        misTET.error.handle("Security error: something went wrong while login");
                     }
                 });
                         
@@ -98,8 +94,7 @@ misTET.module.create("security", {
                 },
                                 
                 onFailure: function () {
-                    misTET.errors.create({ message: "Something went wrong while logout",
-                                           name: "security error" });
+                    misTET.error.handle("Security error: something went wrong during logout");
                 }
             });
                 
@@ -108,8 +103,7 @@ misTET.module.create("security", {
             if (Object.isset(args["action"])) {
                                 
                 if (!Object.isset(args["password"])) {
-                    misTET.errors.create({ name: "security error",
-                                           message: "missing password" });
+                    misTET.error.handle("Security changePassword: password is missing");
                     return false;
                 }
                 
@@ -123,8 +117,7 @@ misTET.module.create("security", {
                     },
                                         
                     onFailure: function () {
-                        misTET.errors.create({ message: "something went wrongly while changing the password",
-                                               name: "security error" });
+                        misTET.error.handle("Security changePassword: someting went wrong");
                         
                         }
                     });
@@ -138,8 +131,7 @@ misTET.module.create("security", {
                         },
                                         
                         onFailure: function () {
-                            misTET.errors.create({ message: "something went wrongly while changing the password",
-                                                   name: "security error" });
+                            misTET.error.handle("Security changePassword: someting went wrong");
                         
                         }
                         
@@ -160,7 +152,7 @@ misTET.module.create("security", {
                 return misTET.res.get("security").connected;
 
             } else {
-                misTET.errors.create("args not valid");
+                misTET.error.handle("Security execute: args not valid");
             }
     }
 });

@@ -20,7 +20,7 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
-define("VERSION", "0.4.0");
+define("VERSION", "0.4.2");
 define("__NAME__", "blog");
 
 session_start();
@@ -61,7 +61,7 @@ if (!$_SESSION['misTET']['logged']) {
 
 	if (isset($_GET['new'])) {
 		if (no_parameters()) {
-			echo "<form onsubmit=\"misTET.modules.run('blog',{post: 1, action: 1, title: $('titl').value, author: $('author').value, text: $('text').value, token: $('token').value}); return false;\">".
+			echo "<form onsubmit=\"misTET.module.run('blog',{post: 1, action: 1, title: $('titl').value, author: $('author').value, text: $('text').value, token: $('token').value}); return false;\">".
 				 "Title: <input type = 'text' id = 'titl'></input>".
 				 "<br>Author: <input type = 'text' id = 'author'></input>".
 				 "<br><textarea rows = '15' cols = '60' id = 'text'></textarea>".
@@ -117,7 +117,7 @@ if (!$_SESSION['misTET']['logged']) {
 				if (no_parameters()) {
 					$title = $post->getAttribute('title');
 					$author = $post->getAttribute('author');
-					echo "<form onsubmit=\"misTET.modules.run('blog',{id: {$_REQUEST['id']}, edit: 1, action: 1, title: $('titl').value, author: $('author').value, text: $('text').value, token: $('token').value}); return false;\">".
+					echo "<form onsubmit=\"misTET.module.run('blog',{id: {$_REQUEST['id']}, edit: 1, action: 1, title: $('titl').value, author: $('author').value, text: $('text').value, token: $('token').value}); return false;\">".
 				 		 "Title: <input type = 'text' id = 'titl' value = '{$title}'></input>".
 				 		 "<br>Author: <input type = 'text' id = 'author' value = '${author}'></input>".
 				 		 "<br><textarea id = 'text' rows = '15' cols = '60'>{$post->nodeValue}</textarea>".
@@ -150,7 +150,7 @@ if (!$_SESSION['misTET']['logged']) {
 				
 				if (!isset($_POST['token'])) {
 					
-					echo "<form onsubmit=\"misTET.modules.run('blog',{id: {$_REQUEST['id']}, del: 1, action: 1, token: $('token').value}); return false;\">".
+					echo "<form onsubmit=\"misTET.module.run('blog',{id: {$_REQUEST['id']}, del: 1, action: 1, token: $('token').value}); return false;\">".
 						 "<input id =\"token\" value=\"".$_SESSION['token']."\" type=\"hidden\"></input>".
 						 "<input type = 'submit' value = 'delete'></input>".
 					 	 "</form>";

@@ -27,7 +27,7 @@ misTET.res.create("blog", {
 
 misTET.module.create("blog", {
 
-    version: ["0", "4", "0"].join("."),
+    version: ["0", "4", "2"].join("."),
     
     needs: ["security"],
         
@@ -50,10 +50,9 @@ misTET.module.create("blog", {
             },
                 
             onFailure: function (http) {
-                misTET.errors.create({
-                    message: "Error while loading blog.xml (#{error})".interpolate({ error: http.status }), 
-                    name: "blog error"
-                });
+                misTET.error.handle(new misTET.exception({
+                    description: "Error while loading blog.xml (#{error})".interpolate({ error: http.status })
+                }));
             }
         });
         /* this is useless 
@@ -82,7 +81,7 @@ misTET.module.create("blog", {
                             },
                                         
                             onFailure: function (http) {
-                                misTET.errors.create({message: http.responseText});
+                                misTET.error.handle({description: http.responseText});
                             }
                         });
                         
@@ -98,7 +97,7 @@ misTET.module.create("blog", {
                         },
                                 
                         onFailure: function (http) {
-                            misTET.errors.create(http.responseText);
+                            misTET.error.handle({description: http.responseText});
                         }
                                 
                     });
@@ -119,7 +118,7 @@ misTET.module.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.errors.create({message: http.responseText});
+                            misTET.error.handle({description: http.responseText});
                         }
                                                 
                     });
@@ -135,7 +134,7 @@ misTET.module.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.errors.create({message: http.responseText});
+                            misTET.error.handle({description: http.responseText});
                         }
                     });
                 }
@@ -161,7 +160,7 @@ misTET.module.create("blog", {
                     },
                                                 
                     onFailure: function (http) {
-                        misTET.errors.create({message: http.responseText});
+                        misTET.error.handle({description: http.responseText});
                     }
                 });
                 this.updateRss();
@@ -175,7 +174,7 @@ misTET.module.create("blog", {
                     },
                                                 
                     onFailure: function (http) {
-                        misTET.errors.create({message: http.responseText});
+                        misTET.error.handle({description: http.responseText});
                     }
                 });
             }
@@ -190,7 +189,7 @@ misTET.module.create("blog", {
                 },
                                 
                 onFailure: function (http) {
-                    misTET.errors.create({message: http.responseText});
+                    misTET.error.handle({description: http.responseText});
                 }
             });
                 
