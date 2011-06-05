@@ -47,7 +47,8 @@ var misTET = {
         misTET.location = location.hash;
         misTET.initialized = false;
 
-        [/* init.xml stuff */
+        [
+        /* init.xml stuff */
         function () {
             eval("misTET.init.load()");
         
@@ -91,13 +92,16 @@ var misTET = {
             misTET.modules.load();
             $("page").update("Checking dependencies");
             misTET.modules.checkDependencies();
-        }].each(
+        }
+        ].each(
+
         function (initialization) {
             try { 
                 initialization();
             } catch (e) {
                 throw (e);
             }
+
         });
             
         misTET.go(misTET.location);
@@ -816,33 +820,45 @@ var misTET = {
             var result = ""
 
             if (arguments.length == 1) {
+
                 if (_isException(arguments[0])) {
                     result = "ERROR occurred!\n" + 
                              "\nDescription: \n\t\t" + arguments[0].description +
                              "\nPage:        \t" + arguments[0].page +
                              "\nLine:      \t\t" + arguments[0].line;
                     misTET.$error = true;
+                    Event.fire(document, ":error", arguments[0]);
                     window.alert(result);
                     return true;  
+
                 } else {
+
                     if (Object.isString(arguments[0])) {
-                        window.alert(arguments[0].escapeHTML());
+                        Event.fire(document, ":error", _fixException({
+                            description: arguments[0]
+                        }));
+
                         misTET.$error = true;
+                        window.alert(arguments[0].escapeHTML());
                         return misTET.$error;
+
                     } else {
                         misTET.error.handle(new misTET.exception({
                             description: "misTET.error.handle: arguments[0] is not exception"
                         }));
-                        misTET.$error = true;
-                        return misTET.$error;
                     }
                 }
             }
 
+            Event.fire(document, ":error", {
+                description: arguments[0],
+                file: arguments[1],
+                line: arguments[2]
+            });
             window.alert( 'ERROR occurred! \n'
-                   +'\nError description: \t'+desc
-                   +'\nPage address:      \t'+page
-                   +'\nLine number:       \t'+line
+                   +'\nError description: \t'+arguments[0]
+                   +'\nPage address:      \t'+arguments[1]
+                   +'\nLine number:       \t'+arguments[2]
             )
             misTET.$error = true;
             return true;

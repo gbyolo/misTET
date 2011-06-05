@@ -54,6 +54,8 @@ function _fixException (exception) {
     exception.description = exception.description.isEmpty() ? "Error" : exception.description;
     exception.file = exception.file.isEmpty() ? "Undefined file" : exception.file;
     exception.line = exception.line.isEmpty() ? "Undefined line" : exception.line;
+
+    return exception;
 }
 
 misTET.exception = Class.create({
