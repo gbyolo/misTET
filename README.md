@@ -12,8 +12,8 @@ You can know everything about *misTET* and its power by reading the github wiki.
 	- Konqueror => 4.3 (may not work)
 	
 <h2>Compiling</h2>
-`chmod +x compile.sh`<br>
-`./compile.sh`
+`chmod +x compile`<br>
+`./compile`
 
 <h2>Site</h2>
 misTET developing site is here:

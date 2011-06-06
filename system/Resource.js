@@ -32,7 +32,7 @@ misTET.Resource = Class.create({
         if (!obj) {
             error = {
                 name: "misTET.Resource.new",
-                message: "no obj passed",
+                message: "no obj passed"
             };
             throw (error);
         }

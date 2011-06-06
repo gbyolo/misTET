@@ -20,7 +20,7 @@
 
 var misTET = {
     
-    version: ["0", "7", "5"].join("."),
+    version: ["0", "7", "6"].join("."),
     
     modFolder: "/modules",
     module: { },
@@ -174,6 +174,7 @@ var misTET = {
                     misTET.module.run(queries.module, queries);
                 } catch (e) {
                     misTET.error.handle(new misTET.exception(e));
+                    return false;
                 }         
                     
             } else {
@@ -222,6 +223,7 @@ var misTET = {
             /* Error... */
             if (error) {
                 misTET.error.handle(error);
+                return false;
             }
                 
             var init = misTET.config.init.documentElement;
@@ -266,6 +268,7 @@ var misTET = {
             /* Error... */
             if (error) {
                 misTET.error.handle(error);
+                return false;
             }
         },
             
@@ -348,6 +351,7 @@ var misTET = {
             /* Error... */
             if (error) {
                 misTET.error.handle(error);
+                return false;
             }
         },
             
@@ -394,6 +398,7 @@ var misTET = {
                                     misTET.error.handle(new misTET.exception({
                                         description: "404 - couldn't find " + misTET.extern + href
                                     }));
+                                    return false;
                                 }
                             } else {
                                 output += list[j].nodeValue;    
@@ -424,6 +429,7 @@ var misTET = {
                 misTET.error.handle(new misTET.exception({
                     description: "404 - couldn't find " + id
                 }));
+                return false;
             } else {
                         
                 try {
@@ -465,6 +471,7 @@ var misTET = {
                 misTET.error.handle(new misTET.exception({
                     description: "404 - couldn't find " + misTET.extern + res
                 }));
+                return false;
             }
                     
             Event.fire(document, ":page.set", { name: misTET.extern + res, args: args });
@@ -506,6 +513,7 @@ var misTET = {
             /* Error... */
             if (error) {
                 misTET.error.handle(error);
+                return false;
             }
             
             /* Parsing and loading */
@@ -547,6 +555,7 @@ var misTET = {
                         file: e.fileName,
                         line: (e.lineNumber || e.line)
                     }));
+                    return false;
                                                 
                 }
             }
@@ -607,7 +616,7 @@ var misTET = {
                 misTET.error.handle(new misTET.exception({
                     description: "misTET.module.exists: 0 of 1 parameters sent to misTET.module.exists"
                 }));
-                 return false;
+                return false;
             }
             return Boolean(misTET.module[name]);
         },
@@ -664,6 +673,7 @@ var misTET = {
                             root: object.root,
                             name: name })
                     }));
+                    return false;
                 }
             }
             else {
@@ -680,14 +690,14 @@ var misTET = {
                 
             if (!Object.isset(name) || !Object.isset(args)) {
                 misTET.error.handle(new misTET.exception({
-                    description: "misTET.module.run: wrong number of arguments".interpolate(name),
+                    description: "misTET.module.run: wrong number of arguments"
                 }));
                 return false;
             }
                 
             if (!misTET.module.exists(name)) {
                 misTET.error.handle(new misTET.exception({
-                    description: "misTET.module.run: [`#{0}`] doesn't exist".interpolate(name)
+                    description: "misTET.module.run: module['#{what}'] doesn't exist".interpolate({what: name})
                 }));
                 return false;
             }
@@ -745,6 +755,7 @@ var misTET = {
                     file: e.fileName,
                     line: (e.lineNumber || e.line) 
                 }));
+                return false;
             }
 
             if (misTET.res.exists(name)) {
@@ -765,7 +776,7 @@ var misTET = {
                 return misTET.res[name];
             } else {
                 misTET.error.handle(new misTET.exception({
-                    description: "misTET.res.get: #{0} doesn't exist".interpolate(name)
+                    description: "misTET.res.get: #{what} doesn't exist".interpolate({what: name})
                 }));
                 return false;
             }
@@ -789,7 +800,7 @@ var misTET = {
                 delete misTET.res[name];
             } else {
                 misTET.error.handle(new misTET.exception({
-                    description: "misTET.res.del: misTET.res[\'#{name}\'] is not defined".interpolate({name: name}),
+                    description: "misTET.res.del: misTET.res[\'#{name}\'] is not defined".interpolate({name: name})
                 }));
                 return false;
                                 
@@ -822,8 +833,8 @@ var misTET = {
             if (arguments.length == 1) {
                 if (_isException(arguments[0])) {
                     result = "misTET $error!\n" + 
-                             "\nDescription: \n\t\t" + arguments[0].description +
-                             "\nPage:        \t" + arguments[0].page +
+                             "\nDescription: \n\t\t\t" + arguments[0].description +
+                             "\nPage:        \t" + arguments[0].file +
                              "\nLine:      \t\t" + arguments[0].line;
                     misTET.$error = true;
                     Event.fire(document, ":error", arguments[0]);
@@ -935,6 +946,7 @@ var misTET = {
 
             if (error) {
                 misTET.error.handle(error);
+                return false;
             }
             
             return result;
@@ -1064,7 +1076,7 @@ var misTET = {
                     file: "#{root}/#{loc}".interpolate(misTET)
                 }));
       
-                 return false;
+                return false;
             }
                 
             var matches = url.match(/[?#](.*)$/);

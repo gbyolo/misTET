@@ -1,6 +1,9 @@
 <h2>Changelog</h2>
 *Note*: date format is dd/mm/aaaa
----
+- - - -
+  -  [06-06-2011]  -  0.7.6
++ Fixed minor bugs
++ Fixed compiler and moved compile.sh to compile
   -  [05-06-2011]  -  0.7.5
 + cool own exception handling
 - minor fixes
