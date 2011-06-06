@@ -22,19 +22,19 @@ misTET.Resource = Class.create({
 
     initialize: function (name, obj) {
         if (!name) {
-            error = {
-                name: "misTET.Resource.new",
-                message: "no name passed"
-            };
-            throw error;
+            var error = new misTET.exception({
+                description: "misTET.Resource.new: no name passed"
+            });
+            misTET.error.handle(error);
+            return false;
         }
 
         if (!obj) {
-            error = {
-                name: "misTET.Resource.new",
-                message: "no obj passed"
-            };
-            throw (error);
+            var error = new misTET.exception({
+                description: "misTET.Resource.new: no obj passed"
+            });
+            misTET.error.handle(error);
+            return false;
         }
 
         this.name = String(name);
@@ -70,24 +70,21 @@ misTET.Resource = Class.create({
                                 
             onSuccess: function (http) {
                 if (misTET.utils.xml_not_valid(http.responseXML)) {
-                    error = {
-                        name: "misTET.res.loadXML",
-                        message: "error while parsing #{file}".interpolate({
+                    misTET.error.handle(new misTET.exception({
+                        description: "Resource#loadXML: error while parsing #{file}".interpolate({
                             file: path
                         })
-                    };
-                    throw (error);
+                    }));
+                    return false;
                 }
                 this.config = http.responseXML;
             },
                                 
             onFailure: function (http) {
-                error = {
-                    name: "misTET.res.loadXML", 
-                    message: "failed to retrieve (#{status} - #{statusText})".interpolate(http),
+                misTET.error.handle(new misTET.exception({
+                    description: "Resource#loadXML: failed to retrieve (#{status} - #{statusText})".interpolate(http),
                     file: file
-                };
-                throw (error);
+                }));
             }
         });
                         
