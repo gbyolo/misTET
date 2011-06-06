@@ -845,6 +845,7 @@ var misTET = {
                         misTET.error.handle(new misTET.exception({
                             description: "misTET.error.handle: arguments[0] is not exception"
                         }));
+                        return (misTET.$error = true);
                     }
                 }
             }
