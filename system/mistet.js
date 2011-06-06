@@ -820,9 +820,8 @@ var misTET = {
             var result = ""
 
             if (arguments.length == 1) {
-
                 if (_isException(arguments[0])) {
-                    result = "ERROR occurred!\n" + 
+                    result = "misTET $error!\n" + 
                              "\nDescription: \n\t\t" + arguments[0].description +
                              "\nPage:        \t" + arguments[0].page +
                              "\nLine:      \t\t" + arguments[0].line;
@@ -832,14 +831,14 @@ var misTET = {
                     return true;  
 
                 } else {
-
                     if (Object.isString(arguments[0])) {
                         Event.fire(document, ":error", _fixException({
                             description: arguments[0]
                         }));
 
                         misTET.$error = true;
-                        window.alert(arguments[0].escapeHTML());
+                        window.alert("misTET $error!\n\n" + 
+                                      arguments[0].escapeHTML());
                         return misTET.$error;
 
                     } else {
@@ -855,10 +854,10 @@ var misTET = {
                 file: arguments[1],
                 line: arguments[2]
             });
-            window.alert( 'ERROR occurred! \n'
-                   +'\nError description: \t'+arguments[0]
-                   +'\nPage address:      \t'+arguments[1]
-                   +'\nLine number:       \t'+arguments[2]
+            window.alert( "misTET $error! \n"
+                   +"\nError description: \t"+arguments[0]
+                   +"\nPage address:      \t"+arguments[1]
+                   +"\nLine number:       \t"+arguments[2]
             )
             misTET.$error = true;
             return true;
