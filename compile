@@ -26,26 +26,21 @@ MODULES="modules"
 
 codes=($mistet $utils $resource $exception $prototype)
 
-hook_tmp() {
-        
+hook_tmp() {        
     if [ -f $1 -o -e $1 ]; then
         rm -f $1
-    fi
-        
+    fi        
     touch $1
     chmod 0600 $1 || {
         error "Unable to chmod ${1} "
         exit -1
-    }
-        
+    }        
 }
 
-unhook_tmp() {
-        
+unhook_tmp() {        
     if [ -e $1 ]; then
         rm -f $1
-    fi
-        
+    fi        
 }
 
 error() {
@@ -145,5 +140,6 @@ done
 unhook_tmp ${TMP}
 unhook_tmp "tmp.js"
 
-sec "\nmisTET has been compiled successful"
+sec "\nmisTET has been compiled successfully"
 exit 0
+
