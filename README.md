@@ -20,7 +20,7 @@ misTET developing site is here:
 <a href = "http://mistet.altervista.org" target = "_blank">http://mistet.altervista.org</a>
 
 <h2>License breaking</h2>
-I want to make it clear that all files belonging to this project are released under the GNU Afferro v3+ license, you can find a 
+I want to make it clear that all files belonging to this project are released under the GNU Affero v3+ license, you can find a 
 copy of it at /LICENSE. Sometimes could happen that I forget to add the copyright lines on some files, especially on style and
 markup files, but this does not mean that these files are not released under the license. So be aware of that.
 

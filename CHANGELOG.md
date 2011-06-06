@@ -5,7 +5,7 @@
 + Fixed minor bugs
 + Fixed compiler and moved compile.sh to compile
   -  [05-06-2011]  -  0.7.5
-+ cool own exception handling
++ cool own exception handling system
 - minor fixes
   -  [02-06-2011]  -  0.7.2
 + New theme
