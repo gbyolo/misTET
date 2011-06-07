@@ -1,7 +1,7 @@
 *misTET* is a modular CMS written in Javascript. The choice of this language has been required by the need of a fast and complete CMS.<br>
 
 <h2>Documentation</h2>
-You can know everything about *misTET* and its power by reading the github wiki.
+You can know everything about *misTET* and its power by reading the [github wiki](http://github.com/lostpassword/misTET/wiki).
 
 <h2>Site</h2>
 misTET developing site is here:

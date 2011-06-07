@@ -71,3 +71,4 @@
 + "importa" function, SintaxHighlighting sucks -.-. added prototype.js
   -  [14-01-2010]  -  0.1   	
 + First version
+

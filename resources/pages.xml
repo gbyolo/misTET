@@ -36,9 +36,20 @@ WARNING: Don't use exclusively html code in your pages, it can cause some
 <pages>
 	<page id = 'home'>
 		<![CDATA[
-			This site is for those who follow my project. It will be updated everytime
-			another version of misTET is released. You can visit the blog page to view all the
-			news.
+            <div class = 'markdown'>
+Welcome to misTET home!
+- - - - - - - -
+**misTET** is a highly modular cms written in Javascript that loads its contents in XML files thus being easier both to web developers
+and visitors to navigate the site and manage it. 
+
+misTET comes also with some useful libraries and thanks to its power it's very easy 
+to develop modules that interact with its content.
+- - - - - - -  -
+
+[1]: #module=blog
+[2]: http://github.com/lostpassword/misTET
+
+            </div>
 		]]>
 	</page>
 	<page id = 'module=blog'>
