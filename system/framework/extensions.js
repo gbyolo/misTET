@@ -18,8 +18,6 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
-/* Faggot things */
-
 Object.extend(Object, {
 
         /* return true if obj is defined, false otherwise */
@@ -78,9 +76,59 @@ Object.extend(Object, {
         
 });
 
+/* extension to the built-in string class */
 Object.extend(String.prototype, {
+
+        /* string#parseQuery() -> object
+         *
+         * #home?id=45&ff=1&ff=2&ops=5 ->
+         * { home: true, id: 45, ff: [1, 2], ops: 5 }
+        **/
+
+        parseQuery: function () {
+            var result = {};
+                
+            if (!Object.isString(this)) {
+                        
+                misTET.error.handle(new misTET.exception({
+                    description: "parsing error: what url should parseQuery parse?"
+                }));
+      
+                return false;
+            }
+                
+            var matches = this.match(/[?#](.*)$/);
         
-        /* string.isEmpty() return true if the string is "", false otherwise */
+            if (!matches) {
+                return result;
+            }
+        
+            var splitted = matches[1].split(/&/);
+            for (var i = 0; i < splitted.length; i++) {
+                var parts = splitted[i].split(/=/);
+                var name = parts[0].decodeURI();
+                var value = parts[1];
+
+                if (value) {
+                    if (Object.isset(result[name])) {
+                        if (!Object.isArray(result[name])) {
+                            result[name] = Array(result[name], value);
+                        } else {
+                            result[name].push(value);
+                        }
+                    } else {
+                        result[name] = value.decodeURI();
+                    }
+                } else {
+                    result[name] = true;
+                }
+                    
+            }
+        
+            return result;
+        },
+        
+        /* string#isEmpty() return true if the string is "", false otherwise */
         isEmpty: function () {
                 return this == "";
         },
@@ -98,5 +146,12 @@ Object.extend(String.prototype, {
         /* srip slashes */
         stripslashes: function () {
                 return this.replace(/\\/g, '');
+        },
+        
+        /* string#reverse -> string
+         * example -> elpmaxe
+        **/
+        reverse: function () {
+            return this.toArray().reverse().join("");
         }
 });

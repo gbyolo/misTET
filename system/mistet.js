@@ -20,7 +20,7 @@
 
 var misTET = {
     
-    version: ["0", "7", "6"].join("."),
+    version: ["0", "8", "0"].join("."),
     
     modFolder: "/modules",
     module: { },
@@ -157,7 +157,7 @@ var misTET = {
     
     go: function (query) {
             
-        var queries = misTET.utils.getQueries(query);
+        var queries = query.parseQuery();
         if (query.isEmpty()) {
             misTET.pages.set(misTET["config"]["home"]);
                 
@@ -165,6 +165,10 @@ var misTET = {
             if (queries.page) {    
                 var page = queries.page;
                 var inner = misTET.pages.loadGET(page, queries);
+
+                if (!inner) {
+                    return false;
+                }
                 if (!inner.isEmpty()) {
                     $("page").innerHTML = inner;  
                 }
@@ -199,15 +203,8 @@ var misTET = {
                 evalJS: false,
                 
                 onSuccess: function (http) {
-                    if (misTET.utils.xml_not_valid(http.responseXML)) {
-                        error = new misTET.exception({
-                            description: "misTET.init.load: error while parsing #{file}".interpolate({
-                                file: path
-                            })
-                        });
-                        error.description = "misTET.init.load: error while parsing #{file}".interpolate({
-                                file: path
-                            })
+                    if (misTET.XML.check(http.responseXML, path)) {
+                        return false;
                     }
                     misTET["config"]["init"] = http.responseXML;
                 },
@@ -248,12 +245,8 @@ var misTET = {
                 evalJS: false,
                 
                 onSuccess: function (http) {
-                    if (misTET.utils.xml_not_valid(http.responseXML)) {
-                        error = new misTET.exception({
-                            description: "misTET.menu.load: error while parsing #{file}".interpolate({
-                                file: path
-                            })
-                        });
+                    if (misTET.XML.check(http.responseXML, path)) {
+                        return false;
                     }
                     misTET["config"]["menu"] = http.responseXML;
                 },
@@ -331,12 +324,8 @@ var misTET = {
                 evalJS: false,
                     
                 onSuccess: function (http) {
-                    if (misTET.utils.xml_not_valid(http.responseXML)) {
-                        error = new misTET.exception({
-                            description: "misTET.pages.load: error while parsing #{file}".interpolate({
-                                file: path
-                            })
-                        });
+                    if (misTET.XML.check(http.responseXML, path)) {
+                        return false;
                     }
                     misTET["config"]["pages"] = http.responseXML;
                 },
@@ -391,8 +380,8 @@ var misTET = {
                                 var href = list[j].getAttribute("href");
                                 var args = list[j].getAttribute("args") || "";
 
-                                if (misTET.utils.isFile(misTET.extern+href)) {
-                                    var inner = misTET.utils.encorp(misTET.extern+href);
+                                if (misTET.File.exists(misTET.extern+href)) {
+                                    var inner = misTET.File.get_contents(misTET.extern+href);
                                     output += "<pre id = \'"+args+"\'>" + inner + "</pre>";
                                 } else {
                                     misTET.error.handle(new misTET.exception({
@@ -464,8 +453,8 @@ var misTET = {
 
             var output = "";
             
-            if (misTET.utils.isFile(misTET.extern + res)) {
-                var inner = misTET.utils.encorp(misTET.extern + res);
+            if (misTET.File.exists(misTET.extern + res)) {
+                var inner = misTET.File.get_contents(misTET.extern + res);
                 output += "<pre id=\'" + result + "\'>#{code}</pre>".interpolate({code: inner});
             } else {
                 misTET.error.handle(new misTET.exception({
@@ -494,12 +483,8 @@ var misTET = {
                 evalJS: false,
                 
                 onSuccess: function (http) {
-                    if (misTET.utils.xml_not_valid(http.responseXML)) {
-                        error = new misTET.exception({
-                            description: "misTET.modules.load: error while parsing #{file}".interpolate({
-                                file: path
-                            })
-                        });
+                    if (misTET.XML.check(http.responseXML, path)) {
+                        return false;
                     }
                     misTET["config"]["modules"] = http.responseXML;
                 },
@@ -539,7 +524,7 @@ var misTET = {
                     
                 try {
                             
-                    misTET.utils.include("#{modules}/#{name}/#{name2}.js".interpolate({
+                    misTET.File.include("#{modules}/#{name}/#{name2}.js".interpolate({
                         modules: misTET.modFolder,
                         name: moduleName,
                         name2: moduleName
@@ -875,235 +860,5 @@ var misTET = {
             return true;
         }
   
-    },
-    
-    utils: {
-        
-        /* True: you're using IE, False: you're not using IE :) */
-        isIE: function () {
-                
-            if (Prototype.Browser.IE) {
-                return true;
-            } else {
-                return false;
-            }
-            
-        },
-        
-        isFile: function (path) {
-            var result = false;
- 
-             try {
-                     
-                new Ajax.Request(path, {
-                        /* The HTTP head method is identical to GET, except
-                         * that the server must not return a message-body in
-                         * the response.
-                         */
-                    method: "head",
-                    asynchronous: false,
- 
-                    onSuccess: function () {
-                        result = true;
-                    }
-                });
-                
-            } catch (exception) { }
- 
-            return result;
-        },
-        
-        /* Require a file */
-        encorp: function (path) {
-        
-            var result = false;
-            var error = false;
-            
-            new Ajax.Request(path, {
-                method: "get",
-                asynchronous: false,
-                evalJS: false,
-                
-                onSuccess: function (http) {
-                    try {
-                        result = http.responseText.toString().escapeHTML();
-                    }
-                    catch (e) {
-                         error = new misTET.exception({
-                             description: e.toString(),
-                             file: path
-                         });
-                      }
-                },
-                
-                onFailure: function (http) {
-                    error = new misTET.exception({
-                        description: "Error while loading file (#{status} - #{statusText}).".interpolate(http),
-                        file: path
-                    });
-                }
-            });
-
-            if (error) {
-                misTET.error.handle(error);
-                return false;
-            }
-            
-            return result;
-        },
-        
-        xml_not_valid: function (xml) {
-
-            var result = false;
-            if (!Object.isset(xml)) {
-                result = true;
-            }
-                        
-            if (Object.isset(xml.documentElement.nodeName)) {
-                if (xml.documentElement.nodeName == "parsererror") {
-                    result = true;
-                }
-            }
-                        
-            if (Object.isBoolean(result)) {
-                return result;
-            }
-            
-        },
-
-        /* include a js file */
-        include: function (path) {
-        
-            var result = false;
-            
-            new Ajax.Request(path, {
-                method: "get",
-                asynchronous: false,
-                evalJS: false,
-                
-                onSuccess: function (http) {
-                    try {
-                        if (window.execScript) {
-                            window.execScript(http.responseText);
-                        } else {
-                            window.eval(http.responseText);
-                        }
-                        result = true;
-                    } catch (error) { 
-                        misTET.error.handle(new misTET.exception({
-                            description: e.message.toString(),
-                            file: e.fileName,
-                            line: (e.lineNumber || e.line)
-                        }));
-                        return false;
-                    }
-                }
-            });
-                        
-            return result;
-       
-        },
-        
-        execute: function (path) {
-                
-            var result;
-            var error = false;
-                
-            new Ajax.Request(path, {
-                method: "get",
-                asynchronous: false,
-                evalJS: false,
-                        
-                onSuccess: function (http) {
-                    try {
-                        if (window.execScript) {
-                            result = window.execScript(http.responseText);
-                        } else {
-                            result = window.eval(http.responseText);
-                        }
-                    } catch (exception) {
-                        error = new misTET.exception({
-                            description: exception.message.toString(),
-                            file: exception.fileName,
-                            line: (exception.lineNumber || exception.line)
-                        });
-                    }
-                },
-                        
-                onFailure: function (http) {
-                    error = new misTET.exception({
-                        description: "(#{status} - #{statusText})".interpolate(http),
-                        file: path
-                    });
-                }
-            });
-                
-            if (error) {
-                misTET.error.handle(error);
-                return false;
-            }
-                
-            return result;
-        },
-        
-        /* Insert a CSS Link in the head section */
-        insertCSS: function (path) {
-            
-            var result = false;
- 
-            if (misTET.utils.isFile(path)) {
-                var style = new Element("link", {
-                    rel: "stylesheet",
-                    href: path,
-                    type: "text/css"
-                });
- 
-                $$("head")[0].insert(style);
-                result = true;
-            }
- 
-            return result;
-        },
-        
-        getQueries: function (url) {
-                
-            var result = {};
-                
-            if (!Object.isset(url) || !Object.isString(url)) {
-                        
-                misTET.error.handle(new misTET.exception({
-                    description: "parsing error: what url should getQueries parse?",
-                    file: "#{root}/#{loc}".interpolate(misTET)
-                }));
-      
-                return false;
-            }
-                
-            var matches = url.match(/[?#](.*)$/);
-        
-            if (!matches) {
-                return result;
-            }
-        
-            var splitted = matches[1].split(/&/);
-            for (var i = 0; i < splitted.length; i++) {
-                var parts = splitted[i].split(/=/);
-                var name = parts[0].decodeURI();
-                    
-                if (parts[1]) {
-                    result[name] = parts[1].decodeURI();
-                } else {
-                    result[name] = true
-                }
-                    
-            }
-        
-            return result;
-        }
-
     }
 };
-
-misTET.utils.include("system/utils.js");
-misTET.utils.include("system/Resource.js");
-misTET.utils.include("system/Exception.js");

@@ -69,12 +69,7 @@ misTET.Resource = Class.create({
             evalJS: false,
                                 
             onSuccess: function (http) {
-                if (misTET.utils.xml_not_valid(http.responseXML)) {
-                    misTET.error.handle(new misTET.exception({
-                        description: "Resource#loadXML: error while parsing #{file}".interpolate({
-                            file: path
-                        })
-                    }));
+                if (misTET.XML.check(http.responseXML, file)) {
                     return false;
                 }
                 this.config = http.responseXML;
