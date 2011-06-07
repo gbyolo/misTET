@@ -24,7 +24,7 @@ misTET.module.create("markdown", {
 
 	initialize: function () {
 
-		misTET.utils.include(this.root + "/system/showdown.js");
+		misTET.File.include(this.root + "/system/showdown.js");
 		misTET.res.get("markdown").loadXML(this.root + "/resources/config.xml");
 
 		if (!Object.isset(misTET.res["markdown"].config["class"])) {

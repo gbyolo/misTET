@@ -33,7 +33,7 @@ misTET.module.create("blog", {
         
     initialize: function () {
 
-        misTET.utils.insertCSS(this.root + "/resources/blog.css");
+        misTET.CSS.insert(this.root + "/resources/blog.css");
         var path = this.root + "/resources/blog.xml";
         var test = false;
         var error = false;
@@ -286,7 +286,7 @@ misTET.module.create("blog", {
     },
     
     updateRss: function () {
-        var feed = misTET.utils.execute(this.root + "/feed.js");
+        var feed = misTET.File.execute(this.root + "/feed.js");
         var f = new feed({root: this.root});
         f.update(misTET.res.get("blog").file);
     }

@@ -25,10 +25,10 @@ misTET.module.create("SyntaxHighlighter", {
 	initialize: function () {
 		misTET.res.get("hl").loadXML(this.root + "/resources/config.xml");
 
-		misTET.utils.insertCSS(this.root + "/styles/#{style}.css".interpolate({
+		misTET.CSS.insert(this.root + "/styles/#{style}.css".interpolate({
 			style : misTET.res.get("hl").config["style"]
 		}));
-		misTET.utils.include(this.root + "/system/highlight.pack.js");
+		misTET.File.include(this.root + "/system/highlight.pack.js");
 
 		Event.observe(document, ":change", function () {
 			misTET.module.run("SyntaxHighlighter", []);
