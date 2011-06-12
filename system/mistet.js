@@ -89,9 +89,7 @@ var misTET = {
             $("page").update("Checking dependencies");
             misTET.modules.checkDependencies();
         }
-        ].each(
-
-        function (initialization) {
+        ].each( function (initialization) {
             try { 
                 initialization();
             } catch (e) {
@@ -435,12 +433,12 @@ var misTET = {
             var inner = misTET.pages.parse(id);
                 
             if (inner == "") {
-
                 new misTET.exception({
                     name: "Error 404",
                     message: "couldn't find " + id
                 }).handle();
                 return false;
+
             } else {              
                 try {
                     window.eval(inner);
@@ -449,6 +447,7 @@ var misTET = {
                     divpage.innerHTML = inner;
                 }                    
             }
+
             Event.fire(document, ":change", { name: id });
             Event.fire(document, ":page.set", { name: id });
         },
@@ -460,6 +459,7 @@ var misTET = {
             }
                     
             var result = "";
+
             if (!Object.isString(args)) {
                 for (var arg in args) {
                     result += arg+"="+args[arg].toString().escapeHTML()+"&";
@@ -473,13 +473,20 @@ var misTET = {
             
             if (misTET.File.exists(misTET.extern + res)) {
                 var inner = misTET.File.get_contents(misTET.extern + res);
-                output += "<pre id=\'" + result + "\'>#{code}</pre>".interpolate({code: inner});
+
+                output += "<pre id=\'#{result}\'>#{code}</pre>".interpolate({
+                    result: result,
+                    code: inner
+                });
             } else {
+
                 new misTET.exception({
                     name: "Error 404",
                     message: "couldn't find " + misTET.extern + res
                 }).handle();
+
                 return false;
+
             }
                     
             Event.fire(document, ":page.set", { name: misTET.extern + res, args: args });
@@ -571,18 +578,22 @@ var misTET = {
         checkDependencies: function () {
 
             for (var module in misTET.module) {
-                var needs = misTET.module[module].needs;                                       
+                var needs = misTET.module[module].needs;      
+                                 
                 if (needs) {
                     for (var i = 0; i < needs.length; i++) {
                         if (!misTET.module.exists(needs[i])) {
-                            var e = new Error();
-                            e.message = "`#{module}` requires `#{needs}`".interpolate({module: module, needs: needs[i]});
-                            e.name = "misTET.modules.checkDependencies";
-                            e.fileName = "#{root}/#{name}.js".interpolate({
-                                root: misTET.module[module].root,
-                                name: module
+
+                            var e = new Error({
+                                message = "`#{module}` requires `#{needs}`".interpolate({module: module, needs: needs[i]});
+                                name = "misTET.modules.checkDependencies";
+                                fileName = "#{root}/#{name}.js".interpolate({
+                                    root: misTET.module[module].root,
+                                    name: module
+                                }),
+                                lineNumber: ""
                             });
-                            e.lineNumber = "";
+
                             e.fix();                           
                             new misTET.exception(e).handle();
 
@@ -632,11 +643,13 @@ var misTET = {
                 }).handle();
                 return false;
             }
+
             return Boolean(misTET.module[name]);
         },
                         
         create: function (name, object) {
             if (!object) {     
+
                 new misTET.exception({
                     name: "misTET.module.create",
                     message: "no object given".interpolate({name: name}),
@@ -646,6 +659,7 @@ var misTET = {
                         name2: name 
                     })
                 }).handle();
+
                 return false;
             }
                 
@@ -660,8 +674,8 @@ var misTET = {
                         file: name 
                     })
                 }).handle();
-                return false;
-                        
+
+                return false;                        
             }
                                 
             /* load all functions */
@@ -695,6 +709,7 @@ var misTET = {
             else {
                 object.initialize = new Function()
             }
+
             misTET.module[name] = object;
             Event.fire(document, ":module.create", {obj: object});
         },
