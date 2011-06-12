@@ -164,7 +164,8 @@ misTET.File = (function () {
     return {
         exists: exists,
         get_contents: get_contents,
-        include: include
+        include: include,
+        execute: execute
     }
 
 })();
