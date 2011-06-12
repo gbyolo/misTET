@@ -6,8 +6,8 @@
 	
 	<!ELEMENT page ANY>
 	<!ATTLIST page
-		id		ID		#REQUIRED
-		alias	CDATA	#IMPLIED
+        id      ID      #REQUIRED
+        alias   CDATA   #IMPLIED
 	>
 	<!ELEMENT go ANY>
 	<!ATTLIST go
@@ -26,7 +26,6 @@
 <!--
 
 The examples below are self explanatory but I recommend to read the wiki to know more about pages.xml
-wiki: http://github.com/lostpassword/misTET/wiki
 
 -->
 <pages>
