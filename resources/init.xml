@@ -16,7 +16,7 @@
 	 title: title of your site
 -->
 <init>
-	<home>module=blog</home>
+	<home>home</home>
 	<loading>Loading...</loading>
 	<title>misTET - Power on earth</title>
 </init>

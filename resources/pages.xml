@@ -57,7 +57,7 @@ You should take a look at the [wiki](http://github.com/lostpassword/misTET/wiki)
 		]]>
 		<go href = "/python.txt" args = "source" text = "View" after = " ~ This is an internal link, a python source"></go>
 		<go href = "/js.txt" args = "source" text = "View" after = " ~ This is an internal link, a JS source"></go>
-        <go href = "/lol.php" text = "View" after = " ~ This is a PHP page which shows your IP"></go>
+		<go href = "/lol.php" text = "View" after = " ~ This is a PHP page which shows your IP"></go>
 		<go href = "/well" text = "View" after = " ~ This is a splitted file located in /stat"></go>
         <![CDATA[
             <div class='markdown'>
