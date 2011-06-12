@@ -18,19 +18,76 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
+/* Cross-Browser stuff */
+(function () {
+
+    Object.extend(Error.prototype, (function () {
+
+        function fix () {
+            this.message = (this.message || this.description);
+            this.file = this.fileName.strip();
+            this.line = String(this.lineNumber);
+            this.stack = (this.stack.strip() || "");
+        }
+        return { fix: fix };
+
+    })());  
+
+    if (Prototype.Browser.IE) {
+        Error.prototype.toString = function () {
+            return "#{name}: #{description}\n#{stack}".interpolate({
+                name: this.name,
+                description: this.description,
+                stack: (this.stack || "") /* stack: @file: line */
+            });
+        };
+    } else if (Prototype.Browser.Gecko) {
+        Error.prototype.toString = function () {
+            return "#{name}: #{message}\n#{stack}".interpolate({
+                name: this.name,
+                message: this.message,
+                stack: (this.stack || "")
+            });
+        };
+    } else if (Prototype.Browser.Chrome || Prototype.Browser.Safari) {
+        Error.prototype.toString = function () {
+            return '#{name}: #{message}\n#{stack}'.interpolate({
+                name: this.name,
+                message: this.message,
+                stack: (this.stack || "")
+            });
+        };
+    } else if (Prototype.Browser.Opera) {
+        Error.prototype.toString = function () {
+            return '#{name}: #{message}'.interpolate({
+                name: this.name,
+                message: this.message
+            });
+        };
+    }
+})();
+
+(function () {
+    if (!Object.isset(misTET)) {
+        misTET = new Object();  
+    }
+})();
+
 function _isException (object) {
 
     var result = true;
     result = (!typeof(object) == "object" ||
               !object.constructor === Object) ? false : true;
 
-    if (!Object.isset(object.description) ||
+    if (!Object.isset(object.name) ||
+        !Object.isset(object.message) ||
         !Object.isset(object.file) ||
         !Object.isset(object.line)) {
         result = false;
     }
 
-    if (!Object.isString(object.description) ||
+    if (!Object.isString(object.name) ||
+        !Object.isString(object.message) ||
         !Object.isString(object.file) ||
         !Object.isString(object.line)) {
         result = false;
@@ -41,19 +98,10 @@ function _isException (object) {
 
 function _fixException (exception) {
 
-    if (!Object.isset(exception.description)) {
-        exception.description = "Error";
-    }
-    if (!Object.isset(exception.file)) {
-        exception.file = "Undefined file";
-    }
-    if (!Object.isset(exception.line)) {
-        exception.line = "Undefined line";
-    }
-
-    exception.description = exception.description.isEmpty() ? "Error" : exception.description;
-    exception.file = exception.file.isEmpty() ? "Undefined file" : exception.file;
-    exception.line = exception.line.isEmpty() ? "Undefined line" : exception.line;
+    exception.name = (exception.name || "Error");
+    exception.message = (exception.message || "");
+    exception.file = (exception.file || "");
+    exception.line = (exception.line || "");
 
     return exception;
 }
@@ -66,11 +114,29 @@ misTET.exception = Class.create({
             exception = new Object();
         }
         if (!_isException(exception)) {
-            _fixException(exception);
+            if (Object.isString(exception)) {
+                exception = _fixException({message: exception});
+            } else {
+                exception = _fixException(exception);
+            }
         }
 
         Object.extend(this, exception);
         return true;
-    }
-        
+    },
+
+    handle: function () {
+   
+        if (!Object.isset(this) || !Object.isset(misTET)) {
+            return false;
+        }
+        misTET.$error = true;
+        Event.fire(document, ":error", this);
+
+        var result = "#{name}: #{message}\n".interpolate(this);
+        result += this.file.isEmpty() ? "" : "@#{file}".interpolate(this);
+        result += this.line.isEmpty() ? "" : " :#{line}".interpolate(this);
+        window.alert(result);
+
+    }       
 });

@@ -10,10 +10,8 @@
 ]>
 
 <!--
-	Here all your modules.
-	To create a new module, just enter his name here, and then create a
-	new folder in /modules with the same name. The main file of the module
-	you created before must have the specified name.
+    Here all official modules.
+	Read the wiki about Modules to know how to make a module for misTET. http://github.com/lostpassword/misTET/wiki
 -->
 
 <modules>

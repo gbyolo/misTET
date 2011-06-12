@@ -18,14 +18,34 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
+/* nodeType constants if the Node object is not defined */
+(function () {
+    if (!window.Node){
+        var Node = {
+            ELEMENT_NODE                :  1,
+            ATTRIBUTE_NODE              :  2,
+            TEXT_NODE                   :  3,
+            CDATA_SECTION_NODE          :  4,
+            ENTITY_REFERENCE_NODE       :  5,
+            ENTITY_NODE                 :  6,
+            PROCESSING_INSTRUCTION_NODE :  7,
+            COMMENT_NODE                :  8,
+            DOCUMENT_NODE               :  9,
+            DOCUMENT_TYPE_NODE          : 10,
+            DOCUMENT_FRAGMENT_NODE      : 11,
+            NOTATION_NODE               : 12
+        };
+    }
+})();
+
 Object.extend(Object, {
 
-        /* return true if obj is defined, false otherwise */
+        /* true if obj is defined, false otherwise */
         isset: function (obj) {
                 return typeof(obj) !== "undefined";
         },
         
-        /* isBoolean: return true if `o` is boolean, false otherwise */
+        /* true if `o` is boolean, false otherwise */
         isBoolean: function (o) {
                 return ((typeof o === "boolean") && (o.constructor === Boolean));
         },        
@@ -33,12 +53,12 @@ Object.extend(Object, {
         /* Usage: 
         Object.getID = Object.getID.bind(element);
         examples:
-        Object.getID = Object.getID.bind(document); -> search in the document
+        Object.getID = Object.getID.bind(document); -> search in document
         Object.getID = Object.getID.bind(misTET.config.menu); -> search through the xml file
         Object.getID = Object.getID.bind(object) -> search through a general object
                 
         Or you can use the following syntax:
-        Object.getID.call(document, id); -> search in the document
+        Object.getID.call(document, id); -> search in document
         Object.getID.call(misTET.config.menu, id); -> search through the xml document
         */
         getID: function (id) {
@@ -54,7 +74,7 @@ Object.extend(Object, {
         },
                 
         /* Use it as it's written above about Object.getID */
-        /* Return an array containing all the elements with the specifiec id */
+        /* Returns an array containing all the elements with the specifiec id */
         getsID: function (id) {
                 
             var array = $A(this.getElementsByTagName('*'));

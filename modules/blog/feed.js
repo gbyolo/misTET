@@ -28,18 +28,20 @@
         initialize: function (data) {
                         
             if (!Object.isset(data)) {
-                misTET.error.handle(new misTET.exception({
-                    description: "feed initialize: wrong number of arguments(0 of 1)"
-                }));
+                new misTET.exception({
+                    name: "feed initialize",
+                    message: "wrong number of arguments(0 of 1)"
+                }).handle();
                                 
                 return false;
             }
                         
             if (Object.isset(data) && !Object.isset(data.root)) {
                                 
-                misTET.error.handle(new misTET.exception({
-                    description: "feed initialize: root path is missing"
-                }));
+                new misTET.exception({
+                    name: "feed initialize",
+                    message: "root path is missing"
+                }).handle();
                                 
                 return false;
             }
@@ -65,7 +67,7 @@
                 parameters: data,
                                 
                 onFailure: function (http) {
-                    misTET.error.handle("feed: #{status} - #{statusText}.".interpolate(http));
+                    new misTET.exception({message: "feed: #{status} - #{statusText}.".interpolate(http)}).handle();
                 }
             });
         },

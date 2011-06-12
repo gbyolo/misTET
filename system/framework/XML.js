@@ -18,9 +18,18 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
+(function () {
+    if (!Object.isset(misTET)) {
+        misTET = new Object();
+    }
+    if (!Object.isset(misTET.exception)) {
+        throw new Error("misTET.exception is undefined");
+    }
+})();
+
 misTET.XML = (function() {
 
-    function check (xml, path) {
+    function not_valid (xml, path) {
         var result = false;
         if (!xml) {
             result = "parsing error";
@@ -32,18 +41,34 @@ misTET.XML = (function() {
             }
         }
                         
-        if (result && file) {
-            misTET.error.handle(new misTET.exception({
-                description: "#{error}\n".interpolate({error: result}),
-                file: file
-            }));
+        if (result && path) {
+            new misTET.exception({
+                name: "misTET.XML.not_valid",
+                message: "#{error}\n".interpolate({error: result}),
+                file: path
+            }).handle();
             return result;
         }
         return result;
             
     }
 
+    function getNodes (xml, nodeName) {
+        result = new Array();
+
+        $A(xml.childNodes).each(function (node) { 
+            if (node.nodeType == Node.ELEMENT_NODE && 
+                node.nodeName == String(nodeName)) { 
+                var e = node.cloneNode(true);
+                result.push(e);
+            } 
+        });
+
+        return result;
+    }
+
     return {
-        check: check
+        not_valid: not_valid,
+        getNodes: getNodes
     }
 })();

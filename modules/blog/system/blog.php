@@ -56,7 +56,7 @@ if (!$_SESSION['misTET']['logged']) {
 	$token = sha1(uniqid(rand(),TRUE));
 	$_SESSION['token'] = $token;
 
-	/* Remember to give the permissions to this file in order not to receive any error */
+	/* Remember to give the right permissions to this file in order not to receive any error */
 	$file = DOMDocument::load('../resources/blog.xml');
 
 	if (isset($_GET['new'])) {

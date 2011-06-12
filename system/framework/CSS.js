@@ -18,6 +18,10 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
+if (!Object.isset(misTET)) {
+    misTET = new Object();
+}
+
 misTET.CSS = (function () {
 
     /* CSS#insert -> insert a CSS style in the head section

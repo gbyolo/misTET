@@ -24,19 +24,14 @@
 ]>
 <!--
 
-If a page should show a module's executing output, you should declare the page as:
-<page id = 'module=moduleName'></page>
+The examples below are self explanatory but I recommend to read the wiki to know more about pages.xml
+wiki: http://github.com/lostpassword/misTET/wiki
 
-WARNING: When you load an extern page with `text` and `go`, be sure that the page
-		 is located in /res/files/stat
-		 
-WARNING: Don't use exclusively html code in your pages, it can cause some
-	 	 problems.
 -->
 <pages>
 	<page id = 'home'>
 		<![CDATA[
-            <div class = 'markdown'>
+            <div class='markdown'>
 Welcome to misTET home!
 - - - - - - - -
 **misTET** is a highly modular cms written in Javascript that loads its contents in XML files thus being easier both to web developers
@@ -45,6 +40,7 @@ and visitors to navigate the site and manage it.
 misTET comes also with some useful libraries and thanks to its power it's very easy 
 to develop modules that interact with its content.
 - - - - - - -  -
+You should take a look at the [wiki](http://github.com/lostpassword/misTET/wiki) to know how misTET works and how to configure it.
 
 [1]: #module=blog
 [2]: http://github.com/lostpassword/misTET
@@ -54,48 +50,24 @@ to develop modules that interact with its content.
 	</page>
 	<page id = 'module=blog'>
 	</page>
-	<page id = 'features'>
+	<page id = 'pages'>
 		<![CDATA[
-			In this section there are some of the features of this cms, like including an extern file,
-			using sources, and using the `go` attribute.
+			Here there are some links that point to different files in /stat.<br><br>
 		]]>
-	</page>
-	<page id = 'extern'>
-		<![CDATA[
-			This is an example of how including an extern file, with Syntax Highlighting :P<br>
-			(Take a look at /resources/pages.xml for further information)
-		]]>
-		<text href = "/python.txt"></text>
-	</page>
-	<page id = 'PHP'>
-		<![CDATA[
-			You can use the following syntax:<br>
-			<pre>#id&page=name.php</pre>
-			or:
-			<pre>#page=name.php</pre>
-			name.php: name of the page in /stat<br>
-			The output is not the source, but what the server says getting the PHP page. Here's an example:<br>
-		]]>
-		<go href = "/lol.php" text = "View" after = " ~ This is a PHP page which shows your IP"></go>
-	</page>
-	<page id = 'go'>
-		<![CDATA[
-			How to use `go` attribute. As you can see, you can also include a file using:<br>
-			(Take a look at /resources/pages.xml for further information)<br><br>
-			<pre>#id&page=pageRef</pre><br>where pageRef is a link of a file in /stat :P<br><br>
-		]]>
-		<go href = "/python.txt" text = "View" after = " ~ This is an external link, a python source"></go>
-		<go href = "/js.txt" text = "View" after = " ~ This is an external link, a JS source"></go>
-		<go href = "/well" text = "View" after = " ~ This is an external link, a simple file"></go>
-	</page>
-	<page id = 'nigger'>
-		<![CDATA[
-			NIGGER page, this is just useless.
-		]]>
+		<go href = "/python.txt" text = "View" after = " ~ This is an internal link, a python source"></go>
+		<go href = "/js.txt" text = "View" after = " ~ This is an internal link, a JS source"></go>
+        <go href = "/lol.php" text = "View" after = " ~ This is a PHP page which shows your IP"></go>
+		<go href = "/well" text = "View" after = " ~ This is a splitted file located in /stat"></go>
+        <![CDATA[
+            <div class='markdown'>
+The code below is fetched with a HTTP GET request. The file is /stat/python.txt.
+            </div> 
+        ]]>
+        <text href = "/python.txt"></text>
 	</page>
 	<page id = 'modules'>
 		<![CDATA[
-			You can find here all the officials modules for misTET.
+			You can find here all the official modules for misTET.
 		]]>
 	</page>
 	<page id = 'security'>
@@ -106,20 +78,20 @@ to develop modules that interact with its content.
 			config.php.<br><br>
 
 			Options:<br>
-			<i>#module=security&login</i> -> logging in<br>
+			<i>#module=security&login</i> -> log in<br>
 			<i>#module=security&connected</i> -> chech if you're logged<br>
-			<i>#module=security&logout</i> -> logout<br>
+			<i>#module=security&logout</i> -> log out<br>
 			<i>#module=security&changePassword</i> -> change your password<br>
 		]]>
 	</page>
 	<page id = 'blog'>
 		<![CDATA[
-			This is the blog module for mistet. As you can see, is simple, very simle, just
+			This is the blog module for mistet. As you can see is simple, very simle, just
 			something to write some news on your site.<br><br>
 
 			Options:<br>
 			<i>#module=blog</i>: display all posts<br>
-			<i>#module=blog&id=idN</i>: display the post with the specified id<br>
+			<i>#module=blog&id=idN</i>: display the post with the specified id<br><br>
 			<i>#module=blog&id=idN&del</i>: delete the post with the specified id<br>
 			<i>#module=blog&id=idN&edit</i>: edit the post with the specified id<br>
 			<i>#module=blog&show</i>: show all posts with the options of editing and deleting<br>
@@ -134,21 +106,20 @@ to develop modules that interact with its content.
 			This is the logging module.<br><br>
 			<i>/modules/logger/logger.php?read</i>: read the log as a xml file<br>
 			<pre>Event.observe(res, "event", function() { misTET.modules.logger.execute(args) })</pre><br>
-			use this to observe an event and log it. args must be an array
+			use this to observe an event and log it.
 		]]>
 	</page>
 	<page id = 'syntax'>
 		<![CDATA[
-		<div class='markdown'>
 			You can highlight your sources using a html tag with the code inside. The module will do all the rest.<br>
-			You can change the html tag in */modules/SyntaxHighlighter/resources/config.xml*
-
-	#!/usr/bin/python
-	def hello (name):
-    	return "Hello %s" % (name)
+			You can change the html tag in <i>/modules/SyntaxHighlighter/resources/config.xml</i>
+<pre>
+#!/usr/bin/python
+def hello (name):
+    return "Hello %s" % (name)
 						
-	print hello("George")
-		</div>
+print hello("George")
+</pre>
 		]]>
 	</page>
 	<page id = 'markdown'>

@@ -18,22 +18,33 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
+(function () {
+    if (!Object.isset(misTET)) {
+        misTET = new Object();
+    }
+    if (!Object.isset(misTET.exception)) {
+        throw new Error("misTET.exception is undefined");
+    }
+})();
+            
 misTET.Resource = Class.create({
 
     initialize: function (name, obj) {
         if (!name) {
             var error = new misTET.exception({
-                description: "misTET.Resource.new: no name passed"
+                name: "misTET.Resource.new",
+                message: "no name passed"
             });
-            misTET.error.handle(error);
+            error.handle();
             return false;
         }
 
         if (!obj) {
             var error = new misTET.exception({
-                description: "misTET.Resource.new: no obj passed"
+                name: "misTET.Resource.new",
+                message: "no obj passed"
             });
-            misTET.error.handle(error);
+            error.handle();
             return false;
         }
 
@@ -50,7 +61,9 @@ misTET.Resource = Class.create({
             try {
                 this.obj.initialize();
             } catch (e) {
-                throw (e);
+                e.fix();
+                new misTET.exception(e).handle();
+                return false;
             }
         }
 		
@@ -69,33 +82,33 @@ misTET.Resource = Class.create({
             evalJS: false,
                                 
             onSuccess: function (http) {
-                if (misTET.XML.check(http.responseXML, file)) {
+                if (misTET.XML.not_valid(http.responseXML, file)) {
                     return false;
                 }
                 this.config = http.responseXML;
             },
                                 
             onFailure: function (http) {
-                misTET.error.handle(new misTET.exception({
-                    description: "Resource#loadXML: failed to retrieve (#{status} - #{statusText})".interpolate(http),
+                new misTET.exception({
+                    name: "#{name}.loadXML".interpolate(this),
+                    message: "failed to retrieve (#{status} - #{statusText})".interpolate(http),
                     file: file
-                }));
+                }).handle();
+                return false;
             }
         });
-                        
-        var configuration = config.documentElement;
-        var list = configuration.childNodes;
 
-        var confs = new Array();
-                        
-        for (var j = 1; j < list.length; j = j+2) {
-            if (j == (list.length -1)) {
-                break;
+        var configuration = config.documentElement;
+        var confs = new Array ();
+
+        $A(configuration.childNodes).each(function (node) {
+            if (node.nodeType != Node.ELEMENT_NODE) { /* Node.ELEMENT_NODE == 1 */
+                return;
             }
-            var node = list[j].nodeName;
-            var value = list[j].childNodes[0].nodeValue;
-            confs[node] = value;
-        }
+            var name = node.nodeName;
+            confs[name] = (node.firstChild.data || node.firstChild.nodeValue);
+        });
+
         this.config = { };
         Object.extend(this.config, confs);
     }

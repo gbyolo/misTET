@@ -18,17 +18,26 @@
  * along with misTET.  If not, see <http://www.gnu.org/licenses/>.          *
  ****************************************************************************/
 
+(function () {
+    if (!Object.isset(misTET)) {
+        misTET = new Object();
+    }
+    if (!Object.isset(misTET.exception)) {
+        throw new Error("misTET.exception is undefined");
+    }
+})();
+    
 misTET.File = (function () {
 	
     /* File#exists -> Boolean
      * 
-     * Return true if path exists, false otherwise
+     * Returns true if path exists, false otherwise
     */
 
     function exists (path) {
         var result = false;
 
-         try {        
+        try {        
             new Ajax.Request(path, {
                 /* The HTTP head method is identical to GET, except
                 * that the server must not return a message-body in
@@ -48,7 +57,7 @@ misTET.File = (function () {
     
     /* File#get_contents -> String
      * 
-     * Get the content of path and return it
+     * Gets the content of path and returns it
      */
 
     function get_contents (path) {
@@ -64,24 +73,22 @@ misTET.File = (function () {
                 try {
                     result = http.responseText.toString().escapeHTML();
                 }
-                catch (e) {
-                    error = new misTET.exception({
-                        description: e.toString(),
-                        file: path
-                    });
+                catch (e) { 
+                    e.fix();
+                    error = new misTET.exception(e);
                 }
             },
                 
             onFailure: function (http) {
                 error = new misTET.exception({
-                    description: "Error while loading file (#{status} - #{statusText}).".interpolate(http),
+                    message: "Error while loading file (#{status} - #{statusText}).".interpolate(http),
                     file: path
                 });
             }
         });
 
         if (error) {
-            misTET.error.handle(error);
+            error.handle();
             return false;
         }
             
@@ -105,11 +112,8 @@ misTET.File = (function () {
                     }
                     result = true;
                 } catch (error) { 
-                    misTET.error.handle(new misTET.exception({
-                        description: e.message.toString(),
-                        file: e.fileName,
-                        line: (e.lineNumber || e.line)
-                    }));
+                    error.fix();
+                    new misTET.exception(error).handle();
                     return false;
                 }
             }
@@ -136,24 +140,21 @@ misTET.File = (function () {
                         result = window.eval(http.responseText);
                     }
                 } catch (exception) {
-                    error = new misTET.exception({
-                        description: exception.message.toString(),
-                        file: exception.fileName,
-                        line: (exception.lineNumber || exception.line)
-                    });
+                    exception.fix();
+                    error = new misTET.exception(exception);
                 }
             },
                         
             onFailure: function (http) {
                 error = new misTET.exception({
-                    description: "(#{status} - #{statusText})".interpolate(http),
+                    message: "(#{status} - #{statusText})".interpolate(http),
                     file: path
                 });
             }
         });
                 
         if (error) {
-            misTET.error.handle(error);
+            error.handle();
             return false;
         }
                 

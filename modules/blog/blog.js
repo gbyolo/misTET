@@ -50,9 +50,10 @@ misTET.module.create("blog", {
             },
                 
             onFailure: function (http) {
-                misTET.error.handle(new misTET.exception({
-                    description: "Error while loading blog.xml (#{error})".interpolate({ error: http.status })
-                }));
+                new misTET.exception({
+                    name: "misTET.blog.initialize()",
+                    message: "Error while loading blog.xml (#{error})".interpolate({ error: http.status })
+                }).handle();
             }
         });
         /* this is useless 
@@ -81,7 +82,7 @@ misTET.module.create("blog", {
                             },
                                         
                             onFailure: function (http) {
-                                misTET.error.handle({description: http.responseText});
+                                new misTET.exception({ message: http.responseText }).handle();
                             }
                         });
                         
@@ -97,7 +98,7 @@ misTET.module.create("blog", {
                         },
                                 
                         onFailure: function (http) {
-                            misTET.error.handle({description: http.responseText});
+                            new misTET.exception({ message: http.responseText }).handle();
                         }
                                 
                     });
@@ -118,7 +119,7 @@ misTET.module.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.error.handle({description: http.responseText});
+                            new misTET.exception({ message: http.responseText }).handle();
                         }
                                                 
                     });
@@ -134,7 +135,7 @@ misTET.module.create("blog", {
                         },
                                                 
                         onFailure: function (http) {
-                            misTET.error.handle({description: http.responseText});
+                            new misTET.exception({ message: http.responseText }).handle();
                         }
                     });
                 }
@@ -160,7 +161,7 @@ misTET.module.create("blog", {
                     },
                                                 
                     onFailure: function (http) {
-                        misTET.error.handle({description: http.responseText});
+                        new misTET.exception({ message: http.responseText }).handle();
                     }
                 });
                 this.updateRss();
@@ -174,7 +175,7 @@ misTET.module.create("blog", {
                     },
                                                 
                     onFailure: function (http) {
-                        misTET.error.handle({description: http.responseText});
+                        new misTET.exception({ message: http.responseText }).handle();
                     }
                 });
             }
@@ -189,7 +190,7 @@ misTET.module.create("blog", {
                 },
                                 
                 onFailure: function (http) {
-                    misTET.error.handle({description: http.responseText});
+                    new misTET.exception({ message: http.responseText }).handle();
                 }
             });
                 

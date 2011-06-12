@@ -1,6 +1,13 @@
 <h2>Changelog</h2>
 *Note*: date format is dd/mm/aaaa
 - - - -
+  -  [xx-06-2011]  -  0.8
++ Browser compatibility
++ Changed parsing method for misTET resources
++ misTET.exception is cross-browser
++ Added misTET#XML#getNodes
++ Python compiler
++ Minor fixes
   -  [06-06-2011]  -  0.7.6
 + Fixed minor bugs
 + Fixed compiler and moved compile.sh to compile

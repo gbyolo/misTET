@@ -9,13 +9,8 @@
 	>
 ]>
 <!--
-To create a new menu, just use `menu` node. Each `text` node represents
-a new menu: if you use only one node, it is a simple menu, if you use
-several ones, the first one represents the main one, the others
-represent the sub menus. The `id` attribute is REQUIRED, since it must be 
-the same you'll use for the specified page in pages.xml.
-Don't use XML special characters.
-
+    Read the wiki about misTET resources for further information, the example below should however be self explanatory.
+    wiki: http://github.com/lostpassword/misTET/wiki
 -->
 <menue>
 	<menu>
@@ -25,11 +20,7 @@ Don't use XML special characters.
 		<text id = 'module=blog'>Blog</text>
 	</menu>
 	<menu>	
-		<text id = 'features'>Features</text>
-		<text id = 'extern'>Extern_file</text>
-		<text id = 'PHP'>PHP</text>
-		<text id = 'go'>`go`</text>
-		<text id = 'nigger'>NIGGER_NIGGER</text>
+		<text id = 'pages'>My pages</text>
 	</menu>
 	<menu>
 		<text id = 'modules'>Modules</text>

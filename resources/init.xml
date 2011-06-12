@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE init [
-	<!ELEMENT init (homePage+)>
-	<!ELEMENT init (loadMessage+)>
+	<!ELEMENT init (home+)>
+	<!ELEMENT init (loadinge+)>
 	<!ELEMENT init (title+)>
 	
-	<!ELEMENT homePage ANY>
+	<!ELEMENT home ANY>
 	<!ELEMENT loadMessage ANY>
 	<!ELEMENT title ANY>
 ]>
 
 <!--
 	 Init file
-	 homePage: specifies the id of the page you want to use as homepage
-	 loadMessage: message to show while misTET is loading
-	 title: title tag in head section
+	 home: id of the page you want to use as homepage
+	 loading: message to show while misTET is loading
+	 title: title of your site
 -->
 <init>
-	<homePage>home</homePage>
-	<loadMessage>Loading...</loadMessage>
+	<home>home</home>
+	<loading>Loading...</loading>
 	<title>misTET - Power on earth</title>
 </init>
