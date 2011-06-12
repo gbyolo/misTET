@@ -71,7 +71,7 @@ misTET.File = (function () {
                 
             onSuccess: function (http) {
                 try {
-                    result = http.responseText.toString().escapeHTML();
+                    result = http.responseText.toString();
                 }
                 catch (e) { 
                     e.fix();

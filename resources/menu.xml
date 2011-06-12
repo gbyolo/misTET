@@ -17,7 +17,7 @@
 		<text id = 'home'>Home</text>
 	</menu>
 	<menu>
-		<text id = 'module=blog'>Blog</text>
+		<text id = 'blog'>Blog</text>
 	</menu>
 	<menu>	
 		<text id = 'pages'>My pages</text>

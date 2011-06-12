@@ -6,7 +6,8 @@
 	
 	<!ELEMENT page ANY>
 	<!ATTLIST page
-		id	ID	#REQUIRED
+		id		ID		#REQUIRED
+		alias	CDATA	#IMPLIED
 	>
 	<!ELEMENT go ANY>
 	<!ATTLIST go
@@ -48,14 +49,14 @@ You should take a look at the [wiki](http://github.com/lostpassword/misTET/wiki)
             </div>
 		]]>
 	</page>
-	<page id = 'module=blog'>
+	<page id = 'blog' alias = 'module=blog'>
 	</page>
 	<page id = 'pages'>
 		<![CDATA[
 			Here there are some links that point to different files in /stat.<br><br>
 		]]>
-		<go href = "/python.txt" text = "View" after = " ~ This is an internal link, a python source"></go>
-		<go href = "/js.txt" text = "View" after = " ~ This is an internal link, a JS source"></go>
+		<go href = "/python.txt" args = "source" text = "View" after = " ~ This is an internal link, a python source"></go>
+		<go href = "/js.txt" args = "source" text = "View" after = " ~ This is an internal link, a JS source"></go>
         <go href = "/lol.php" text = "View" after = " ~ This is a PHP page which shows your IP"></go>
 		<go href = "/well" text = "View" after = " ~ This is a splitted file located in /stat"></go>
         <![CDATA[
@@ -63,7 +64,7 @@ You should take a look at the [wiki](http://github.com/lostpassword/misTET/wiki)
 The code below is fetched with a HTTP GET request. The file is /stat/python.txt.
             </div> 
         ]]>
-        <text href = "/python.txt"></text>
+        <text href = "/python.txt" args = "source"></text>
 	</page>
 	<page id = 'modules'>
 		<![CDATA[
@@ -113,13 +114,13 @@ The code below is fetched with a HTTP GET request. The file is /stat/python.txt.
 		<![CDATA[
 			You can highlight your sources using a html tag with the code inside. The module will do all the rest.<br>
 			You can change the html tag in <i>/modules/SyntaxHighlighter/resources/config.xml</i>
-<pre>
+<code>
 #!/usr/bin/python
 def hello (name):
     return "Hello %s" % (name)
 						
 print hello("George")
-</pre>
+</code>
 		]]>
 	</page>
 	<page id = 'markdown'>

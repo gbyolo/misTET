@@ -6,6 +6,7 @@
 + Changed parsing method for misTET resources
 + misTET.exception is cross-browser
 + Added misTET#XML#getNodes
++ Added pages aliases
 + Python compiler
 + Minor fixes
   -  [06-06-2011]  -  0.7.6

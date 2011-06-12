@@ -42,6 +42,7 @@ misTET.module.create("SyntaxHighlighter", {
   		var pres = document.getElementsByTagName(tag);
 
 		for (var i = 0; i < pres.length; i++) {
+			pres[i].update("<pre>#{inner}</pre>".interpolate({inner: pres[i].innerHTML}));
 			hljs.highlightBlock(pres[i], hljs.tabReplace);
 		}
 

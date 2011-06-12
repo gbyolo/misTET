@@ -145,7 +145,7 @@ var misTET = {
         var queries = query.parseQuery();
 
         if (query.isEmpty()) {
-            misTET.pages.set(misTET["config"]["home"]);                
+            misTET.pages.set(misTET["config"]["home"], queries);                
         } 
         else {
             if (queries.page) {    
@@ -170,7 +170,7 @@ var misTET = {
                     
             } else {
                 var ref = query.match(/#\w+/);
-                misTET.pages.set(ref[0].replace("#","")); 
+                misTET.pages.set(ref[0].replace("#",""), queries); 
             }
             
         }
@@ -391,7 +391,7 @@ var misTET = {
 
                                 if (misTET.File.exists(misTET.extern + href)) {
                                     var inner = misTET.File.get_contents(misTET.extern + href);
-                                    output += "<pre id='#{args}'>#{inner}</pre>".interpolate({
+                                    output += "<div id='#{args}'>#{inner}</div>".interpolate({
                                         args: args,
                                         href: href,
                                         inner: inner.strip()
@@ -420,7 +420,7 @@ var misTET = {
             return output;
         },
             
-        set: function (id) {
+        set: function (id, queries) {
             if (!Object.isset(id) || !Object.isString(id)) {                            
                 new misTET.exception({
                     name: "misTET.pages.set",
@@ -439,13 +439,22 @@ var misTET = {
                 }).handle();
                 return false;
 
-            } else {              
-                try {
-                    window.eval(inner);                        
-                } catch (e) {
-                    divpage.innerHTML = inner;
-                }                    
             }
+            var page = Object.getID.call(misTET.config.pages.documentElement, String(id));
+
+            if (page.getAttribute('alias')) {
+                var alias = page.getAttribute('alias');
+
+                if (alias.charAt(0) != '#') {
+                    alias = '#' + alias;
+                }
+                delete queries[id];
+
+                queries = "&" + $H(queries).toQueryString();
+                return misTET.go(alias + queries);
+            }
+
+            divpage.innerHTML = inner;
 
             Event.fire(document, ":change", { name: id });
             Event.fire(document, ":page.set", { name: id });
@@ -473,7 +482,7 @@ var misTET = {
             if (misTET.File.exists(misTET.extern + res)) {
                 var inner = misTET.File.get_contents(misTET.extern + res);
 
-                output += "<pre id=\'#{result}\'>#{code}</pre>".interpolate({
+                output += "<div id=\'#{result}\'>#{code}</div>".interpolate({
                     result: result,
                     code: inner
                 });
@@ -498,7 +507,7 @@ var misTET = {
             
         /* load modules.xml */
         load: function() {
-            var path = "/resources/modules.xml";
+            var path = "#{root}/resources/modules.xml".interpolate(misTET);
             var test = false;
             var error = false;
                 

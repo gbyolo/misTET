@@ -1,5 +1,7 @@
+<code>
 #!/usr/bin/python
 def hello (name):
     return "Hello %s" % (name)
 
 print hello("George")
+</code>
