@@ -79,6 +79,7 @@ if __name__ == "__main__":
     for file in framework:
         print "Compiling system/framework/%s" % str(file)
         comp(file, "system/framework")
+        header("system/framework/%s.min.js" % (file[:-3]))
 
     del_tmp(str(tmp))
     print "misTET compiled successfully"

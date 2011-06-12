@@ -441,8 +441,7 @@ var misTET = {
 
             } else {              
                 try {
-                    window.eval(inner);
-                        
+                    window.eval(inner);                        
                 } catch (e) {
                     divpage.innerHTML = inner;
                 }                    
@@ -585,9 +584,9 @@ var misTET = {
                         if (!misTET.module.exists(needs[i])) {
 
                             var e = new Error({
-                                message = "`#{module}` requires `#{needs}`".interpolate({module: module, needs: needs[i]});
-                                name = "misTET.modules.checkDependencies";
-                                fileName = "#{root}/#{name}.js".interpolate({
+                                message: "`#{module}` requires `#{needs}`".interpolate({module: module, needs: needs[i]}),
+                                name: "misTET.modules.checkDependencies",
+                                fileName: "#{root}/#{name}.js".interpolate({
                                     root: misTET.module[module].root,
                                     name: module
                                 }),
