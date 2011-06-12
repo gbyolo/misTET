@@ -449,6 +449,7 @@ var misTET = {
                     alias = '#' + alias;
                 }
                 delete queries[id];
+                if (queries.page) { delete queries.page; }
 
                 queries = "&" + $H(queries).toQueryString();
                 return misTET.go(alias + queries);

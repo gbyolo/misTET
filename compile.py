@@ -8,7 +8,6 @@
 # This file is part of misTET
 # read /LICENSE for more information
 
-import re
 import os
 import sys
 import subprocess

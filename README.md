@@ -3,12 +3,9 @@
 <h2>Documentation</h2>
 You can know everything about *misTET* and its power by reading the [github wiki](http://github.com/lostpassword/misTET/wiki).
 
-<h2>Sites</h2>
+<h2>Site</h2>
 misTET developing site is here:
 <a href = "http://mistet.altervista.org" target = "_blank">http://mistet.altervista.org</a>
-
-misTET demo site is here:
-<a href = "http://mistet.altervista.org/demo" target = "_blank">http://mistet.altervista.org/demo</a> -> this is what you will get after downloading and putting misTET on your server. There are some examples of what you can do and modules explanations.
 
 <h2>License breaking</h2>
 I want to make it clear that all files belonging to this project are released under the GNU Affero v3+ license, you can find a 

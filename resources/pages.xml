@@ -6,7 +6,7 @@
 	
 	<!ELEMENT page ANY>
 	<!ATTLIST page
-		id		ID		#REQUIRED
+        id      ID      #REQUIRED
 		alias	CDATA	#IMPLIED
 	>
 	<!ELEMENT go ANY>
