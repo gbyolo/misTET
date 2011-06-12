@@ -1,4 +1,13 @@
-*misTET* is a modular CMS written in Javascript. The choice of this language has been required by the need of a fast and complete CMS.<br>
+<h2>misTET</h2>
+**misTET** is a highly modular cms written in Javascript that loads its contents in XML files.
+- - - - - - - -
+<h2>Why Javascript</h2>
+Why Javascript? Javascript it's a beautiful language, the best in my opinion. Because of XML contents you can't be indexed in search engines but this was
+not my purpose while thinking about a js CMS, I don't want to be indexed.
+
+It's a fascinating thing having content generated from XML files but even more the fact that you can customize it as you want. You aren't obliged to write modules in js(if you need some), they can have their own backend in whatever language you want. The javascript part is needed to understand when and how misTET should initialize and execute a module.
+
+The core is Javascript only, it's fast, you need to configure some stuff only and in 5 minutes your misTET based website is ready to be put on the server.
 
 <h2>Documentation</h2>
 You can know everything about *misTET* and its power by reading the [github wiki](http://github.com/lostpassword/misTET/wiki).
