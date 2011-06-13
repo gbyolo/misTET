@@ -2,7 +2,6 @@
 
 <!DOCTYPE configuration [
 	<!ELEMENT configuration (class*)>
-	<!ELEMENT configuration (highlighter*)>
 ]>
 
 <configuration>
