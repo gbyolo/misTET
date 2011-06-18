@@ -28,11 +28,6 @@
 })();
     
 misTET.File = (function () {
-	
-    /* File#exists -> Boolean
-     * 
-     * Returns true if path exists, false otherwise
-    */
 
     function exists (path) {
         var result = false;
@@ -54,11 +49,6 @@ misTET.File = (function () {
  
         return result;
     }
-    
-    /* File#get_contents -> String
-     * 
-     * Gets the content of path and returns it
-     */
 
     function get_contents (path) {
         var result = false;

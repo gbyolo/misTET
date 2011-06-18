@@ -24,11 +24,6 @@ if (!Object.isset(misTET)) {
 
 misTET.CSS = (function () {
 
-    /* CSS#insert -> insert a CSS style in the head section
-     * 
-     * -> Boolean (true or false)
-     */
-
     function insert (path) {
         var result = false;
  
