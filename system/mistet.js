@@ -461,7 +461,7 @@ var misTET = {
             Event.fire(document, ":page.set", { name: id });
         },
             
-        /* load an extern page(/stat) */
+        /* load an internal file in /stat */
         loadGET: function (res, args) {
             if (args.page) {
                 delete args.page;
