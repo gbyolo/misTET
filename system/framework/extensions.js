@@ -108,17 +108,14 @@ Object.extend(String.prototype, {
         parseQuery: function () {
             var result = {};
                 
-            if (!Object.isString(this)) {
-                        
+            if (!Object.isString(this)) {                    
                 misTET.error.handle(new misTET.exception({
                     description: "parsing error: what url should parseQuery parse?"
-                }));
-      
+                }));      
                 return false;
             }
                 
-            var matches = this.match(/[?#](.*)$/);
-        
+            var matches = this.match(/[?#](.*)$/);       
             if (!matches) {
                 return result;
             }
