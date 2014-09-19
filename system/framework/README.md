@@ -4,4 +4,4 @@
 
 Read the [github wiki][1] about the framework or take a look at the sources for more information.
 
-[1]: http://github.com/lostpassword/misTET/wiki/Framework
+[1]: http://github.com/gbyolo/misTET/wiki/Framework

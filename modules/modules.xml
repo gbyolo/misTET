@@ -37,9 +37,9 @@
 <modules>
 	<module name="security">
 		<author>
-			<name>lostpassword</name>
-			<email>gdb.lost@gmail.com</email>
-			<homepage>http://github.com/lostpassword</homepage>
+			<name>gbyolo</name>
+			<email>gb.yolo@gmail.com</email>
+			<homepage>http://github.com/gbyolo</homepage>
 		</author>
 		<release version="0.2.6">
 			<description>A module to get more security on your site</description>
@@ -49,9 +49,9 @@
 	
 	<module name="blog">
 		<author>
-			<name>lostpassword</name>
-			<email>gdb.lost@gmail.com</email>
-			<homepage>http://github.com/lostpassword</homepage>
+			<name>gbyolo</name>
+			<email>gb.yolo@gmail.com</email>
+			<homepage>http://github.com/gbyolo</homepage>
 		</author>
 		<release version="0.4.2">
 			<description>A blog with rss feed</description>
@@ -61,9 +61,9 @@
 	
 	<module name="logger">
 		<author>
-			<name>lostpassword</name>
-			<email>gdb.lost@gmail.com</email>
-			<homepage>http://github.com/lostpassword</homepage>
+			<name>gbyolo</name>
+			<email>gb.yolo@gmail.com</email>
+			<homepage>http://github.com/gbyolo</homepage>
 		</author>
 		<release version="0.2">
 			<description>A logger</description>
@@ -73,9 +73,9 @@
 
 	<module name="markdown">
 		<author>
-			<name>lostpassword</name>
-			<email>gdb.lost@gmail.com</email>
-			<homepage>http://github.com/lostpassword</homepage>
+			<name>gbyolo</name>
+			<email>gb.yolo@gmail.com</email>
+			<homepage>http://github.com/gbyolo</homepage>
 		</author>
 		<release version="0.1">
 			<description>MarkDown module using Showdown.js library</description>
@@ -85,9 +85,9 @@
 
     <module name="SyntaxHighlighter">
 		<author>
-			<name>lostpassword</name>
-			<email>gdb.lost@gmail.com</email>
-			<homepage>http://github.com/lostpassword</homepage>
+			<name>gbyolo</name>
+			<email>gb.yolo@gmail.com</email>
+			<homepage>http://github.com/gbyolo</homepage>
 		</author>
 		<release version="0.1">
 			<description>SyntaxHighlighter for misTET</description>

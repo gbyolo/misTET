@@ -10,7 +10,7 @@ It's a fascinating thing having content generated from XML files but even more t
 The core is Javascript only, it's fast, you need to configure some stuff only and in 5 minutes your misTET based website is ready to be put on the server.
 
 <h2>Documentation</h2>
-You can know everything about *misTET* and its power by reading the [github wiki](http://github.com/lostpassword/misTET/wiki).
+You can know everything about *misTET* and its power by reading the [github wiki](http://github.com/gbyolo/misTET/wiki).
 
 <h2>Site</h2>
 misTET developing site is here:
@@ -18,8 +18,8 @@ misTET developing site is here:
 
 <h2>License breaking</h2>
 I want to make it clear that all files belonging to this project are released under the GNU Affero v3+ license, you can find a 
-copy of it at /LICENSE. Sometimes could happen that I forget to add the copyright lines on some files, especially on style and
+copy of it at /COPYING. Sometimes could happen that I forget to add the copyright lines on some files, especially on style and
 markup files, but this does not mean that these files are not released under the license. So be aware of that.
 
 <h2>Collaboration</h2>
-Whoever wants to collaborate is welcome, contact me at: <a href = "mailto:gdb.lost@gmail.com">gdb.lost@gmail.com </a>
+Whoever wants to collaborate is welcome, contact me at: <a href = "mailto:gb.ylolo@gmail.com">gb.yolo@gmail.com </a>

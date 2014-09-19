@@ -1,8 +1,8 @@
 <?php
 
 /**************************************************************************** 
- * Copyleft lostpassword                                                    * 
- * [gdb.lost@gmail.com]                                                     *
+ * Copyleft gbyolo                                                    * 
+ * [gb.yolo@gmail.com]                                                     *
  *                                                                          *
  * This file is part of misTET.                                             *
  *                                                                          *

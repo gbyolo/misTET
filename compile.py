@@ -6,7 +6,7 @@
 # You need also java (latest version)
 
 # This file is part of misTET
-# read /LICENSE for more information
+# read /COPYING for more information
 
 import os
 import sys
@@ -46,7 +46,7 @@ def header (file):
         return False
 
     if os.access(file, os.W_OK):
-        head = "/* Copyleft lostpassword [gdb.lost@gmail.com]. This file is part of misTET, released under under AGPLv3. */"
+        head = "/* Copyleft gbyolo [gb.yolo@gmail.com]. This file is part of misTET, released under under AGPLv3. */"
         fd = open(file, "w");
         fd.write("%s\n%s" % (head, content))
         fd.close()

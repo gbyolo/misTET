@@ -40,10 +40,10 @@ and visitors to navigate the site and manage it.
 misTET comes also with some useful libraries and thanks to its power it's very easy 
 to develop modules that interact with its content.
 - - - - - - -  -
-You should take a look at the [wiki](http://github.com/lostpassword/misTET/wiki) to know how misTET works and how to configure it.
+You should take a look at the [wiki](http://github.com/gbyolo/misTET/wiki) to know how misTET works and how to configure it.
 
 [1]: #module=blog
-[2]: http://github.com/lostpassword/misTET
+[2]: http://github.com/gbyolo/misTET
 
             </div>
 		]]>
