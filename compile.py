@@ -6,7 +6,7 @@
 # You need also java (latest version)
 
 # This file is part of misTET
-# read /COPYING for more information
+# read /LICENSE for more information
 
 import os
 import sys
